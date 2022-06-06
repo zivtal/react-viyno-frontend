@@ -68,7 +68,7 @@ export const ReplyPreview = ({
                     : setAuthCb(() => setLike(reply, "reply"));
                 }}
               >
-                Like
+                {reply.ilike ? "Unlike" : "Like"}
               </span>
 
               <span

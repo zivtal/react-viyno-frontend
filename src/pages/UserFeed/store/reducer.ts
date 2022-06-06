@@ -224,35 +224,6 @@ export default (state = INITIAL_STATE, action: ReducerAction) => {
         };
       };
 
-      // const _update = (
-      //   id: number,
-      //   like: boolean,
-      //   posts: Array<Post>,
-      //   index: number = 0
-      // ): any => {
-      //   return posts.map((post: Post) => {
-      //     if (post._id === id && post.ilike !== (like ? 1 : 0)) {
-      //       return {
-      //         ...post,
-      //         ilike: like ? 1 : 0,
-      //         likes: post.likes + (like ? +1 : -1),
-      //       };
-      //     }
-      //
-      //     if (post.reply?.data?.length) {
-      //       return {
-      //         ...post,
-      //         reply: {
-      //           ...post.reply,
-      //           data: _update(id, like, post?.reply?.data || [], type, ++index),
-      //         },
-      //       };
-      //     }
-      //
-      //     return post;
-      //   });
-      // };
-
       return {
         ...state,
         [POSTS]: _update(state[POSTS], ilike, _id),

@@ -39,7 +39,7 @@ interface UserRateProps {
   set: Function;
 }
 
-const UserRate = ({ user, rate, set }: UserRateProps): JSX.Element => {
+const UserRate = ({ user, rate, set }: UserRateProps) => {
   return (
     <>
       <p className="rating-feedback">
@@ -83,7 +83,7 @@ const WinePreviews = ({
   activeId,
   setActiveId,
   onLoadMore,
-}: WinePreviewsProps): JSX.Element => {
+}: WinePreviewsProps) => {
   const data =
     loading && !reviews?.data?.length ? Array(3).fill(demo) : reviews?.data;
 
@@ -125,9 +125,7 @@ const WinePreviews = ({
   );
 };
 
-export const WineCommunityReviews = (props: {
-  wine?: Wine;
-}): JSX.Element | null => {
+export const WineCommunityReviews = (props: { wine?: Wine }) => {
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -153,9 +151,9 @@ export const WineCommunityReviews = (props: {
     setRate(null);
     const vintage = +getQuery("year")?.toString();
 
-    dispatch(getMyReviews());
-    dispatch(getRecentReviews(vintage, true));
-    dispatch(getHelpfulReviews(vintage, true));
+    dispatch(getMyReviews(props.wine?._id));
+    dispatch(getRecentReviews(props.wine?._id, vintage, true));
+    dispatch(getHelpfulReviews(props.wine?._id, vintage, true));
   }, [props.wine, location.search, user]);
 
   const ReviewMenu = () => {

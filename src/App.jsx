@@ -16,6 +16,7 @@ import { WineEdit } from "./pages/Wine/WineEdit/WineEdit";
 import { WineryView } from "./pages/Winery/WineryView/WineryView";
 import { WinerySearch } from "./pages/Winery/WinerySearch/WinerySearch";
 import { MainState } from "./store/models/store.models";
+import { GET_WINE_KEYWORDS } from "./pages/Wine/store/types";
 
 // const WinePage = lazy(() =>
 //     import(/* webpackChunkName: wine */ './pages/Wine/WineView/WineView')
@@ -32,7 +33,7 @@ export function App() {
     (async () => {
       if (keywords) return;
       try {
-        const res = await wineService.getKeywords();
+        const res = await wineService[GET_WINE_KEYWORDS]();
         dispatch(setWinesKeywords(res));
       } catch (err) {
         console.error(err);

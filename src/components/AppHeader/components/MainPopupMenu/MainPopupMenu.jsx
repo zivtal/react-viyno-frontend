@@ -5,13 +5,16 @@ import { mediaQuery } from "../../AppHeader";
 import { tryRequire } from "../../../../services/require.service";
 import { toKebabCase } from "../../../../services/dev.service";
 import { MainState } from "../../../../store/models/store.models";
+import { WINE_KEYWORDS } from "../../../../pages/Wine/store/types";
 
 export function MainPopupMenu(props) {
   const rtl = document.dir === "rtl";
   const { config, close } = props;
   const history = useHistory();
   const el = useRef(null);
-  const { keywords } = useSelector((state: MainState) => state.wineModule);
+  const { [WINE_KEYWORDS]: keywords } = useSelector(
+    (state: MainState) => state.wineModule
+  );
   const [tables, setTables] = useState({});
 
   const _generateMenu = (data, section, add, folder) => {
@@ -34,7 +37,10 @@ export function MainPopupMenu(props) {
   };
 
   useEffect(() => {
-    if (!keywords) return;
+    if (!keywords) {
+      return;
+    }
+
     setTables({
       wines: [
         [
@@ -104,7 +110,9 @@ export function MainPopupMenu(props) {
     });
   }, [keywords]);
 
-  if (!config) return null;
+  if (!config) {
+    return null;
+  }
 
   const isMobile = window.innerWidth < mediaQuery.mobile;
 

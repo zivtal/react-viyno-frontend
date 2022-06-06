@@ -13,28 +13,50 @@ import { WineKeywordsReq, Wine, WineQuery } from "../models/wine.model";
 import { BaseRecords } from "../../../shared/models/base-records.model";
 
 export const wineService = {
-  getKeywords,
-  searchWines,
-  getWines,
-  getWine,
-  getWineUpdate,
-  addWine,
+  [GET_WINE]: (id: string, queries: any): Promise<Wine> => {
+    return httpService.get(BASE_API + GET_WINE + "/" + id, null, queries);
+  },
+
+  [SEARCH_WINES]: (queries?: WineQuery): Promise<BaseRecords<Wine>> => {
+    queries = _clearEmptyQueries(queries);
+
+    return httpService.get(BASE_API + SEARCH_WINES, null, queries);
+  },
+
+  [GET_WINES]: (queries?: WineQuery): Promise<BaseRecords<Wine>> => {
+    queries = _clearEmptyQueries(queries);
+
+    return httpService.get(BASE_API + GET_WINES, null, queries);
+  },
+
+  [GET_WINE_KEYWORDS]: (queries?: WineKeywordsReq) => {
+    queries = _clearEmptyQueries(queries);
+
+    return httpService.get(BASE_API + GET_WINE_KEYWORDS, null, queries);
+  },
+
+  [ADD_WINE]: (wine: Wine) => {
+    return httpService.post(BASE_API + ADD_WINE, wine);
+  },
 };
 
 const BASE_API = "wine/";
 
-const _cleanUpEmptyFields = (obj: {}) =>
-  Object.entries(obj).reduce((q: any, p: any) => {
+const _cleanUpEmptyFields = (obj: {}) => {
+  const typeOf = (obj: any): any => Object.prototype.toString.call(obj);
+
+  return Object.entries(obj).reduce((q: any, p: any) => {
     const key = p[0];
     const val = p[1];
-    if (typeOf(val) !== "Object" || Object.values?.length)
+    if (typeOf(val) !== "[object Object]" || Object.values?.length)
       q = { ...q, [key]: val };
 
     return q;
   }, {});
+};
 
-const _cleanUpEmptyEntries = (obj: {}): any =>
-  Object.fromEntries(
+const _cleanUpEmptyEntries = (obj: {}): any => {
+  return Object.fromEntries(
     Object.entries(obj).flatMap(([key, value]: any) =>
       String(value) !== "[object Object]"
         ? [[key, value]]
@@ -42,6 +64,7 @@ const _cleanUpEmptyEntries = (obj: {}): any =>
           Object.keys(value).length > 0 ? [[key, value]] : [])
     )
   );
+};
 
 function _clearEmptyQueries(queries: any) {
   if (!queries) {
@@ -51,33 +74,7 @@ function _clearEmptyQueries(queries: any) {
   return _cleanUpEmptyEntries(_cleanUpEmptyFields(queries));
 }
 
-async function getKeywords(queries?: WineKeywordsReq) {
-  queries = _clearEmptyQueries(queries);
-
-  return httpService.get(BASE_API + GET_WINE_KEYWORDS, null, queries);
-}
-
-async function searchWines(queries?: WineQuery): Promise<BaseRecords<Wine>> {
-  queries = _clearEmptyQueries(queries);
-
-  return httpService.get(BASE_API + SEARCH_WINES, null, queries);
-}
-
-async function getWines(queries?: WineQuery): Promise<BaseRecords<Wine>> {
-  queries = _clearEmptyQueries(queries);
-
-  return httpService.get(BASE_API + GET_WINES, null, queries);
-}
-
-async function getWine(id: string, queries: any): Promise<Wine> {
-  return httpService.get(BASE_API + GET_WINE + "/" + id, null, queries);
-}
-
 async function getWineUpdate(queries?: WineQuery): Promise<BaseRecords<Wine>> {
   queries = _clearEmptyQueries(queries);
   return httpService.get(BASE_API + GET_WINES, null, queries);
-}
-
-async function addWine(wine: Wine) {
-  return httpService.post(BASE_API + ADD_WINE, wine);
 }

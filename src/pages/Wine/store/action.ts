@@ -14,6 +14,8 @@ import {
   WINES,
   WINES_CACHE,
   ADD_WINE_CACHE,
+  GET_WINES,
+  GET_WINE,
 } from "./types";
 import { CLEAR_WINE_REVIEWS } from "../../UserFeed/store/types";
 import { Pagination } from "../../../shared/models/pagination";
@@ -67,7 +69,7 @@ export const getWines = () => {
 
     try {
       dispatch({ type: SET_WINES_LOADING, loading: true });
-      const wines = await wineService.getWines({ filter, sort, page });
+      const wines = await wineService[GET_WINES]({ filter, sort, page });
       dispatch({ type: SET_WINES, [WINES]: wines });
     } catch (err) {
       console.error(err);
@@ -90,7 +92,7 @@ export const getWine = (id: string, vintage?: number) => {
     try {
       dispatch({ type: SET_WINES_LOADING, loading: true });
       dispatch({ type: CLEAR_WINE_REVIEWS });
-      const wine = await wineService.getWine(id, { vintage });
+      const wine = await wineService[GET_WINE](id, { vintage });
       dispatch({ type: ADD_WINE_CACHE, wine });
     } catch (err) {
       console.error(err);

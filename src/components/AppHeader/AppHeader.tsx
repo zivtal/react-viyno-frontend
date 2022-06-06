@@ -12,6 +12,7 @@ import {
 } from "../CustomInput/CustomInput";
 import { wineService } from "../../pages/Wine/service/wine.service";
 import { tryRequire } from "../../services/require.service";
+import { SEARCH_WINES } from "../../pages/Wine/store/types";
 
 export const mediaQuery = { mobile: 540 };
 
@@ -47,7 +48,7 @@ export function AppHeader(): JSX.Element | null {
 
     (async () => {
       try {
-        const wines = await wineService.searchWines({
+        const wines = await wineService[SEARCH_WINES]({
           filter: { search: value },
         });
 

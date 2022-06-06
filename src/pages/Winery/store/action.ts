@@ -3,6 +3,7 @@ import { getCurrentPosition } from "../../../services/util.service";
 import { wineryService } from "../service/winery.service";
 import {
   ADD_WINERY_CACHE,
+  GET_WINERIES,
   GET_WINERY,
   SET_WINERIES,
   SET_WINERIES_LOADING,
@@ -47,7 +48,11 @@ export function getWineries() {
 
     try {
       dispatch({ type: SET_WINERIES_LOADING, loading: true });
-      const wineries = await wineService.getWines({ filter, sort, page });
+      const wineries = await wineryService[GET_WINERIES]({
+        filter,
+        sort,
+        page,
+      });
       dispatch({ type: SET_WINERIES, ...wineries });
     } catch (err) {
       console.error(err);

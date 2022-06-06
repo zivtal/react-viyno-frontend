@@ -205,8 +205,6 @@ export function CustomInput(props: CustomInputProps): JSX.Element {
             />
           ) : null}
 
-          {JSON.stringify(props.items)}
-
           {props.type === CustomInputType.DROPDOWN &&
           isDropdownActive &&
           (data || []).length ? (

@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { wineService } from "../../../service/wine.service";
 import { debounce } from "../../../../../services/debounce.service";
 import { toKebabCase } from "../../../../../services/dev.service";
+import { GET_WINE_KEYWORDS } from "../../../store/types";
 
 export const EditMultiSelect = ({
   data,
@@ -25,7 +26,7 @@ export const EditMultiSelect = ({
   useLayoutEffect(() => {
     if (db) return;
     (async () => {
-      const res = await wineService.getKeywords({ section: input });
+      const res = await wineService[GET_WINE_KEYWORDS]({ section: input });
       if (res) {
         setDb(res);
         setOutput(res.find((db) => db.seo === data[input])?.name || output);

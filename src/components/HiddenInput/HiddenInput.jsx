@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { wineService } from "../../pages/Wine/service/wine.service";
 import { setWineSection } from "../../pages/Wine/store/action";
 import { debounce } from "../../services/debounce.service";
+import { GET_WINE_KEYWORDS } from "../../pages/Wine/store/types";
 
 export const HiddenInput = ({
   data,
@@ -40,7 +41,7 @@ export const HiddenInput = ({
   useLayoutEffect(() => {
     (async () => {
       try {
-        const res = await wineService.getKeywords({
+        const res = await wineService[GET_WINE_KEYWORDS]({
           section: input,
         });
         if (res) {

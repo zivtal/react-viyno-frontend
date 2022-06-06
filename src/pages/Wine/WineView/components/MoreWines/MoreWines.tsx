@@ -4,6 +4,7 @@ import { WineSlider } from "../WineSlider/WineSlider";
 import { Loader } from "../../../../../components/Loader/Loader";
 import { BaseProps } from "../../../../../shared/models/base-props";
 import { Wine } from "../../../models/wine.model";
+import { GET_WINES } from "../../../store/types";
 
 interface Props extends BaseProps {
   title?: string;
@@ -23,7 +24,7 @@ export function MoreWines(props: Props): JSX.Element {
 
     (async () => {
       try {
-        const res = await wineService.getWines({
+        const res = await wineService[GET_WINES]({
           filter: {
             eqCountry: props.wine?.country,
             eqWinery: props.wine?.winery,

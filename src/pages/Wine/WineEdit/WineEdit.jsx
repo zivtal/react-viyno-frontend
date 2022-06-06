@@ -17,7 +17,7 @@ import {
 } from "../../../services/media/media.service";
 import "./WineEdit.scss";
 import { MainState } from "../../../store/models/store.models";
-import { WINE_SECTIONS } from "../store/types";
+import { ADD_WINE, GET_WINE_KEYWORDS, WINE_SECTIONS } from "../store/types";
 import { WineSections } from "../models/wine.model";
 
 export const WineEdit = (props) => {
@@ -56,7 +56,7 @@ export const WineEdit = (props) => {
     if (seo) {
       (async () => {
         try {
-          const style = await wineService.getKeywords({
+          const style = await wineService[GET_WINE_KEYWORDS]({
             section: "style",
             seo,
           });
@@ -108,7 +108,7 @@ export const WineEdit = (props) => {
   };
 
   const onSubmit = async () => {
-    const res = await wineService.addWine(edit);
+    const res = await wineService[ADD_WINE](edit);
     history.push(`/wine/${toKebabCase(`${res?.winery} ${res?.name}`)}`);
   };
 

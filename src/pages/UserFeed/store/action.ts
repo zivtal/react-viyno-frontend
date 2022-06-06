@@ -82,19 +82,18 @@ export function setPostReaction(id: number, state: number | boolean) {
   };
 }
 
-export function getMyReviews() {
+export function getMyReviews(id?: string | number) {
   return async (dispatch: Function, state: Function) => {
     const user = state().authModule.user;
-    const wineId = state().wineModule.wine?._id;
 
-    if (!wineId || !user) {
+    if (!id || !user) {
       dispatch({ type: SET_MY_REVIEWS, [MY_REVIEWS]: [] });
       return;
     }
 
     try {
       dispatch({ type: SET_POST_STATE_LOADING, loading: true });
-      const res = await postService[GET_MY_REVIEWS](wineId, {
+      const res = await postService[GET_MY_REVIEWS](id, {
         sort: { createdAt: 0 },
       });
       dispatch({ type: SET_MY_REVIEWS, [MY_REVIEWS]: res });
@@ -106,12 +105,15 @@ export function getMyReviews() {
   };
 }
 
-export function getRecentReviews(vintage?: number, force?: boolean) {
+export function getRecentReviews(
+  id?: string | number,
+  vintage?: number,
+  force?: boolean
+) {
   return async (dispatch: Function, state: Function) => {
-    const wineId = state().wineModule.wine?._id;
     const queries = vintage ? { filter: { eqVintage: vintage } } : {};
 
-    if (!wineId) {
+    if (!id) {
       dispatch({ type: SET_RECENT_REVIEWS, [RECENT_REVIEWS]: [] });
       return;
     }
@@ -122,7 +124,7 @@ export function getRecentReviews(vintage?: number, force?: boolean) {
 
     try {
       dispatch({ type: SET_POST_STATE_LOADING, loading: true });
-      const res = await postService[GET_RECENT_REVIEWS](wineId, {
+      const res = await postService[GET_RECENT_REVIEWS](id, {
         ...queries,
         page: { index: index !== undefined ? index + 1 : 0 },
         sort: { createdAt: 0 },
@@ -136,12 +138,15 @@ export function getRecentReviews(vintage?: number, force?: boolean) {
   };
 }
 
-export function getHelpfulReviews(vintage?: number, force?: boolean) {
+export function getHelpfulReviews(
+  id?: string | number,
+  vintage?: number,
+  force?: boolean
+) {
   return async (dispatch: Function, state: Function) => {
-    const wineId = state().wineModule.wine?._id;
     const queries = vintage ? { filter: { eqVintage: vintage } } : {};
 
-    if (!wineId) {
+    if (!id) {
       dispatch({ type: SET_HELPFUL_REVIEWS, [HELPFUL_REVIEWS]: [] });
       return;
     }
@@ -152,7 +157,7 @@ export function getHelpfulReviews(vintage?: number, force?: boolean) {
 
     try {
       dispatch({ type: SET_POST_STATE_LOADING, loading: true });
-      const res = await postService[GET_HELPFUL_REVIEWS](wineId, {
+      const res = await postService[GET_HELPFUL_REVIEWS](id, {
         ...queries,
         page: { index: index !== undefined ? index + 1 : 0 },
         sort: { createdAt: 0 },

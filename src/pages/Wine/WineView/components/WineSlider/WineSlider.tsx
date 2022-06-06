@@ -85,7 +85,7 @@ export const WineSlider = (props: Props) => {
   const backEnabled = () =>
     rtl ? (data?.length || 8) > position * itemPerPage + itemPerPage : position;
 
-  return (
+  return loading || data?.length ? (
     <>
       <SliderTitle title={props.title} />
 
@@ -127,5 +127,5 @@ export const WineSlider = (props: Props) => {
         </div>
       </div>
     </>
-  );
+  ):null;
 };

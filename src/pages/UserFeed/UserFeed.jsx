@@ -96,7 +96,7 @@ export const UserFeed = () => {
       }
     };
 
-    const data = !props.loading ? props.reviews : Array(8).fill(REVIEW_DEMO);
+    const data = !props.loading ? props?.reviews || [] : Array(8).fill(REVIEW_DEMO);
 
     return (
       <section className="user-feed">
@@ -131,10 +131,10 @@ export const UserFeed = () => {
 
       <Loader if={postsLoading && !posts.data.length} type="overlay-skeleton">
         <UserFeed
-          reviews={posts.data}
+          reviews={posts?.data}
           activeId={postActiveId}
           setActiveId={setPostActiveId}
-          loading={!posts.data?.length}
+          loading={!posts?.data?.length && postsLoading}
         />
       </Loader>
 

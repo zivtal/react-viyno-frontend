@@ -92,7 +92,7 @@ export const getWine = (id: string, vintage: number) => {
       dispatch({ type: SET_WINES_LOADING, loading: true });
       dispatch({ type: CLEAR_WINE_REVIEWS });
       const wine = await wineService.getWine(id, { vintage });
-      dispatch({ type: ADD_WINE_CACHE, [WINE]: wine });
+      dispatch({ type: ADD_WINE_CACHE, wine });
     } catch (err) {
       console.error(err);
     } finally {

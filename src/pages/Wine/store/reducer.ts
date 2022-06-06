@@ -33,7 +33,6 @@ interface ReducerAction {
 }
 
 export interface PostState {
-  [WINE]: Wine | null;
   [WINES]: Array<Wine>;
   [WINES_FILTER]: BaseFilter;
   [WINES_SORT]: BaseSort;
@@ -46,7 +45,6 @@ export interface PostState {
 }
 
 const INITIAL_STATE: PostState = {
-  [WINE]: null,
   [WINES]: [],
   [WINES_FILTER]: {},
   [WINES_SORT]: {},
@@ -142,7 +140,7 @@ export default (state: PostState = INITIAL_STATE, action: ReducerAction) => {
     case ADD_WINE_CACHE: {
       return {
         ...state,
-        [WINES_CACHE]: [action[WINE], ...state[WINES_CACHE]].slice(0, 20),
+        [WINES_CACHE]: [action.wine, ...state[WINES_CACHE]].slice(0, 20),
       };
     }
 

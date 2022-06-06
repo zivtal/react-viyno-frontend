@@ -134,7 +134,6 @@ export const UserFeed = () => {
           reviews={posts?.data}
           activeId={postActiveId}
           setActiveId={setPostActiveId}
-          loading={!posts?.data?.length && postsLoading}
         />
       </Loader>
 

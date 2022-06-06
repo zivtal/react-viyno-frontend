@@ -121,6 +121,7 @@ export const WineEdit = (props) => {
           <div className="picture">
             <label>
               <input type="file" onChange={upload} accept="image/*" hidden />
+
               <img
                 ref={img}
                 src={
@@ -131,6 +132,7 @@ export const WineEdit = (props) => {
               {!edit.base64ImageLarge ? <span>UPLOAD IMAGE</span> : null}
             </label>
           </div>
+
           <div className="wine-content">
             <HiddenInput
               className="winery"
@@ -140,6 +142,7 @@ export const WineEdit = (props) => {
               set={(value, input) => setEdit({ ...edit, [input]: value })}
               placeholder="winery name"
             />
+
             <HiddenInput
               data={edit}
               input="name"
@@ -147,6 +150,7 @@ export const WineEdit = (props) => {
               placeholder="wine name"
               duplicate={false}
             />
+
             <HiddenInput
               data={edit}
               database={database["country"]}
@@ -155,6 +159,7 @@ export const WineEdit = (props) => {
               placeholder="country"
               duplicate={true}
             />
+
             <HiddenInput
               data={edit}
               database={database["region"]}
@@ -163,6 +168,7 @@ export const WineEdit = (props) => {
               placeholder="region"
               duplicate={true}
             />
+
             <HiddenInput
               data={edit}
               database={database["style"]}
@@ -172,12 +178,14 @@ export const WineEdit = (props) => {
               placeholder="wine style"
               duplicate={true}
             />
+
             <EditMultiSelect
               data={edit}
               input="grapes"
               set={(value, input) => setEdit({ ...edit, [input]: value })}
               placeholder="Select grapes"
             />
+
             <EditMultiSelect
               data={edit}
               input="pairings"
@@ -187,7 +195,9 @@ export const WineEdit = (props) => {
           </div>
         </div>
       </form>
+
       <ScaleRate wine={edit} set={(scale) => setEdit({ ...edit, ...scale })} />
+
       <div className="wine-edit__controls">
         <button onClick={onSubmit}>Save</button>
       </div>

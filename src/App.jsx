@@ -4,7 +4,7 @@ import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch, useSelector } from "react-redux";
 import { wineService } from "./pages/Wine/service/wine.service";
-import { setKeywords } from "./pages/Wine/store/action";
+import { setWinesKeywords } from "./pages/Wine/store/action";
 import "./styles/global.scss";
 
 import { AppHeader } from "./components/AppHeader/AppHeader";
@@ -32,7 +32,7 @@ export function App() {
       if (keywords) return;
       try {
         const res = await wineService.getKeywords();
-        dispatch(setKeywords(res));
+        dispatch(setWinesKeywords(res));
       } catch (err) {
         console.error(err);
       }

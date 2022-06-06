@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import useInfinityScroll from "../../../shared/hooks/useInfinityScroll";
 import { useDispatch, useSelector } from "react-redux";
 import { WineCardPreview } from "../WineView/components/WinesPreview/WineCardPreview";
-import { setFilter, setPagination, getWines } from "../store/action";
+import { setWinesFilter, setWinesPagination, getWines } from "../store/action";
 import { WineFilters } from "./components/WineFilters/WineFilters";
 import { FilterSelection } from "../../../components/AdvancedSearchFilter/components/FilterSelection/FilterSelection";
 import { FilterQuickSort } from "../../../components/AdvancedSearchFilter/components/FilterQuickSort/FilterQuickSort";
@@ -30,7 +30,7 @@ export const WineSearch = (props) => {
 
   useInfinityScroll(
     async () => {
-      dispatch(setPagination({ index: page.index + 1 }));
+      // dispatch(setWinesPagination({ index: page.index + 1 }));
       dispatch(getWines());
     },
     [wines],
@@ -42,7 +42,7 @@ export const WineSearch = (props) => {
   useEffect(() => {
     if (!keywords) return;
     dispatch(
-      setFilter(
+      setWinesFilter(
         Object.values(keywords.query).reduce(
           (obj, cKey) =>
             (obj = {

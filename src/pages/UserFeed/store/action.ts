@@ -15,7 +15,6 @@ import {
   SET_HELPFUL_REVIEWS,
   HELPFUL_REVIEWS,
   GET_HELPFUL_REVIEWS,
-  CLEAR_WINE_REVIEWS,
 } from "./types";
 import { BaseQueries } from "../../../shared/models/base-queries";
 import { Post } from "../models/post";

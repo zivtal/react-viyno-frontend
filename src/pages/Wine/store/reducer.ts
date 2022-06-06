@@ -2,7 +2,7 @@ import {
   SET_WINES_FILTER,
   SET_WINE_KEYWORDS,
   SET_WINES,
-  SET_WINE_SORT,
+  SET_WINES_SORT,
   SET_WINE_SECTION,
   ADD_WINE,
   REMOVE_WINE,
@@ -23,6 +23,7 @@ import { BaseSort } from "../../../shared/models/base-sort";
 import { BaseFilter } from "../../../shared/models/base-filter";
 import { WineSections } from "../models/wine.models";
 import { Pagination } from "../../../shared/models/pagination";
+import { WINERIES_SORT } from "../../Winery/store/types";
 
 interface ReducerAction {
   type: string;
@@ -78,29 +79,37 @@ export default (state: PostState = INITIAL_STATE, action: ReducerAction) => {
     }
 
     case SET_WINES_FILTER: {
+      const isChanged =
+        JSON.stringify(action[WINES_FILTER]) !==
+        JSON.stringify(state[WINES_FILTER]);
+
       return {
         ...state,
         [WINES_FILTER]: action[WINES_FILTER] || INITIAL_STATE[WINES_FILTER],
-        [WINES]:
-          JSON.stringify(action[WINES_FILTER]) ===
-          JSON.stringify(state[WINES_FILTER])
-            ? state[WINES]
-            : [],
+        [WINES]: isChanged ? INITIAL_STATE[WINES] : state[WINES],
+        page: isChanged ? INITIAL_STATE.page : state.page,
+        total: isChanged ? INITIAL_STATE.total : state.total,
       };
     }
 
-    case SET_WINE_SORT: {
+    case SET_WINES_SORT: {
+      const isChanged =
+        JSON.stringify(action[WINES_SORT]) !==
+        JSON.stringify(state[WINES_SORT]);
+
       return {
         ...state,
         [WINES_SORT]: action[WINES_SORT] || INITIAL_STATE[WINES_SORT],
-        [WINES]: [],
+        [WINES]: isChanged ? INITIAL_STATE[WINES] : state[WINES],
+        page: isChanged ? INITIAL_STATE.page : state.page,
+        total: isChanged ? INITIAL_STATE.total : state.total,
       };
     }
 
     case SET_WINES: {
       return {
         ...state,
-        [WINES]: [...(state[WINES] || []), ...action[WINES]?.data],
+        [WINES]: [...state[WINES], ...action[WINES]?.data],
         page: { ...(action[WINES]?.page || {}) },
         total: action[WINES].total,
       };

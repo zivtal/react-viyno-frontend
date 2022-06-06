@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSortBy } from "../../../../pages/Wine/store/action";
+import { setWinesSort } from "../../../../pages/Wine/store/action";
 import { MainState } from "../../../../store/models/store.models";
 import { BaseSort } from "../../../../shared/models/base-sort";
 
@@ -77,17 +77,17 @@ export const FilterQuickSort = () => {
     const sorting = sort[type];
 
     if (sorting == null) {
-      dispatch(setSortBy({ ...sort, [type]: 0 }));
+      dispatch(setWinesSort({ ...sort, [type]: 0 }));
       return;
     }
     if (sorting == 0) {
-      dispatch(setSortBy({ ...sort, [type]: 1 }));
+      dispatch(setWinesSort({ ...sort, [type]: 1 }));
       return;
     }
 
     const reSort = sort;
     delete reSort[type];
-    dispatch(setSortBy(reSort));
+    dispatch(setWinesSort(reSort));
   };
 
   return (

@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { setFilter } from "../../../store/action";
+import { setWinesFilter } from "../../../store/action";
 import { tryRequire } from "../../../../../services/require.service";
 import { Loader } from "../../../../../components/Loader/Loader";
 
@@ -16,7 +16,7 @@ export const WinePairings = (props) => {
         (val) => val.seo === seo
       )?.name;
       const goTo = () => {
-        dispatch(setFilter({ inPairings: seo }));
+        dispatch(setWinesFilter({ inPairings: seo }));
         history.push(`/wine?pairings=${seo}`);
       };
 

@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { wineService } from "../../pages/Wine/service/wine.service";
-import { setSection } from "../../pages/Wine/store/action";
+import { setWineSection } from "../../pages/Wine/store/action";
 import { debounce } from "../../services/debounce.service";
 
 export const HiddenInput = ({
@@ -44,7 +44,7 @@ export const HiddenInput = ({
           section: input,
         });
         if (res) {
-          dispatch(setSection({ [input]: res }));
+          dispatch(setWineSection({ [input]: res }));
         }
       } catch (err) {
         console.error(err);

@@ -3,7 +3,7 @@ import {
   SET_WINES_FILTER,
   SET_WINE_KEYWORDS,
   SET_WINES,
-  SET_WINE_SORT,
+  SET_WINES_SORT,
   SET_WINE_SECTION,
   SET_WINE,
   SET_WINES_PAGINATION,
@@ -21,13 +21,13 @@ import { BaseFilter } from "../../../shared/models/base-filter";
 import { BaseSort } from "../../../shared/models/base-sort";
 import { WineKeywordsReq } from "../models/wine.models";
 
-export const setPagination = (pagination: Pagination) => {
+export const setWinesPagination = (pagination: Pagination) => {
   return (dispatch: Function) => {
     dispatch({ type: SET_WINES_PAGINATION, pagination });
   };
 };
 
-export const setFilter = (filter: BaseFilter) => {
+export const setWinesFilter = (filter: BaseFilter) => {
   return (dispatch: Function) => {
     filter = Object.fromEntries(
       Object.entries(filter).filter(([key, val]) => val)
@@ -36,22 +36,22 @@ export const setFilter = (filter: BaseFilter) => {
   };
 };
 
-export const setSortBy = (sort: BaseSort) => {
+export const setWinesSort = (sort: BaseSort) => {
   return (dispatch: Function) => {
     sort = Object.fromEntries(
       Object.entries(sort).filter(([key, val]) => val !== null)
     );
-    dispatch({ type: SET_WINE_SORT, [WINES_SORT]: sort });
+    dispatch({ type: SET_WINES_SORT, [WINES_SORT]: sort });
   };
 };
 
-export const setKeywords = (keywords?: WineKeywordsReq) => {
+export const setWinesKeywords = (keywords?: WineKeywordsReq) => {
   return (dispatch: Function) => {
     dispatch({ type: SET_WINE_KEYWORDS, [WINE_KEYWORDS]: keywords });
   };
 };
 
-export const setSection = (section?: { [key: string]: string }) => {
+export const setWineSection = (section?: { [key: string]: string }) => {
   return (dispatch: Function) => {
     dispatch({ type: SET_WINE_SECTION, [WINE_SECTIONS]: section });
   };
@@ -60,6 +60,11 @@ export const setSection = (section?: { [key: string]: string }) => {
 export const getWines = () => {
   return async (dispatch: Function, state: Function) => {
     const { filter, sort, page } = state().wineModule;
+
+    if (page.index !== undefined) {
+      page.index++;
+    }
+
     try {
       dispatch({ type: SET_WINES_LOADING, loading: true });
       const wines = await wineService.getWines({ filter, sort, page });

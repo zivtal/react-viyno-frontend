@@ -14,3 +14,8 @@ export interface Winery {
   ratings?: number;
   wines?: number;
 }
+
+export interface WineryQuery {
+  lat?: number;
+  lng?: number;
+}

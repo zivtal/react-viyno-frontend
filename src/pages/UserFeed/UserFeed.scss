@@ -1,0 +1,319 @@
+@import "/src/styles/setup/variables.scss";
+@import "/src/styles/setup/functions.scss";
+@import "/src/styles/setup/mixins.scss";
+
+@import "components/PostEditor/PostEditor";
+
+.user-feed {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 24px 10px;
+
+  > * {
+    width: 100%;
+  }
+
+  h1 {
+    font-size: 1.25em;
+  }
+
+  .review-card {
+    display: flex;
+
+    .bottle-image {
+      object-fit: contain;
+      max-height: 150px;
+      padding: 0 16px 0 0;
+    }
+  }
+
+  .user-quick-post {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: $clrwht;
+
+    form {
+      // padding: 25px 25px 0 25px;
+      display: flex;
+      flex-direction: column;
+
+      .community-attachments.edit-mode {
+        padding: 0;
+      }
+
+      > label {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+
+        span {
+          font-weight: 700;
+        }
+
+        &:not(:last-child) {
+          background-color: white;
+          border-radius: $frmrad;
+          overflow: hidden;
+        }
+
+        &:last-child {
+          gap: 8px;
+        }
+
+        input,
+        textarea {
+          border: 0;
+          outline: none;
+          width: 100%;
+        }
+
+        textarea {
+          padding: $frmrad;
+          resize: none;
+          height: 140px;
+        }
+      }
+
+      > :last-child {
+        position: relative;
+        top: -20px;
+        display: flex;
+        gap: 6px;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.95em;
+
+        :last-child {
+          position: relative;
+          display: flex;
+
+          > label {
+            position: relative;
+            bottom: 10px;
+
+            p {
+              top: -4px;
+              position: relative;
+              opacity: 0.5;
+            }
+
+            img {
+              cursor: pointer;
+              width: 16px;
+              opacity: 0.3;
+              transition: 0.3s;
+
+              &:hover {
+                opacity: 1;
+              }
+            }
+
+            &:last-child {
+              padding: 0 8px 0 0;
+            }
+          }
+        }
+      }
+    }
+
+    button {
+      position: relative;
+      top: 7px;
+      margin: 0 12px;
+      padding: 3px 8px 4px 8px;
+      // position: relative;
+      align-self: flex-end;
+      max-width: fit-content;
+      // top: -16px;
+    }
+  }
+}
+
+.wine-review {
+  .wine-review-title {
+    width: 100%;
+
+    h1 {
+      width: 100%;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      font-size: 1.125em;
+
+      @include from-tablet-layout {
+        font-size: 1.5em;
+      }
+    }
+  }
+
+  .review-card {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 8px;
+    flex-wrap: wrap;
+    background-color: $clrwht;
+    width: 100%;
+
+    @include for-mobile-layout {
+      padding: 16px 16px;
+    }
+
+    @include from-tablet-layout {
+      // flex-direction: row-reverse;
+      padding: 32px 24px;
+    }
+
+    .review-content {
+      display: flex;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+
+    .community-attachments {
+      padding: 0;
+      // @include from-tablet-layout {
+      //   flex: 1;
+      // }
+    }
+
+    .user-rating {
+      color: $clr1;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+
+      > * {
+        padding: 4px 8px;
+        border-radius: 24px;
+        background-color: $clr4;
+
+        .review-rate-title {
+          display: inline-block;
+          font-weight: 700;
+        }
+
+        img {
+          position: relative;
+          max-height: 14px;
+        }
+
+        &.review-vintage {
+          display: inline-block;
+          font-weight: 700;
+          text-decoration: none;
+        }
+      }
+    }
+
+    .review-desc {
+      line-height: 1.875em;
+      padding: 0 8px;
+      width: 100%;
+
+      @include for-mobile-layout {
+        font-size: 1.25em;
+      }
+
+      @include from-tablet-layout {
+        font-size: 1.5em;
+      }
+    }
+
+    .wine-card-preview {
+      max-width: 150px;
+      border: 0;
+      box-shadow: none;
+
+      img {
+        max-height: 200px;
+      }
+    }
+  }
+
+  .user-reply {
+    padding: 12px;
+
+    img {
+      align-self: flex-start;
+      max-height: 32px;
+      border-radius: 50%;
+      margin-inline-end: 10px;
+    }
+  }
+  .review-user {
+    display: flex;
+    padding: 8px 8px 16px;
+
+    @include for-mobile-layout {
+      font-size: 0.875em;
+    }
+
+    @include from-tablet-layout {
+      font-size: 1em;
+    }
+
+    .community-user-info {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      // max-height: 42px;
+      justify-content: flex-start;
+
+      img {
+        max-height: 2rem;
+        background-color: #dfe5e4;
+        background-size: cover;
+        border-radius: 50%;
+      }
+
+      p {
+        display: flex;
+        text-align: start;
+        color: #8e041a;
+        // line-height: 24px;
+        font-weight: 600;
+
+        > * {
+          margin: 0 0 0 4px;
+        }
+
+        span.user-fullname {
+          font-size: 1em;
+
+          @include from-tablet-layout {
+            font-size: 1.25em;
+          }
+        }
+
+        span.user-ratings {
+          font-size: 0.875em;
+
+          @include for-mobile-layout {
+            display: none;
+          }
+        }
+
+        span.post-date {
+          color: $clrblk;
+          font-weight: 400;
+        }
+      }
+
+      .date {
+        font-size: 1em;
+      }
+    }
+  }
+
+  .review-comments {
+    padding: 0 16px;
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    top: -13px;
+    height: max-content;
+    gap: 8px;
+  }
+}

@@ -1,0 +1,33 @@
+.close-icon {
+  position: absolute;
+  z-index: 100;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+
+  &:hover .close-icon__line-right,
+  &:hover .close-icon__line-left {
+    transform: rotate(-45deg);
+    background-color: var(--base-color1) !important;
+  }
+
+  &:hover .close-icon__line-left {
+    transform: rotate(45deg);
+  }
+
+  &__line-right,
+  &__line-left {
+    height: 2px;
+    width: 16px;
+    position: absolute;
+    margin-top: 10px;
+    background-color: var(--base-dark1);
+    border-radius: 5px;
+    transform: rotate(45deg);
+    transition: all 0.3s ease-in;
+  }
+
+  &__line-left {
+    transform: rotate(-45deg);
+  }
+}

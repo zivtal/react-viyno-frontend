@@ -1,0 +1,33 @@
+[
+  {
+    "language": "en",
+    "wine": "wine",
+    "wines": "wines",
+    "light": "light",
+    "bold": "bold",
+    "smooth": "smooth",
+    "tannic": "tannic",
+    "dry": "dry",
+    "sweet": "sweet",
+    "acidic": "acidic",
+    "soft": "soft",
+    "beef": "beef",
+    "veal": "veal",
+    "game": "game",
+    "pasta": "pasta",
+
+    "taste-header": "What does this wine taste like?",
+    "taste-subheader": "members taste summary",
+
+    "pairings-header": "Food that goes well with this wine",
+    "pairings-desc": "Our team of wine experts thinks this $1 would be a perfect match with these dishes.",
+
+    "reviews-header": "community reviews",
+    "helpful": "helpful",
+    "recent:": "recent",
+    "you": "you"
+  },
+  {
+    "language": "he"
+  }
+]

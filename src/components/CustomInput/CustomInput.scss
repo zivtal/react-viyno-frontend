@@ -1,0 +1,95 @@
+@import "/src/styles/setup/variables.scss";
+@import "/src/styles/setup/functions.scss";
+@import "/src/styles/setup/mixins.scss";
+
+@import "./components/Suggestions/Suggestions.scss";
+
+.custom-input {
+  &__field {
+    position: relative;
+    flex: 1;
+    border: 1px solid var(--base-background);
+    border-radius: 3em;
+    display: flex;
+    max-width: calc(100% - 40px);
+    background-color: $clrwht;
+
+    @include from-tablet-layout {
+      max-width: 300px;
+    }
+
+    > div:last-child {
+      min-width: 20px;
+    }
+  }
+
+  &__text-input {
+    position: relative;
+    flex-grow: 1;
+    height: 36px;
+
+    input {
+      height: 36px;
+      background: transparent;
+      outline: none;
+      border: 0;
+    }
+  }
+
+  &__dropdown {
+    padding-top: 1px;
+    padding-inline-end: 8px;
+    flex-basis: 20px;
+    opacity: 0.4;
+    transition: opacity 0.3s;
+
+    img {
+      transition: 0.5s;
+    }
+
+    &-open {
+      img {
+        transform: rotate(90deg);
+      }
+    }
+
+    &-close {
+      img {
+        transform: rotate(270deg);
+      }
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &__clear {
+    padding: 8px 0 8px 0;
+    flex-basis: 16px;
+    opacity: 0.4;
+    transition: opacity 0.3s;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &__icon,
+  &__loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    margin-inline-start: 6px;
+    padding: 4px;
+  }
+
+  &__icon {
+    img {
+      max-width: 16px;
+      max-height: 16px;
+      opacity: 0.5;
+    }
+  }
+}

@@ -1,0 +1,144 @@
+import { useEffect } from "react";
+import { useLayoutEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import { PostEditor } from "./components/PostEditor/PostEditor";
+import { PostPreview } from "./components/PostPreview/PostPreview";
+import { ReviewPreview } from "../Wine/WineView/components/WineCommunityReviews/components/ReviewPreview/ReviewPreview";
+import { WineSlider } from "../Wine/WineView/components/WineSlider/WineSlider";
+import { postServiceOld } from "./service/post.api-service";
+import { Loader } from "../../components/Loader/Loader";
+import { getPosts, getReplies } from "./store/action";
+import { getWines } from "../Wine/store/action";
+import { REVIEW_DEMO } from "../Wine/WineView/constants/wine";
+import { POSTS } from "./store/types";
+import { WINES } from "../Wine/store/types";
+import { MainState } from "../../store/models/store.models";
+import useInfinityScroll from "../../shared/hooks/useInfinityScroll";
+import "./UserFeed.scss";
+
+export const UserFeed = () => {
+  const location = useLocation();
+  const dispatch = useDispatch();
+
+  const user = useSelector((state: MainState) => state.authModule.user);
+
+  const { [WINES]: wines, loading: winesLoading } = useSelector(
+    (state: MainState) => state.wineModule
+  );
+
+  const { [POSTS]: posts, loading: postsLoading } = useSelector(
+    (state: MainState) => state.postModule
+  );
+
+  const [postActiveId, setPostActiveId] = useState(null);
+
+  const [feed, setFeed] = useState(null);
+
+  useLayoutEffect(() => {
+    if (wines?.length) {
+      return;
+    }
+
+    (async () => {
+      dispatch(getWines());
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (posts.data?.length) {
+      (async () => {
+        dispatch(
+          getPosts({ filter: { gtCreatedAt: posts.data[0].createdAt } })
+        );
+      })();
+
+      return;
+    }
+
+    (async () => {
+      dispatch(getPosts());
+    })();
+  }, [user]);
+
+  useInfinityScroll(
+    async () => {
+      dispatch(getPosts());
+    },
+    [posts.data],
+    posts.page?.index < posts.page?.total && location.pathname === "/"
+  );
+
+  useEffect(() => {
+    if (!postActiveId) {
+      return;
+    }
+
+    dispatch(getReplies(postActiveId));
+  }, [postActiveId]);
+
+  const UserFeed = (props) => {
+    const [saved, setSaved] = useState(null);
+
+    const submit = async (post, isSave) => {
+      if (isSave) {
+        setSaved(post);
+      }
+
+      if (!post.description && !post.attach) {
+        return;
+      }
+
+      try {
+        await postServiceOld.post(post._id, post, { type: "post" });
+      } catch (err) {
+        setSaved(post);
+      }
+    };
+
+    const data = !props.loading ? props.reviews : Array(8).fill(REVIEW_DEMO);
+
+    return (
+      <section className="user-feed">
+        <PostEditor onSubmit={submit} />
+
+        {(data || []).map((review, index) =>
+          review.wine ? (
+            <ReviewPreview
+              key={index}
+              review={review}
+              activeId={postActiveId}
+              setActiveId={setPostActiveId}
+            />
+          ) : (
+            <PostPreview
+              key={index}
+              post={review}
+              activeId={postActiveId}
+              setActiveId={setPostActiveId}
+            />
+          )
+        )}
+      </section>
+    );
+  };
+
+  return (
+    <>
+      <section className="story-line-wines">
+        <WineSlider wines={wines} loading={winesLoading} />
+      </section>
+
+      <Loader if={postsLoading && !posts.data.length} type="overlay-skeleton">
+        <UserFeed
+          reviews={posts.data}
+          activeId={postActiveId}
+          setActiveId={setPostActiveId}
+          loading={!posts.data?.length}
+        />
+      </Loader>
+
+      <Loader if={postsLoading} type="float-1" size={50} />
+    </>
+  );
+};

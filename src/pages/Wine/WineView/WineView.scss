@@ -1,0 +1,12 @@
+@import "/src/styles/setup/variables.scss";
+@import "/src/styles/setup/functions.scss";
+@import "/src/styles/setup/mixins.scss";
+
+@import "components/WineHeader/WineHeader";
+@import "components/MoreWines/MoreWines";
+@import "components/WinePairings/WinePairings";
+@import "components/TasteLike/TasteLike";
+@import "components/TastePreview/TastePreview";
+@import "components/WineCommunityReviews/WineCommunityReviews";
+@import "components/WineSlider/WineSlider";
+@import "components/WinesPreview/WineCardPreview";

@@ -1,0 +1,132 @@
+@import "/src/styles/setup/variables.scss";
+@import "/src/styles/setup/functions.scss";
+@import "/src/styles/setup/mixins.scss";
+
+.wine-edit {
+  &__header {
+    margin: 0 0 24px 0;
+    width: 100%;
+    background: #f7f3f0 linear-gradient(
+                    90deg,
+                    rgba(247, 243, 240, 1) 0%,
+                    rgba(247, 243, 240, 1) 80%,
+                    rgba(247, 243, 240, 0) 100%
+    );
+
+    .information {
+      display: flex;
+      align-items: flex-start;
+
+      &:hover > .picture > img {
+        transform: rotateZ(-1deg);
+      }
+
+      .picture {
+        label {
+          position: relative;
+          display: flex;
+          justify-content: center;
+          max-width: 208px;
+          img {
+            object-fit: cover;
+            object-position: center;
+            padding: 24px 12px;
+            height: 380px;
+            transition: transform 2s;
+          }
+          span {
+            font-size: 1.75em;
+            white-space: nowrap;
+            position: absolute;
+            color: white;
+            top: 64%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(89deg);
+          }
+        }
+      }
+
+      .wine-content {
+        padding: 48px 0 48px 8px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+
+        input {
+          display: inline-block;
+          border: 0;
+          margin: 12px 0 0 -8px;
+          background-color: transparent;
+          border-bottom: 2px solid transparent;
+          padding: 12px;
+
+          &.winery,
+          &.name {
+            font-size: 1.5em;
+            font-weight: 700;
+          }
+
+          &.name {
+            font-size: 1.75em;
+            font-weight: 700;
+          }
+
+          &.country,
+          &.region {
+            font-size: 1.25em;
+          }
+
+          &.empty:not(:focus) {
+            font-size: 1em;
+            border-bottom: 2px solid $clr3;
+          }
+
+          &:not(:focus, .empty) {
+            max-width: max-content;
+          }
+        }
+
+        button {
+          margin: 4px;
+          position: relative;
+          padding: 6px 8px;
+          border: 0;
+          min-width: 80px;
+          text-transform: capitalize;
+          color: $clrwht;
+          background-color: $clr1;
+
+          &.selected {
+            transition: color 0.3s, background-color 0.3s;
+            background-color: $clr2;
+            color: $clrwht;
+            // animation: flicker 0.2s 3 ease-in-out;
+          }
+
+          &.added {
+            padding: 6px 8px 6px 24px;
+
+            &::before {
+              position: absolute;
+              top: calc(50% - 6px);
+              left: 6px;
+              font-size: 12px;
+              padding: 0 0 0 4px;
+              content: "X";
+            }
+          }
+
+          &:hover {
+            background-color: $clr2;
+          }
+        }
+      }
+    }
+  }
+
+  &__controls {
+    padding: 24px 0;
+    display: flex;
+    justify-content: flex-end;
+  }
+}

@@ -1,0 +1,98 @@
+.custom-input {
+  &__suggestions {
+    top: 0;
+    position: absolute;
+    z-index: 100;
+    background-color: $clr4;
+    display: flex;
+    flex-direction: column;
+
+    @include for-mobile-layout {
+      width: calc(100% - 16px);
+      margin: 0 8px;
+    }
+
+    padding: 0 16px;
+    > ul {
+      display: flex;
+      flex-direction: column;
+      list-style-type: none;
+
+      li {
+        font-size: 1.2em;
+        padding: 12px 14px;
+        margin: 4px 0;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        &.selected {
+          background-color: red;
+        }
+
+        @include until-normal-layout {
+          padding: 2px;
+        }
+
+        @include from-normal-layout {
+          padding: 6px;
+        }
+
+        &.bold {
+          font-weight: 700;
+        }
+
+        img {
+          height: 48px;
+          transform: rotate(90deg);
+        }
+
+        .title {
+          width: 100%;
+          margin-inline-start: 32px;
+
+          p {
+            margin: 0;
+            padding: 0;
+            font-size: 0.8125em;
+            line-height: 1.25em;
+            max-width: calc(100% - 32px);
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+
+            span.bold {
+              color: $clr1;
+              font-weight: 700;
+            }
+          }
+        }
+      }
+    }
+
+    button {
+      margin-bottom: 16px;
+      width: 100%;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: -8px;
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-bottom: 8px solid $clr4;
+
+      @include from-tablet-layout {
+        margin-inline-start: 10px;
+      }
+
+      @include for-mobile-layout {
+        margin-inline-start: calc(50% - 16px);
+      }
+    }
+  }
+}

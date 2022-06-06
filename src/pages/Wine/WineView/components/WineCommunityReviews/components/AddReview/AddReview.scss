@@ -1,0 +1,129 @@
+@import "/src/styles/setup/mixins.scss";
+
+.wine-add-review {
+  border-radius: var(--base-raduis);
+  background: var(--base-background);
+  display: flex;
+  flex-direction: column;
+
+  @include from-tablet-layout {
+    width: 80vw;
+    max-width: calc(var(--breakpoint-desktop) - 200px);
+  }
+
+  @include until-tablet-layout {
+    width: calc(100% - 16px);
+  }
+
+  .close-btn {
+    cursor: pointer;
+    font-weight: 700;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25px;
+    width: 25px;
+    background-color: $clrwht;
+    border-radius: 50%;
+    right: 8px;
+    top: 8px;
+  }
+
+  form {
+    padding: 25px 25px 0 25px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    > label {
+      position: relative;
+      display: flex;
+
+      span {
+        font-weight: 700;
+      }
+
+      &:not(:last-child) {
+        margin: 8px 0;
+        gap: 40px;
+
+        .stars-container {
+          width: 160px;
+        }
+      }
+
+      &:last-child {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      input,
+      textarea {
+        border: 0;
+        outline-color: var(--base-color1);
+        border-radius: calc(var(--base-raduis) / 2);
+      }
+
+      input {
+        padding: 0 0 2px 8px;
+        height: 1.5em;
+        max-width: 60px;
+      }
+
+      textarea {
+        padding: calc(var(--base-raduis) / 2);
+        resize: none;
+        height: 140px;
+
+        @include until-tablet-layout {
+          height: calc(100vh - 285px);
+        }
+      }
+
+      &:last-child {
+        p.chars-left {
+          font-size: 0.875em;
+          position: absolute;
+          bottom: 10px;
+          right: 12px;
+          opacity: 0.5;
+        }
+
+        img {
+          cursor: pointer;
+          width: 16px;
+          position: absolute;
+          right: 41px;
+          bottom: 12px;
+          opacity: 0.3;
+          transition: 0.3s;
+
+          &:hover {
+            opacity: 1;
+          }
+        }
+      }
+
+      p.warning {
+        position: absolute;
+        bottom: -1.8em;
+        color: var(--text-warning);
+      }
+    }
+  }
+  .community-attachments.edit-mode {
+    padding: 6px 25px;
+
+    > div {
+      border: 2px solid var(--base-color1);
+      border-radius: calc(var(--base-raduis) / 2);
+    }
+  }
+
+  button {
+    margin: 12px 25px;
+    align-self: flex-end;
+  }
+}

@@ -1,0 +1,292 @@
+@import "/src/styles/setup/variables.scss";
+@import "/src/styles/setup/functions.scss";
+@import "/src/styles/setup/mixins.scss";
+
+.filter-container {
+  display: flex;
+  flex-direction: column;
+
+  button {
+    margin: 4px;
+    position: relative;
+    padding: 6px 16px;
+    border: 0;
+    text-transform: capitalize;
+    color: $clrwht;
+    background-color: $clr1;
+    max-height: 36px;
+
+    &.marked {
+      color: $clrwht;
+      background-color: $clr2;
+    }
+  }
+
+  .control-panel {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    padding: 12px 8px;
+    @include from-tablet-layout {
+      margin-bottom: 16px;
+    }
+    @include for-mobile-layout {
+      flex-direction: column;
+      margin-bottom: 24px;
+    }
+
+    .filtered-by {
+      flex: 2;
+      display: flex;
+      flex-wrap: wrap;
+
+      h1 {
+        width: 100%;
+      }
+
+      button {
+        &.remove-button::before {
+          position: relative;
+          top: -1px;
+          left: -6px;
+          font-size: 0.75em;
+          padding: 0 0 0 4px;
+          content: "X";
+        }
+      }
+    }
+
+    .buttons {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        @include from-normal-layout {
+          &.filter-button {
+            display: none;
+          }
+        }
+        margin: 0 6px;
+        position: relative;
+        max-width: 180px;
+        flex: 1;
+      }
+    }
+  }
+  .wines-filter {
+    display: flex;
+
+    @include until-tablet-layout {
+      flex-direction: column;
+    }
+
+    .filter-menu {
+      overflow-y: scroll;
+
+      .title {
+        @include from-normal-layout {
+          display: none;
+        }
+        margin: 12px 0;
+        text-align: center;
+        width: calc(100% - 12px);
+        color: $clrblk;
+        text-transform: capitalize;
+        padding-bottom: 10px;
+        border-bottom: 1px solid $clrblk;
+      }
+
+      h2 {
+        font-size: 1.5em;
+        font-weight: 700;
+        text-transform: capitalize;
+        width: 100%;
+      }
+
+      .wine-select-buttons {
+        button {
+          margin: 4px;
+          position: relative;
+          padding: 6px 8px;
+          border: 0;
+          min-width: 80px;
+          text-transform: capitalize;
+          color: $clrwht;
+          background-color: $clr1;
+
+          &.selected {
+            transition: color 0.3s, background-color 0.3s;
+            background-color: $clr2;
+            color: $clrwht;
+            animation: flicker 0.2s 3 ease-in-out;
+          }
+
+          &:hover {
+            background-color: $clr2;
+          }
+
+          img {
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            position: absolute;
+            top: 50%;
+            left: 6px;
+            transform: translateY(-50%);
+          }
+
+          span {
+            padding-inline-start: 18px;
+            position: relative;
+            top: -1px;
+          }
+        }
+
+        .quick-filter-search {
+          display: block;
+          width: 100%;
+
+          input {
+            background-color: transparent;
+            border: 0;
+            outline: none;
+            border-bottom: 1px solid $clrblk;
+
+            &:focus {
+              border-bottom: 2px solid $clr1;
+            }
+          }
+        }
+      }
+
+      > * {
+        margin: 24px 8px 32px 8px;
+      }
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      @include until-tablet-layout {
+        display: none;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: $clrwht;
+        z-index: 3;
+        overflow-y: scroll;
+      }
+
+      @include from-normal-layout {
+        min-width: 280px;
+        max-width: 40%;
+      }
+
+      .apply {
+        display: flex;
+        justify-content: center;
+
+        button {
+          max-width: 160px;
+          flex: 1;
+          text-transform: capitalize;
+        }
+
+        @include from-normal-layout {
+          display: none;
+        }
+      }
+    }
+
+    .wines-result {
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      justify-content: center;
+      gap: 8px;
+      flex: 1;
+
+      > *:not(.loaders__float-1) {
+        margin: 0 16px 32px 16px;
+        flex-basis: 100%;
+      }
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+
+  .quick-sort {
+    position: absolute;
+    display: flex;
+    z-index: 100;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 100px;
+    background-color: $clr4;
+    padding: 16px;
+    border-radius: $frmrad;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: -8px;
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-bottom: 8px solid $clr4;
+
+      @include from-tablet-layout {
+        left: calc(50% - 4px);
+      }
+
+      @include for-mobile-layout {
+        right: 10%;
+      }
+    }
+
+    button {
+      position: relative;
+      padding: 4px 0 4px 6px;
+
+      span {
+        position: absolute;
+        left: 5px;
+        border-radius: 50%;
+        background-color: $clr3;
+        color: $clrwht;
+        font-size: 0.875em;
+        width: 16px;
+        height: 16px;
+        padding: 0 1px 0 0;
+      }
+
+      &.up,
+      &.down {
+        background-color: $clr1;
+      }
+
+      &::after {
+        color: $clrwht;
+        font-size: 1em;
+        font-weight: 700;
+        font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+        position: absolute;
+        right: 12px;
+        top: 2px;
+      }
+
+      &.up::after {
+        content: "↑";
+      }
+
+      &.down::after {
+        content: "↓";
+      }
+    }
+  }
+}

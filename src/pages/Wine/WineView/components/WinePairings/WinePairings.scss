@@ -1,0 +1,99 @@
+.wine-pairings {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 24px 10px;
+
+    @include for-tablet-layout {
+        flex-direction: column;
+    }
+
+    .information {
+        display: flex;
+        flex: 1;
+        min-width: 300px;
+        max-width: calc(60ch + 70px);
+
+        @include for-mobile-layout {
+            max-height: 120px;
+        }
+
+        @include from-tablet-layout {
+            max-height: 180px;
+        }
+
+        .content {
+            flex: 1;
+
+            h2 {
+                font-size: 1.75em;
+                font-weight: 700;
+            }
+
+            p {
+
+                span {
+                    text-transform: capitalize;
+                }
+
+                line-height: 1.3em;
+            }
+        }
+
+        > img {
+            @include from-normal-layout {
+                object-fit: contain;
+                max-width: 50px;
+            }
+
+            @include until-normal-layout {
+                display: none;
+            }
+        }
+    }
+    .meals {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        .meal {
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+            .image-container {
+                border-radius: 50%;
+                overflow: hidden;
+                margin: 12px 8px;
+
+                @include for-mobile-layout {
+                    height: 90px;
+                    width: 90px;
+                }
+
+                @include from-tablet-layout {
+                    height: 120px;
+                    width: 120px;
+                }
+
+                img {
+                    max-height: 100%;
+                    max-width: 100%;
+                    transition: transform 1s;
+
+                    &:hover {
+                        transform: scale(102%);
+                    }
+                }
+            }
+
+            h3 {
+                text-align: center;
+                text-transform: capitalize;
+            }
+        }
+    }
+}
+

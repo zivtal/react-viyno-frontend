@@ -1,0 +1,31 @@
+.story-line-wines {
+  h1 {
+    margin: 8px 0;
+  }
+}
+
+.main-content {
+  display: flex;
+}
+
+.community-button {
+  cursor: pointer;
+  display: flex;
+  padding: 4px 8px;
+  border: 1px solid $clr4;
+  border-radius: 50px;
+  background-color: $clrwht;
+  gap: 6px;
+  width: max-content;
+  img {
+    width: 18px;
+    object-fit: scale-down;
+  }
+  &:hover {
+    @media not all and (pointer: coarse) {
+      box-shadow: 0 4px 4px 0 rgba(51, 48, 48, 0.2),
+      0 -8px 24px 0 rgba(234, 224, 218, 0.3);
+    }
+  }
+}
+

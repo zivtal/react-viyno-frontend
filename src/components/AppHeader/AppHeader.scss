@@ -1,0 +1,194 @@
+.app-header {
+  user-select: none;
+  display: flex;
+  .logo {
+    cursor: pointer;
+    margin: 12px 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    font-size: 1.75em;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: $clr1;
+    img {
+      height: 72px;
+    }
+  }
+  .control-bar {
+    margin: 12px;
+    flex: 1;
+    font-size: 1em;
+    display: flex;
+    flex-direction: column;
+    .main-controls {
+      display: flex;
+      justify-content: space-between;
+      .side-controls {
+        text-transform: capitalize;
+        img {
+          cursor: pointer;
+          border-radius: 50%;
+          height: 32px;
+          width: 32px;
+        }
+      }
+    }
+    nav {
+      max-width: 800px;
+      ul {
+        padding: 0;
+        display: flex;
+        justify-content: space-between;
+        list-style-type: none;
+        flex-wrap: wrap;
+        gap: 16px;
+        li {
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          background-repeat: no-repeat;
+          gap: 4px;
+          text-transform: capitalize;
+          img {
+            height: 20px;
+            width: 20px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.popup-menu {
+  top: 0;
+  position: absolute;
+  margin: 0;
+  margin-top: 2px;
+  z-index: 100;
+  background-color: $clr4;
+  display: flex;
+  @include for-mobile-layout {
+    border-radius: 0;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+    max-height: 100%;
+    overflow-y: scroll;
+  }
+  @include from-tablet-layout {
+    border-radius: 8px;
+  }
+  padding: 0 16px;
+  > ul {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    padding: 12px 24px;
+    li {
+      cursor: pointer;
+      @include until-normal-layout {
+        padding: 8px 0;
+        font-size: 1.5em;
+      }
+      @include from-normal-layout {
+        padding: 6px 0;
+        font-size: 1.2em;
+      }
+      &.bold {
+        font-weight: 700;
+      }
+      img {
+        position: relative;
+        top: 1px;
+        width: 16px;
+        height: 16px;
+        margin: 0 6px 0 0;
+        opacity: 0.8;
+      }
+      width: max-content;
+    }
+  }
+  &::before {
+    content: "";
+    position: absolute;
+    margin-inline-start: 10px;
+    top: -8px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid $clr4;
+  }
+}
+
+.user-quick-menu {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.quick-login-popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  background-color: $clrwht;
+  width: 300px;
+  max-width: 400px;
+  min-height: 320px;
+  max-height: 528px;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  .title {
+    text-align: center;
+    color: $clr1;
+    font-weight: 700;
+    margin: 1em 0;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0em;
+    p {
+      text-transform: none;
+      margin: 0 0 6px 0;
+      &.warning {
+        color: red;
+      }
+    }
+    input {
+      text-align: center;
+      outline-color: $clr2;
+      border: 2px solid $clr4;
+      height: 44px;
+      padding: 0.5em;
+      margin: 12px;
+      width: calc(100% - 20px);
+      border-radius: $frmrad;
+      transition: background-color 0.2s ease-in-out 0s,
+        border-color 0.2s ease-in-out 0s;
+    }
+  }
+  button {
+    margin: 4px auto;
+    width: calc(100% - 10px);
+  }
+  p {
+    text-align: center;
+  }
+  ul.sign-in {
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    li:first-child {
+      margin-inline-start: -40px;
+      list-style-type: none;
+    }
+  }
+}

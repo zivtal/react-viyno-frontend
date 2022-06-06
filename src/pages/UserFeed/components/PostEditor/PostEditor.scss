@@ -1,0 +1,98 @@
+.user-post-editor {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: flex-start;
+    &.reply-to-reply {
+        padding: 12px 0 12px 32px;
+        textarea {
+            width: 100%;
+        }
+    }
+    &:not(.reply-to-reply) {
+        padding: 12px 12px 0 12px;
+    }
+    > div:first-child {
+        display: flex;
+        width: 100%;
+        img.profile-picture {
+            align-self: flex-start;
+            max-height: 32px;
+            border-radius: 50%;
+            margin-inline-end: 10px;
+        }
+        > div {
+            border: 1px solid $clr4;
+            border-bottom: 2px solid $clr4;
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            width: 100%;
+            // border: 1px solid $clr4;
+            border-radius: $frmrad;
+            padding: 0 0 8px 0;
+            textarea {
+                border-radius: $frmrad;
+                outline: none;
+                width: 100%;
+                border: 0;
+                outline-color: $clr4;
+                padding: 16px 16px 0 16px;
+                height: 64px;
+                resize: none;
+            }
+            label {
+                display: flex;
+                justify-content: flex-end;
+                padding: 0 12px 6px 0;
+                opacity: 0.5;
+                font-size: 0.875em;
+            }
+        }
+    }
+    .button-control {
+        position: relative;
+        top: -12px;
+        display: flex;
+        padding: 0 16px 8px 0;
+        justify-content: flex-end;
+        gap: 10px;
+        width: 100%;
+        .send-button {
+            cursor: pointer;
+            border-radius: $frmrad;
+            display: flex;
+            padding: 2px 8px 2px 16px;
+            align-items: center;
+            height: 28px;
+            border: 2px solid $clr4;
+            &:not(:hover) {
+                background-color: $clrwht;
+            }
+            span {
+                position: relative;
+                top: -1px;
+            }
+            img {
+                border: 0;
+                padding: 6px 2px;
+                width: 28px;
+                height: 24px;
+                object-fit: fill;
+                transition: 0.3s ease-in-out;
+            }
+            label {
+                display: flex;
+                span {
+                    top: 2px;
+                }
+            }
+            &:hover img {
+                background-color: transparent;
+                filter: invert(1);
+            }
+        }
+    }
+}
+

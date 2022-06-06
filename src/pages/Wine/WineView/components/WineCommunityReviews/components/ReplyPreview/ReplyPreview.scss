@@ -1,0 +1,99 @@
+@import "/src/styles/setup/variables.scss";
+@import "/src/styles/setup/functions.scss";
+@import "/src/styles/setup/mixins.scss";
+
+.reply-preview {
+  padding: 12px;
+  display: flex;
+  flex-basis: 100%;
+  flex-wrap: wrap;
+
+  > img {
+    align-self: flex-start;
+    max-height: 32px;
+    border-radius: 50%;
+    margin-inline-end: 10px;
+  }
+
+  button.follow-button {
+    border: 0;
+    position: relative;
+    padding: 1px 6px;
+    font-size: 0.875em;
+    height: 1.6em;
+  }
+
+  .reply-content {
+    white-space: pre-wrap;
+    position: relative;
+    flex-basis: calc(100% - 42px);
+
+    > div:not(:last-child) {
+      font-size: 1em;
+      font-weight: 400;
+      background-color: $clrwht;
+      color: $clrblk;
+      padding: 6px 6px;
+      border-radius: $frmrad / 2;
+      outline: none;
+      border: 1px solid $clr4;
+      border-bottom: 2px solid $clr4;
+      overflow: hidden;
+
+      .reply-user-info {
+        position: relative;
+        display: flex;
+        gap: 8px;
+
+        span {
+          font-size: 1.125em;
+          font-weight: 700;
+        }
+      }
+    }
+
+    .control-panel {
+      padding: 0 8px;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+      height: 28px;
+
+      .community-button {
+        position: relative;
+        bottom: 16px;
+        right: -20px;
+      }
+
+      > div {
+        display: flex;
+
+        &:first-child {
+          gap: 12px;
+
+          > span {
+            &:hover {
+              cursor: pointer;
+              color: $clr2;
+              text-decoration: underline;
+            }
+
+            &:not(:last-child) {
+              color: $clrblk;
+              font-weight: 600;
+            }
+          }
+        }
+
+        &:not(:first-child) {
+          gap: 8px;
+        }
+      }
+    }
+  }
+
+  &.reply-to-reply {
+    padding: 12px 0 0 24px;
+  }
+}

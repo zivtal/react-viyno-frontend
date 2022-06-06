@@ -50,7 +50,7 @@ export const OverlayModal = (props: OverlayModalProps): JSX.Element | null => {
         props: {
           ...(({ slot, ...rest }) => rest)(ch.props),
           className,
-          onClick: (ev: any) => ev.stopPropagation(),
+          onClick: (ev: Event) => ev.stopPropagation(),
         },
       };
     });

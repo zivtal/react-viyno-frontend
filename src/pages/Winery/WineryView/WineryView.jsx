@@ -6,12 +6,15 @@ import "./WineryView.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { getWinery } from "../store/action";
 import { MainState } from "../../../store/models/store.models";
-import { WINERY } from "../store/types";
+import { Winery } from "../models/winery.models";
+import { WINERIES_CACHE } from "../store/types";
 
 export const WineryView = (props) => {
   const dispatch = useDispatch();
   const [winesCount, setWinesCount] = useState(null);
-  const winery = useSelector((state: MainState) => state.wineryModule[WINERY]);
+  const wineries = useSelector(
+    (state: MainState) => state.wineryModule[WINERIES_CACHE]
+  );
 
   useEffect(() => {
     const { id } = props.match.params;
@@ -24,6 +27,10 @@ export const WineryView = (props) => {
       }
     })();
   }, [props.match?.params?.id]);
+
+  const winery = wineries.find(
+    (winery: Winery) => winery.seo === props.match?.params?.id
+  );
 
   return winery ? (
     <>

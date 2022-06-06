@@ -17,7 +17,6 @@ export const REMOVE_WINE = "removeWine";
 export const UPDATE_WINE = "updateWine";
 export const CLEAR_WINES = "clearWines";
 
-export const WINE = "wine";
 export const WINES = "wines";
 export const WINES_FILTER = "filter";
 export const WINES_SORT = "sort";

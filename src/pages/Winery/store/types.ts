@@ -7,8 +7,8 @@ export const SET_WINERIES_SORT = "setWineriesSort";
 export const SET_WINERIES_FILTER = "setWineriesFilter";
 export const SET_WINERIES_LOADING = "setWineriesLoading";
 export const SET_WINERIES_PAGINATION = "setWineriesPagination";
+export const ADD_WINERY_CACHE = "addWineryCache";
 
-export const WINERY = "winery";
 export const WINERIES = "wineries";
 export const WINERIES_SORT = "sort";
 export const WINERIES_FILTER = "filter";

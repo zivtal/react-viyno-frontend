@@ -2,31 +2,30 @@
 import { getCurrentPosition } from "../../../services/util.service";
 import { wineryService } from "../service/winery.service";
 import {
+  ADD_WINERY_CACHE,
   GET_WINERY,
   SET_WINERIES,
   SET_WINERIES_LOADING,
-  SET_WINERY,
+  WINERIES_CACHE,
   WINERIES_FILTER,
   WINERIES_SORT,
-  WINERY,
 } from "./types";
-import { WineryQuery } from "../models/winery.models";
+import { Winery, WineryQuery } from "../models/winery.models";
 import { wineService } from "../../Wine/service/wine.service";
 
 export function getWinery(id: string | number, queries?: WineryQuery) {
   console.log(queries);
   return async (dispatch: Function, state: Function) => {
-    const { [WINERY]: winery } = state().wineryModule;
+    const { [WINERIES_CACHE]: wineries } = state().wineryModule;
 
-    if (winery?.seo === id) {
+    if (wineries.find((winery: Winery) => winery.seo === id)) {
       return;
     }
 
     try {
       dispatch({ type: SET_WINERIES_LOADING, loading: true });
-      dispatch({ type: SET_WINERY });
       const winery = await wineryService[GET_WINERY](id, queries);
-      dispatch({ type: SET_WINERY, [WINERY]: winery });
+      dispatch({ type: ADD_WINERY_CACHE, winery });
     } catch (err) {
       console.error(err);
     } finally {

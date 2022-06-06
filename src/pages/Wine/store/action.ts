@@ -12,7 +12,6 @@ import {
   WINE_KEYWORDS,
   WINE_SECTIONS,
   WINES,
-  WINE,
   WINES_CACHE,
   ADD_WINE_CACHE,
 } from "./types";

@@ -1,13 +1,14 @@
 import {
+  ADD_WINERY_CACHE,
   SET_WINERIES,
   SET_WINERIES_FILTER,
   SET_WINERIES_LOADING,
   SET_WINERIES_SORT,
   SET_WINERY,
   WINERIES,
+  WINERIES_CACHE,
   WINERIES_FILTER,
   WINERIES_SORT,
-  WINERY,
 } from "./types";
 import { Winery } from "../models/winery.models";
 import { BaseSort } from "../../../shared/models/base-sort";
@@ -15,19 +16,19 @@ import { WINES, WINES_FILTER } from "../../Wine/store/types";
 import { Pagination } from "../../../shared/models/pagination";
 
 export interface WineryState {
-  [WINERY]: Winery | null;
   [WINERIES]: Array<Winery>;
   [WINERIES_SORT]: BaseSort;
   [WINERIES_FILTER]: BaseSort;
+  [WINERIES_CACHE]: Array<Winery>;
   page: Pagination;
   total?: number | null;
 }
 
 const INITIAL_STATE = {
-  [WINERY]: null,
   [WINERIES]: [],
   [WINERIES_SORT]: {},
   [WINERIES_FILTER]: {},
+  [WINERIES_CACHE]: [],
   page: {},
   total: null,
   loading: false,
@@ -45,7 +46,21 @@ export default (state: WineryState = INITIAL_STATE, action: any) => {
     case SET_WINERY: {
       return {
         ...state,
-        [WINERY]: action.winery || INITIAL_STATE[WINERY],
+        [WINERIES_CACHE]: state[WINERIES_CACHE].find((winery: Winery) =>
+          winery.seo === action.winery.seo
+            ? { ...winery, ...action.winery }
+            : winery
+        ),
+      };
+    }
+
+    case ADD_WINERY_CACHE: {
+      return {
+        ...state,
+        [WINERIES_CACHE]: [action.winery, ...state[WINERIES_CACHE]].slice(
+          0,
+          20
+        ),
       };
     }
 

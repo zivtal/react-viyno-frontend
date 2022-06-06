@@ -24,7 +24,6 @@ import { BaseSort } from "../../../shared/models/base-sort";
 import { BaseFilter } from "../../../shared/models/base-filter";
 import { WineSections } from "../models/wine.models";
 import { Pagination } from "../../../shared/models/pagination";
-import { WINERIES_SORT } from "../../Winery/store/types";
 
 interface ReducerAction {
   type: string;
@@ -137,6 +136,10 @@ export default (state: PostState = INITIAL_STATE, action: ReducerAction) => {
     }
 
     case ADD_WINE_CACHE: {
+      if (!action.wine) {
+        return;
+      }
+
       return {
         ...state,
         [WINES_CACHE]: [action.wine, ...state[WINES_CACHE]].slice(0, 20),

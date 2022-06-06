@@ -55,6 +55,10 @@ export default (state: WineryState = INITIAL_STATE, action: any) => {
     }
 
     case ADD_WINERY_CACHE: {
+      if (!action.winery) {
+        return state;
+      }
+
       return {
         ...state,
         [WINERIES_CACHE]: [action.winery, ...state[WINERIES_CACHE]].slice(

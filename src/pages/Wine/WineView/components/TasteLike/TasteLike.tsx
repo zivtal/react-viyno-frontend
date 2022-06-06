@@ -9,18 +9,17 @@ import { TasteFill } from "./components/TasteFill/TasteFill";
 // @ts-ignore
 import { TastePreview } from "../TastePreview/TastePreview";
 import { useState } from "react";
-import { Wine, WineStructure } from "../../../models/wine.models";
+import { Wine, WineStructure } from "../../../models/wine.model";
 import { MainState } from "../../../../../store/models/store.models";
 import { debounce } from "../../../../../services/debounce.service";
 import { UPDATE_REVIEW_STRUCTURE } from "../../../../UserFeed/store/types";
+import { BaseProps } from "../../../../../shared/models/base-props";
 
-interface Props {
+interface Props extends BaseProps {
   wine?: Wine;
-  demo?: Wine | any;
-  loading?: boolean;
 }
 
-export function TasteLike(props: Props) {
+export function TasteLike(props: Props): JSX.Element {
   const user = useSelector<MainState, any>(
     (state: MainState) => state.authModule.user
   );

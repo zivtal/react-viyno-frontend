@@ -19,30 +19,14 @@ import {
   WINES_CACHE,
   ADD_WINE_CACHE,
 } from "./types";
-import { Wine, WineKeywords } from "../models/wine.models";
-import { BaseSort } from "../../../shared/models/base-sort";
-import { BaseFilter } from "../../../shared/models/base-filter";
-import { WineSections } from "../models/wine.models";
-import { Pagination } from "../../../shared/models/pagination";
+import { Wine, WineState } from "../models/wine.model";
 
 interface ReducerAction {
   type: string;
   [key: string]: any;
 }
 
-export interface PostState {
-  [WINES]: Array<Wine>;
-  [WINES_FILTER]: BaseFilter;
-  [WINES_SORT]: BaseSort;
-  [WINE_KEYWORDS]: WineKeywords | null;
-  [WINE_SECTIONS]: WineSections;
-  [WINES_CACHE]: Array<Wine>;
-  page: Pagination;
-  total: number | null;
-  loading: boolean;
-}
-
-const INITIAL_STATE: PostState = {
+const INITIAL_STATE: WineState = {
   [WINES]: [],
   [WINES_FILTER]: {},
   [WINES_SORT]: {},
@@ -60,7 +44,7 @@ const INITIAL_STATE: PostState = {
   loading: false,
 };
 
-export default (state: PostState = INITIAL_STATE, action: ReducerAction) => {
+export default (state: WineState = INITIAL_STATE, action: ReducerAction) => {
   switch (action.type) {
     case SET_WINES_LOADING: {
       return {

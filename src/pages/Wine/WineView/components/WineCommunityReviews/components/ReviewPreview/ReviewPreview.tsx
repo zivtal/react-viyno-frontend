@@ -12,17 +12,23 @@ import { PostUserControl } from "../../../../../../UserFeed/components/PostUserC
 import { tryRequire } from "../../../../../../../services/require.service";
 import { setPostReaction } from "../../../../../../UserFeed/store/action";
 import { MainState } from "../../../../../../../store/models/store.models";
-import { Post } from "../../../../../../UserFeed/models/post";
+import { Post } from "../../../../../../UserFeed/models/post.model";
 import React from "react";
+import { BaseProps } from "../../../../../../../shared/models/base-props";
 
-interface Props {
+interface Props extends BaseProps {
   review: Post;
   activeId: number | null;
   setActiveId: Function;
 }
 
-export const ReviewPreview = ({ review, activeId, setActiveId }: Props) => {
+export const ReviewPreview = ({
+  review,
+  activeId,
+  setActiveId,
+}: Props): JSX.Element => {
   const dispatch = useDispatch();
+
   const user = useSelector((state: MainState) => state.authModule.user);
   const [authCb, setAuthCb] = useState<Function>(() => {});
   const [savedReply, setSavedReply] = useState(null);

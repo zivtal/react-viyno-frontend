@@ -2,7 +2,7 @@
 import { httpService } from "../../../services/http-client/http.service";
 // @ts-ignore
 import { getCurrentPosition } from "../../../services/util.service";
-import { Login, User } from "../models/login";
+import { AuthModel, User } from "../models/auth.model";
 import { LOGIN, LOGOUT, SIGNUP } from "../store/types";
 
 const STORAGE_KEY_LOGGEDIN_USER = "user";
@@ -10,7 +10,7 @@ const STORAGE_KEY_LOGGEDIN_USER = "user";
 const API = "auth";
 
 export const authService = {
-  [LOGIN]: async (user: Login) => {
+  [LOGIN]: async (user: AuthModel) => {
     try {
       const loggedInUser: User = await httpService.post(
         API + "/login",
@@ -36,7 +36,7 @@ export const authService = {
     }
   },
 
-  [SIGNUP]: async (user: Login) => {
+  [SIGNUP]: async (user: AuthModel) => {
     try {
       const signedUser = await httpService.post(
         "auth/signup",

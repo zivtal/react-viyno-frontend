@@ -17,7 +17,7 @@ import {
   GET_HELPFUL_REVIEWS,
 } from "./types";
 import { BaseQueries } from "../../../shared/models/base-queries";
-import { Post } from "../models/post";
+import { Post } from "../models/post.model";
 import { container } from "tsyringe";
 import PostApiService from "../service/post.service2";
 

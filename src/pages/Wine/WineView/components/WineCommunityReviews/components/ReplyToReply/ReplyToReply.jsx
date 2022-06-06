@@ -9,8 +9,12 @@ export const ReplyToReply = ({
   setSrc,
   onLoadMore,
 }) => {
-  if (!review) return null;
+  if (!review) {
+    return null;
+  }
+
   const data = review?.reply?.data;
+
   return (
     <>
       {data?.length

@@ -1,5 +1,5 @@
 import { SET_USER } from "./types";
-import { User } from "../models/login";
+import { User } from "../models/auth.model";
 
 export function setUser(user: User): (dispatch: any) => Promise<void> {
   return async (dispatch: any): Promise<void> => {

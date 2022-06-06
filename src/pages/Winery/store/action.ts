@@ -10,11 +10,10 @@ import {
   WINERIES_FILTER,
   WINERIES_SORT,
 } from "./types";
-import { Winery, WineryQuery } from "../models/winery.models";
+import { Winery, WineryQuery } from "../models/winery.model";
 import { wineService } from "../../Wine/service/wine.service";
 
 export function getWinery(id: string | number, queries?: WineryQuery) {
-  console.log(queries);
   return async (dispatch: Function, state: Function) => {
     const { [WINERIES_CACHE]: wineries } = state().wineryModule;
 

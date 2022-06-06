@@ -1,6 +1,6 @@
 import { authService } from "../service/auth.service";
 import { SET_USER } from "./types";
-import { User } from "../models/login";
+import { User } from "../models/auth.model";
 
 export interface AuthState {
   user: User | null;

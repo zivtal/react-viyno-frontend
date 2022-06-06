@@ -9,15 +9,16 @@ import { QuickLogin } from "../../../../../../Login/components/QuickLogin/QuickL
 import { tryRequire } from "../../../../../../../services/require.service";
 import { cloudUpload } from "../../../../../../../services/media/media.service";
 import { OverlayModal } from "../../../../../../../components/OverlayModal/OverlayModal";
-import { Wine } from "../../../../../models/wine.models";
+import { Wine } from "../../../../../models/wine.model";
 import { BaseRecords } from "../../../../../../../shared/models/base-records.model";
-import { Post } from "../../../../../../UserFeed/models/post";
+import { Post } from "../../../../../../UserFeed/models/post.model";
 import { MainState } from "../../../../../../../store/models/store.models";
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { SET_WINE } from "../../../../../store/types";
+import { BaseProps } from "../../../../../../../shared/models/base-props";
 
-interface Props {
+interface Props extends BaseProps {
   wine: Wine;
   rateValue: number | null;
   onSet: Function;
@@ -25,7 +26,7 @@ interface Props {
   reviews: BaseRecords<Post>;
 }
 
-export const AddReview = (props: Props) => {
+export const AddReview = (props: Props): JSX.Element | null => {
   const history = useHistory();
   const location = useLocation();
   const queries = new URLSearchParams(location.search);

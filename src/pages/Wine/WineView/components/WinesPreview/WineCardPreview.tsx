@@ -6,7 +6,7 @@ import { ScaleRate } from "../TasteLike/components/ScaleRate/ScaleRate";
 import { tryRequire } from "../../../../../services/require.service";
 import { toKebabCase } from "../../../../../services/dev.service";
 import { getImgSrcFromBase64 } from "../../../../../services/media/media.service";
-import { Wine } from "../../../models/wine.models";
+import { Wine } from "../../../models/wine.model";
 import "./WineCardPreview.scss";
 
 interface WinePreviewProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -14,7 +14,7 @@ interface WinePreviewProps extends React.HTMLAttributes<HTMLDivElement> {
   isMinimal?: boolean;
 }
 
-const WineRate = ({ wine }: { wine: Wine }) => {
+const WineRate = ({ wine }: { wine: Wine }): JSX.Element | null => {
   return wine.rate ? (
     <div className="wine-rate">
       <p className="avg-rate">{wine.rate.toFixed(1)}</p>
@@ -26,7 +26,7 @@ const WineRate = ({ wine }: { wine: Wine }) => {
   ) : null;
 };
 
-const WineImage = ({ wine }: { wine: Wine }) => {
+const WineImage = ({ wine }: { wine: Wine }): JSX.Element => {
   return wine.imageData ? (
     <img
       className="bottle-img"
@@ -48,7 +48,7 @@ const WineImage = ({ wine }: { wine: Wine }) => {
   );
 };
 
-const WineBackground = ({ wine }: { wine: Wine }) => {
+const WineBackground = ({ wine }: { wine: Wine }): JSX.Element | null => {
   const rtl = document.dir === "rtl";
 
   return wine.background ? (
@@ -64,7 +64,7 @@ export const WineCardPreview = ({
   wine,
   style,
   isMinimal,
-}: WinePreviewProps) => {
+}: WinePreviewProps): JSX.Element => {
   const rtl = document.dir === "rtl";
 
   return (

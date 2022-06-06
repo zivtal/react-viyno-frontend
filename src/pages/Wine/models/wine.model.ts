@@ -1,17 +1,26 @@
 import { Pagination } from "../../../shared/models/pagination";
 import { BaseQueries } from "../../../shared/models/base-queries";
 import { BaseSort } from "../../../shared/models/base-sort";
+import {
+  WINE_KEYWORDS,
+  WINE_SECTIONS,
+  WINES,
+  WINES_CACHE,
+  WINES_FILTER,
+  WINES_SORT,
+} from "../store/types";
+import { BaseFilter } from "../../../shared/models/base-filter";
 
 export interface WineState {
-  wines: Array<Wine> | null;
-  loading: boolean;
+  [WINES]: Array<Wine>;
+  [WINES_FILTER]: BaseFilter;
+  [WINES_SORT]: BaseSort;
+  [WINE_KEYWORDS]: WineKeywords | null;
+  [WINE_SECTIONS]: WineSections;
+  [WINES_CACHE]: Array<Wine>;
+  page: Pagination;
   total: number | null;
-  page: Pagination | null;
-  filter: WineFilter | null;
-  sort: BaseSort;
-  wine: Wine | null;
-  keywords: WineKeywords | null;
-  section: any; // TODO: CREATE INTERFACE
+  loading: boolean;
 }
 
 export interface WineSort {

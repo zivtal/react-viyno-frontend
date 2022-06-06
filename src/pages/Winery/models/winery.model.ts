@@ -1,4 +1,4 @@
-import { Wine } from "../../Wine/models/wine.models";
+import { Wine } from "../../Wine/models/wine.model";
 
 export interface Winery {
   _id: number;

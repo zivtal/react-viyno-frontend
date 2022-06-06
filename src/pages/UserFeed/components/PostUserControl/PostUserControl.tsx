@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { tryRequire } from "../../../../services/require.service";
 import { setPostReaction } from "../../store/action";
 import { MainState } from "../../../../store/models/store.models";
-import { Post } from "../../models/post";
+import { Post } from "../../models/post.model";
 
 interface Props {
   post: Post;

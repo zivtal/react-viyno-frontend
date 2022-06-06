@@ -2,9 +2,16 @@ import React, { useEffect, useState } from "react";
 import { wineService } from "../../../service/wine.service";
 import { WineSlider } from "../WineSlider/WineSlider";
 import { Loader } from "../../../../../components/Loader/Loader";
+import { BaseProps } from "../../../../../shared/models/base-props";
+import { Wine } from "../../../models/wine.model";
 
-export function MoreWines(props) {
-  const [wines, setWines] = useState(null);
+interface Props extends BaseProps {
+  title?: string;
+  wine?: Wine;
+}
+
+export function MoreWines(props: Props): JSX.Element {
+  const [wines, setWines] = useState<Array<Wine>>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -18,13 +25,13 @@ export function MoreWines(props) {
       try {
         const res = await wineService.getWines({
           filter: {
-            eqCountry: props.wine.country,
-            eqWinery: props.wine.winery,
-            neSeo: props.wine.seo,
+            eqCountry: props.wine?.country,
+            eqWinery: props.wine?.winery,
+            neSeo: props.wine?.seo,
           },
           page: { size: 8 },
         });
-        setWines(res);
+        setWines(res?.data || []);
       } catch (e) {
       } finally {
         setIsLoading(false);
@@ -41,7 +48,7 @@ export function MoreWines(props) {
       </Loader>
       {props.wine?.winery ? <p>From {props.wine?.winery}</p> : null}
       <WineSlider
-        wines={wines?.data}
+        wines={wines}
         loading={isLoading}
         repeat={props.wine?.wineryProducts || 8}
       />

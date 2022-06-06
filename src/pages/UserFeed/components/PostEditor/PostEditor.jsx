@@ -8,10 +8,11 @@ import {
   cloudUpload,
   getImgSrcFromBase64,
 } from "../../../../services/media/media.service";
+import { MainState } from "../../../../store/models/store.models";
 
 export const PostEditor = ({ onSubmit, value, data, max = 512, inClass }) => {
   const el = useRef(null);
-  const user = useSelector((state) => state.authModule.user);
+  const user = useSelector((state: MainState) => state.authModule.user);
   const [height, setHeight] = useState(1.25);
   const [isUploading, setUploading] = useState(false);
   const [post, setPost] = useState({

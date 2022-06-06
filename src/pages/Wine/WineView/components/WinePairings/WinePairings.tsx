@@ -3,33 +3,44 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { setWinesFilter } from "../../../store/action";
 import { tryRequire } from "../../../../../services/require.service";
-import { Loader } from "../../../../../components/Loader/Loader";
+import { MainState } from "../../../../../store/models/store.models";
+import { Wine } from "../../../models/wine.model";
+import { BaseProps } from "../../../../../shared/models/base-props";
 
-export const WinePairings = (props) => {
+interface Props extends BaseProps {
+  wine?: Wine;
+}
+
+const FoodPairing = (props: Props): JSX.Element => {
   const dispatch = useDispatch();
-  const keywords = useSelector((state) => state.wineModule.keywords);
+  const keywords = useSelector((state: MainState) => state.wineModule.keywords);
   const history = useHistory();
 
-  const FoodPairing = (props) =>
-    (props.wine?.pairings || []).map((seo, idx) => {
-      const name = keywords?.data["food pairings"]?.find(
-        (val) => val.seo === seo
-      )?.name;
-      const goTo = () => {
-        dispatch(setWinesFilter({ inPairings: seo }));
-        history.push(`/wine?pairings=${seo}`);
-      };
+  return (
+    <>
+      {(props.wine?.pairings || []).map((seo: string, index: number) => {
+        const name = keywords?.data["food pairings"]?.find(
+          (val) => val.seo === seo
+        )?.name;
+        const goTo = () => {
+          dispatch(setWinesFilter({ inPairings: seo }));
+          history.push(`/wine?pairings=${seo}`);
+        };
 
-      return (
-        <div onClick={goTo} className="meal" key={"FOOD_PAIR_" + idx}>
-          <div className="image-container">
-            <img src={tryRequire(`imgs/food/${seo}.jpg`)} />
+        return (
+          <div onClick={goTo} className="meal" key={index}>
+            <div className="image-container">
+              <img src={tryRequire(`imgs/food/${seo}.jpg`)} />
+            </div>
+            <h3>{name}</h3>
           </div>
-          <h3>{name}</h3>
-        </div>
-      );
-    });
+        );
+      })}
+    </>
+  );
+};
 
+export const WinePairings = (props: Props): JSX.Element => {
   const data = !props.loading ? props.wine : props.demo;
 
   return (

@@ -1,4 +1,4 @@
-import { WineState } from "../../pages/Wine/models/wine.models";
+import { WineState } from "../../pages/Wine/models/wine.model";
 import { PostState } from "../../pages/UserFeed/store/reducer";
 import { AuthState } from "../../pages/Login/store/reducer";
 import { WineryState } from "../../pages/Winery/store/reducer";

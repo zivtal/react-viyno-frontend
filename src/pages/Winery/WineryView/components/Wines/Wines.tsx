@@ -1,9 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { WineSlider } from "../../../../Wine/WineView/components/WineSlider/WineSlider";
 import { wineService } from "../../../../Wine/service/wine.service";
+import { BaseProps } from "../../../../../shared/models/base-props";
+import { Winery } from "../../../models/winery.model";
+import { Wine } from "../../../../Wine/models/wine.model";
 
-export function Wines(props) {
-  const [wines, setWines] = useState({ loading: { top: true, popular: true } });
+interface Props extends BaseProps {
+  winery: Winery | undefined;
+  setWinesCount: Function;
+}
+
+export function Wines(props: Props): JSX.Element {
+  interface LocalWineState {
+    loading?: {
+      top?: boolean;
+      popular?: boolean;
+    };
+    top?: Array<Wine>;
+    popular?: Array<Wine>;
+  }
+
+  const [wines, setWines] = useState<LocalWineState>({
+    loading: { top: true, popular: true },
+  });
 
   useEffect(() => {
     (async () => {

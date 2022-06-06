@@ -1,23 +1,32 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { WineryHeader } from "./components/WineryHeader/WineryHeader";
 import { Wines } from "./components/Wines/Wines";
+// @ts-ignore
 import { getCurrentPosition } from "../../../services/util.service";
-import "./WineryView.scss";
-import { useDispatch, useSelector } from "react-redux";
 import { getWinery } from "../store/action";
+import { Winery } from "../models/winery.model";
 import { MainState } from "../../../store/models/store.models";
-import { Winery } from "../models/winery.models";
+import { RouteComponentProps } from "react-router-dom";
+import { BaseProps } from "../../../shared/models/base-props";
 import { WINERIES_CACHE } from "../store/types";
+import "./WineryView.scss";
 
-export const WineryView = (props) => {
+interface MatchParams {
+  id: string;
+}
+
+export const WineryView = (
+  props: BaseProps & RouteComponentProps<MatchParams>
+): JSX.Element | null => {
   const dispatch = useDispatch();
-  const [winesCount, setWinesCount] = useState(null);
+  const [winesCount, setWinesCount] = useState<number>();
   const wineries = useSelector(
     (state: MainState) => state.wineryModule[WINERIES_CACHE]
   );
 
   useEffect(() => {
-    const { id } = props.match.params;
+    const id = props.match.params.id;
     (async () => {
       try {
         const location = await getCurrentPosition();

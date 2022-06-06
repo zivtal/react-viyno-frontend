@@ -2,9 +2,9 @@ import React from "react";
 // @ts-ignore
 import { StarRateDisplay } from "../../../../../../../components/StarRateDisplay/StarRateDisplay";
 import { tryRequire } from "../../../../../../../services/require.service";
-import { Wine } from "../../../../../models/wine.models";
+import { Wine } from "../../../../../models/wine.model";
 
-export const ReviewStat = ({ wine }: { wine: Wine }) => {
+export const ReviewStat = ({ wine }: { wine: Wine }): JSX.Element | null => {
   type ObjectKey = keyof typeof wine;
 
   if (!wine?.ratings) {

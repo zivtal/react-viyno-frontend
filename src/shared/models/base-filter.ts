@@ -1,3 +1,3 @@
 export interface BaseFilter {
-  [key: string]: string | number;
+  [key: string]: any;
 }

@@ -3,11 +3,12 @@ import { useEffect, useRef, useState } from "react";
 import { postService } from "../../../../../../UserFeed/service/post.api-service";
 import { camelCaseToSentence } from "../../../../../../../services/dev.service";
 import { GET_REVIEW_STRUCTURE } from "../../../../../../UserFeed/store/types";
-import { Wine } from "../../../../../models/wine.models";
+import { Wine } from "../../../../../models/wine.model";
 import { useSelector } from "react-redux";
 import { MainState } from "../../../../../../../store/models/store.models";
+import { BaseProps } from "../../../../../../../shared/models/base-props";
 
-interface Props {
+interface Props extends BaseProps {
   wine: Wine;
   onSet?: Function;
   isMinimal?: boolean;

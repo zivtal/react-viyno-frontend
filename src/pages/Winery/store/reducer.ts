@@ -10,7 +10,7 @@ import {
   WINERIES_FILTER,
   WINERIES_SORT,
 } from "./types";
-import { Winery } from "../models/winery.models";
+import { Winery } from "../models/winery.model";
 import { BaseSort } from "../../../shared/models/base-sort";
 import { WINES, WINES_FILTER } from "../../Wine/store/types";
 import { Pagination } from "../../../shared/models/pagination";

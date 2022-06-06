@@ -18,7 +18,7 @@ import {
 import "./WineEdit.scss";
 import { MainState } from "../../../store/models/store.models";
 import { WINE_SECTIONS } from "../store/types";
-import { WineSections } from "../models/wine.models";
+import { WineSections } from "../models/wine.model";
 
 export const WineEdit = (props) => {
   const location = useLocation();

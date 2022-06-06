@@ -60,7 +60,7 @@ export const WineSearch = (props) => {
       async () => {
         try {
           dispatch(getWines());
-          window.scrollTo(0, 0);
+          // window.scrollTo(0, 0);
         } catch {}
       },
       "SEND_GET_REQ",

@@ -6,7 +6,7 @@ import { setUser } from "../../store/actions";
 import { OverlayModal } from "../../../../components/OverlayModal/OverlayModal";
 import { LOGIN, SIGNUP } from "../../store/types";
 import { MainState } from "../../../../store/models/store.models";
-import { Login } from "../../models/login";
+import { AuthModel } from "../../models/auth.model";
 
 interface Props {
   isActive: boolean;
@@ -14,9 +14,9 @@ interface Props {
   onLogin?: Function;
 }
 
-export const QuickLogin = (props: Props) => {
+export const QuickLogin = (props: Props): JSX.Element => {
   const [isSignUpMode, setIsSignUpMode] = useState(false);
-  const [loginUser, setLoginUser] = useState<Login>({});
+  const [loginUser, setLoginUser] = useState<AuthModel>({});
   const [isAfterTry, setIsAfterTry] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state: MainState) => state.authModule.user);
@@ -103,10 +103,10 @@ export const QuickLogin = (props: Props) => {
         </form>
         {/* <p className="alternative">OR</p>
         <button className="gmail-login-btn">
-          <span>{isSignUpMode ? "Sign up" : "Login"} with Gmail</span>
+          <span>{isSignUpMode ? "Sign up" : "AuthModel"} with Gmail</span>
         </button>
         <button className="facebook-login-btn">
-          <span>{isSignUpMode ? "Sign up" : "Login"} with Facebook</span>
+          <span>{isSignUpMode ? "Sign up" : "AuthModel"} with Facebook</span>
         </button> */}
         <hr />
         <ul className="sign-in">

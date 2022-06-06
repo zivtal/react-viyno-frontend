@@ -19,7 +19,7 @@ import { CLEAR_WINE_REVIEWS } from "../../UserFeed/store/types";
 import { Pagination } from "../../../shared/models/pagination";
 import { BaseFilter } from "../../../shared/models/base-filter";
 import { BaseSort } from "../../../shared/models/base-sort";
-import { Wine, WineKeywordsReq } from "../models/wine.models";
+import { Wine, WineKeywordsReq } from "../models/wine.model";
 
 export const setWinesPagination = (pagination: Pagination) => {
   return (dispatch: Function) => {
@@ -77,7 +77,7 @@ export const getWines = () => {
   };
 };
 
-export const getWine = (id: string, vintage: number) => {
+export const getWine = (id: string, vintage?: number) => {
   return async (dispatch: Function, state: Function) => {
     const wine = state().wineModule[WINES_CACHE].find(
       (wine: Wine) => wine.seo === id

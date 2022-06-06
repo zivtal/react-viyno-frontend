@@ -1,5 +1,5 @@
 import { BaseRecords } from "../../../shared/models/base-records.model";
-import { Post } from "../models/post";
+import { Post } from "../models/post.model";
 import ApiService from "../../../services/http-client/api.service";
 import { inject, singleton } from "tsyringe";
 import { GET_POSTS } from "../store/types";

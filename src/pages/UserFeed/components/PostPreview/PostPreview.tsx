@@ -1,18 +1,17 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { postService } from "../../service/post.api-service";
 import { MediaPreviewModal } from "../../../../components/MediaPreviewModal/MediaPreviewModal";
 import { QuickLogin } from "../../../Login/components/QuickLogin/QuickLogin";
 import { Attachments } from "../../../../components/Attachments/Attachments";
+import { PostUserControl } from "../PostUserControl/PostUserControl";
 // @ts-ignore
 import { OnPostReply } from "../../../Wine/WineView/components/WineCommunityReviews/components/OnPostReply/OnPostReply";
 // @ts-ignore
-import { PostUserControl } from "../PostUserControl/PostUserControl";
-// @ts-ignore
 import { PostUserInfo } from "../PostUserInfo/PostUserInfo";
 import { MainState } from "../../../../store/models/store.models";
+import { Post } from "../../models/post.model";
+import { postService } from "../../service/post.api-service";
 import { SET_REPLY } from "../../store/types";
-import { Post } from "../../models/post";
 import React from "react";
 
 interface Props {

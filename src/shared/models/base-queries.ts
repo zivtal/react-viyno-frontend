@@ -6,4 +6,5 @@ export interface BaseQueries {
   page?: Pagination;
   sort?: BaseSort;
   filter?: BaseFilter;
+  rule?: string;
 }

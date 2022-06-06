@@ -21,9 +21,9 @@ import {
 import { MainState } from "../../../../../store/models/store.models";
 import { useLocation } from "react-router-dom";
 import { REVIEW_DEMO } from "../../constants/wine";
-import { Post } from "../../../../UserFeed/models/post";
+import { Post } from "../../../../UserFeed/models/post.model";
 import { BaseRecords } from "../../../../../shared/models/base-records.model";
-import { Wine } from "../../../models/wine.models";
+import { Wine } from "../../../models/wine.model";
 
 interface Reviews {
   [key: string]: {
@@ -39,7 +39,7 @@ interface UserRateProps {
   set: Function;
 }
 
-const UserRate = ({ user, rate, set }: UserRateProps) => {
+const UserRate = ({ user, rate, set }: UserRateProps): JSX.Element => {
   return (
     <>
       <p className="rating-feedback">
@@ -83,7 +83,7 @@ const WinePreviews = ({
   activeId,
   setActiveId,
   onLoadMore,
-}: WinePreviewsProps) => {
+}: WinePreviewsProps): JSX.Element => {
   const data =
     loading && !reviews?.data?.length ? Array(3).fill(demo) : reviews?.data;
 
@@ -125,7 +125,9 @@ const WinePreviews = ({
   );
 };
 
-export const WineCommunityReviews = ({ wine }: { wine: Wine }) => {
+export const WineCommunityReviews = (props: {
+  wine?: Wine;
+}): JSX.Element | null => {
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -154,7 +156,7 @@ export const WineCommunityReviews = ({ wine }: { wine: Wine }) => {
     dispatch(getMyReviews());
     dispatch(getRecentReviews(vintage, true));
     dispatch(getHelpfulReviews(vintage, true));
-  }, [wine, location.search, user]);
+  }, [props.wine, location.search, user]);
 
   const ReviewMenu = () => {
     const reviews = ["Helpful", "Recent", "You"];
@@ -193,7 +195,7 @@ export const WineCommunityReviews = ({ wine }: { wine: Wine }) => {
     You: { state: userReviews, set: () => {} },
   };
 
-  return wine ? (
+  return props.wine ? (
     <>
       <div className="community-reviews">
         <div className="reviews-list">
@@ -214,7 +216,7 @@ export const WineCommunityReviews = ({ wine }: { wine: Wine }) => {
         </div>
 
         <div className="review-statistics">
-          <ReviewStat wine={wine} />
+          <ReviewStat wine={props.wine} />
 
           <UserRate user={user} rate={rate} set={setRate} />
         </div>
@@ -222,7 +224,7 @@ export const WineCommunityReviews = ({ wine }: { wine: Wine }) => {
 
       <AddReview
         rateValue={rate}
-        wine={wine}
+        wine={props.wine}
         reviews={userReviews}
         onSet={setRate}
         onClose={() => setRate(null)}

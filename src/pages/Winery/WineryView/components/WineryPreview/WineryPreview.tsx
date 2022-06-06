@@ -3,8 +3,14 @@ import { useHistory } from "react-router-dom";
 import { tryRequire } from "../../../../../services/require.service";
 import { toKebabCase } from "../../../../../services/dev.service";
 import { getImgSrcFromBase64 } from "../../../../../services/media/media.service";
+import { Wine } from "../../../../Wine/models/wine.model";
+import { BaseProps } from "../../../../../shared/models/base-props";
 
-export function WineryPreview(props) {
+interface Props extends BaseProps {
+  wine?: Wine;
+}
+
+export function WineryPreview(props: Props): JSX.Element | null {
   const history = useHistory();
 
   const data = !props.loading ? props.wine : props.demo;

@@ -9,7 +9,7 @@ import {
   GET_WINES,
   SEARCH_WINES,
 } from "../store/types";
-import { WineKeywordsReq, Wine, WineQuery } from "../models/wine.models";
+import { WineKeywordsReq, Wine, WineQuery } from "../models/wine.model";
 import { BaseRecords } from "../../../shared/models/base-records.model";
 
 export const wineService = {

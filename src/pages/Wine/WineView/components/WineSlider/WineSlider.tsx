@@ -4,15 +4,13 @@ import useWindowResize from "../../../../../shared/hooks/useWindowResize";
 import { minMax } from "../../../../../services/util.service";
 import { WineCardPreview } from "../WinesPreview/WineCardPreview";
 import { Loader } from "../../../../../components/Loader/Loader";
-import { Wine } from "../../../models/wine.models";
+import { Wine } from "../../../models/wine.model";
 import { WINE_DEMO } from "../../constants/wine";
+import { BaseProps } from "../../../../../shared/models/base-props";
 
-interface Props {
+interface Props extends BaseProps {
   wines?: Array<Wine>;
-  loading?: boolean;
   isFlexMode?: boolean;
-  demo?: any;
-  repeat?: number;
   title?: string;
 }
 
@@ -25,11 +23,11 @@ interface TitleProps {
   title?: string;
 }
 
-const SliderTitle = (props: TitleProps) => {
+const SliderTitle = (props: TitleProps): JSX.Element | null => {
   return props.title ? <h1>{props.title}</h1> : null;
 };
 
-export const WineSlider = (props: Props) => {
+export const WineSlider = (props: Props): JSX.Element | null => {
   const rtl = document.dir === "rtl";
   const { isFlexMode, loading } = props;
   const [position, setPosition] = useState<number>(0);

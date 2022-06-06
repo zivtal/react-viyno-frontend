@@ -15,8 +15,8 @@ import {
   UPDATE_REVIEW_STRUCTURE,
 } from "../store/types";
 import { BaseQueries } from "../../../shared/models/base-queries";
-import { WineQuery, WineStructure } from "../../Wine/models/wine.models";
-import { Post } from "../models/post";
+import { WineQuery, WineStructure } from "../../Wine/models/wine.model";
+import { Post } from "../models/post.model";
 
 const API = "post";
 

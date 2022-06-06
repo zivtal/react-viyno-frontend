@@ -14,7 +14,7 @@ import {
   SET_RECENT_REVIEWS,
   SET_REPLIES,
 } from "./types";
-import { Post } from "../models/post";
+import { Post } from "../models/post.model";
 import { BaseRecords } from "../../../shared/models/base-records.model";
 
 interface ReducerAction {

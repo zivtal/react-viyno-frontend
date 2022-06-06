@@ -19,12 +19,15 @@ import { Loader } from "../../../components/Loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { MainState } from "../../../store/models/store.models";
 import { getWine } from "../store/action";
+import { WINES_CACHE } from "../store/types";
 
 export const WineView = (props) => {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const { wine, loading } = useSelector((state: MainState) => state.wineModule);
+  const { [WINES_CACHE]: wines, loading } = useSelector(
+    (state: MainState) => state.wineModule
+  );
 
   useEffect(() => {
     if (!props.match.params.id) {
@@ -36,7 +39,9 @@ export const WineView = (props) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [wine]);
+  }, [wines]);
+
+  const wine = wines.find((wine) => wine.seo === props.match.params.id);
 
   return (
     <Loader

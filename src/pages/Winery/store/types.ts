@@ -12,3 +12,4 @@ export const WINERY = "winery";
 export const WINERIES = "wineries";
 export const WINERIES_SORT = "sort";
 export const WINERIES_FILTER = "filter";
+export const WINERIES_CACHE = "cache";

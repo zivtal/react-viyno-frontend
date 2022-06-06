@@ -6,6 +6,7 @@ import { authService } from "./service/auth.service";
 import { setUser } from "./store/actions";
 import "./Login.scss";
 import { LOGIN, SIGNUP } from "./store/types";
+import { MainState } from "../../store/models/store.models";
 
 export const Login = () => {
   const [isSignUpMode, setIsSignUpMode] = useState(false);
@@ -14,7 +15,7 @@ export const Login = () => {
   const [fullname, setFullname] = useState("");
   const history = useHistory();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.wineModule.user);
+  const user = useSelector((state: MainState) => state.authModule.user);
 
   const submit = async () => {
     try {

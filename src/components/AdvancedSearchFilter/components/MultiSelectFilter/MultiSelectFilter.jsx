@@ -9,11 +9,12 @@ import {
   extractConditionKey,
   toKebabCase,
 } from "../../../../services/dev.service";
+import { MainState } from "../../../../store/models/store.models";
 
 export const MultiSelectFilter = ({ title, query, data, max = 8 }) => {
   const location = useLocation();
   const history = useHistory();
-  const filter = useSelector((state) => state.wineModule.filter);
+  const filter = useSelector((state: MainState) => state.wineModule.filter);
   const queries = new URLSearchParams(location.search);
   const elInput = useRef(null);
   const [dataToShow, setDataToShow] = useState([]);

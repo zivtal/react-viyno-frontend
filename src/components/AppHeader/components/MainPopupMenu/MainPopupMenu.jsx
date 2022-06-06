@@ -4,13 +4,14 @@ import { useHistory } from "react-router-dom";
 import { mediaQuery } from "../../AppHeader";
 import { tryRequire } from "../../../../services/require.service";
 import { toKebabCase } from "../../../../services/dev.service";
+import { MainState } from "../../../../store/models/store.models";
 
 export function MainPopupMenu(props) {
   const rtl = document.dir === "rtl";
   const { config, close } = props;
   const history = useHistory();
   const el = useRef(null);
-  const { keywords } = useSelector((state) => state.wineModule);
+  const { keywords } = useSelector((state: MainState) => state.wineModule);
   const [tables, setTables] = useState({});
 
   const _generateMenu = (data, section, add, folder) => {

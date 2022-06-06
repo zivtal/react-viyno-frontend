@@ -15,6 +15,7 @@ import { Post } from "../../../../../../UserFeed/models/post";
 import { MainState } from "../../../../../../../store/models/store.models";
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
+import { SET_WINE } from "../../../../../store/types";
 
 interface Props {
   wine: Wine;
@@ -119,7 +120,7 @@ export const AddReview = (props: Props) => {
       const wineRatings = props.wine.ratings || 0;
 
       dispatch({
-        type: "SET_WINE",
+        type: SET_WINE,
         wine: {
           ...props.wine,
           rate: id

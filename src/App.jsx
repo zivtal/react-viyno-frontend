@@ -15,6 +15,7 @@ import { WineSearch } from "./pages/Wine/WineSearch/WineSearch";
 import { WineEdit } from "./pages/Wine/WineEdit/WineEdit";
 import { WineryView } from "./pages/Winery/WineryView/WineryView";
 import { WinerySearch } from "./pages/Winery/WinerySearch/WinerySearch";
+import { MainState } from "./store/models/store.models";
 
 // const WinePage = lazy(() =>
 //     import(/* webpackChunkName: wine */ './pages/Wine/WineView/WineView')
@@ -22,8 +23,8 @@ import { WinerySearch } from "./pages/Winery/WinerySearch/WinerySearch";
 // );
 
 export function App() {
-  const user = useSelector((state) => state.authModule.user);
-  const keywords = useSelector((state) => state.wineModule.keywords);
+  const user = useSelector((state: MainState) => state.authModule.user);
+  const keywords = useSelector((state: MainState) => state.wineModule.keywords);
   const dispatch = useDispatch();
   // document.dir = "rtl";
 

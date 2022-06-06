@@ -5,7 +5,6 @@ import {
   SET_WINES,
   SET_WINES_SORT,
   SET_WINE_SECTION,
-  SET_WINE,
   SET_WINES_PAGINATION,
   SET_WINES_LOADING,
   WINES_SORT,
@@ -14,12 +13,14 @@ import {
   WINE_SECTIONS,
   WINES,
   WINE,
+  WINES_CACHE,
+  ADD_WINE_CACHE,
 } from "./types";
 import { CLEAR_WINE_REVIEWS } from "../../UserFeed/store/types";
 import { Pagination } from "../../../shared/models/pagination";
 import { BaseFilter } from "../../../shared/models/base-filter";
 import { BaseSort } from "../../../shared/models/base-sort";
-import { WineKeywordsReq } from "../models/wine.models";
+import { Wine, WineKeywordsReq } from "../models/wine.models";
 
 export const setWinesPagination = (pagination: Pagination) => {
   return (dispatch: Function) => {
@@ -78,12 +79,20 @@ export const getWines = () => {
 };
 
 export const getWine = (id: string, vintage: number) => {
-  return async (dispatch: Function) => {
+  return async (dispatch: Function, state: Function) => {
+    const wine = state().wineModule[WINES_CACHE].find(
+      (wine: Wine) => wine.seo === id
+    );
+
+    if (wine) {
+      return;
+    }
+
     try {
       dispatch({ type: SET_WINES_LOADING, loading: true });
       dispatch({ type: CLEAR_WINE_REVIEWS });
       const wine = await wineService.getWine(id, { vintage });
-      dispatch({ type: SET_WINE, [WINE]: wine });
+      dispatch({ type: ADD_WINE_CACHE, [WINE]: wine });
     } catch (err) {
       console.error(err);
     } finally {

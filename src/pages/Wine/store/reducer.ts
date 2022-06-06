@@ -17,6 +17,8 @@ import {
   WINE_KEYWORDS,
   WINE,
   WINE_SECTIONS,
+  WINES_CACHE,
+  ADD_WINE_CACHE,
 } from "./types";
 import { Wine, WineKeywords } from "../models/wine.models";
 import { BaseSort } from "../../../shared/models/base-sort";
@@ -37,6 +39,7 @@ export interface PostState {
   [WINES_SORT]: BaseSort;
   [WINE_KEYWORDS]: WineKeywords | null;
   [WINE_SECTIONS]: WineSections;
+  [WINES_CACHE]: Array<Wine>;
   page: Pagination;
   total: number | null;
   loading: boolean;
@@ -55,6 +58,7 @@ const INITIAL_STATE: PostState = {
     region: [],
     style: [],
   },
+  [WINES_CACHE]: [],
   page: {},
   total: null,
   loading: false,
@@ -126,43 +130,58 @@ export default (state: PostState = INITIAL_STATE, action: ReducerAction) => {
       };
     }
 
-    case SET_WINE:
+    case SET_WINE: {
       return {
         ...state,
-        [WINE]: action[WINE],
+        [WINES_CACHE]: state[WINES_CACHE].map((wine: Wine) =>
+          wine.seo !== action.wine.seo ? wine : { ...wine, ...action.wine.seo }
+        ),
       };
+    }
 
-    case SET_WINE_KEYWORDS:
+    case ADD_WINE_CACHE: {
+      return {
+        ...state,
+        [WINES_CACHE]: [action[WINE], ...state[WINES_CACHE]].slice(0, 20),
+      };
+    }
+
+    case SET_WINE_KEYWORDS: {
       return {
         ...state,
         [WINE_KEYWORDS]: action[WINE_KEYWORDS],
       };
+    }
 
-    case SET_WINE_SECTION:
+    case SET_WINE_SECTION: {
       return {
         ...state,
         [WINE_SECTIONS]: { ...state[WINE_SECTIONS], ...action[WINE_SECTIONS] },
       };
+    }
 
-    case ADD_WINE:
+    case ADD_WINE: {
       return {
         ...state,
         [WINES]: [...state[WINES], action.wine],
       };
+    }
 
-    case REMOVE_WINE:
+    case REMOVE_WINE: {
       return {
         ...state,
         [WINES]: state[WINES].filter((wine) => wine._id !== action.wineId),
       };
+    }
 
-    case UPDATE_WINE:
+    case UPDATE_WINE: {
       return {
         ...state,
         [WINES]: state.wines.map((wine) =>
           wine._id === action.wine._id ? action.wine : wine
         ),
       };
+    }
 
     default:
       return state;

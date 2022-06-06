@@ -96,7 +96,9 @@ export const UserFeed = () => {
       }
     };
 
-    const data = !props.loading ? props?.reviews || [] : Array(8).fill(REVIEW_DEMO);
+    const data = !props.loading
+      ? props?.reviews || []
+      : Array(8).fill(REVIEW_DEMO);
 
     return (
       <section className="user-feed">

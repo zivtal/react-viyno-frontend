@@ -16,9 +16,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   size?: number;
   color?: string;
   backgroundColor?: string;
-  // className?: string;
-  // style?: CSS.Properties;
-  // children?: string | string[] | JSX.Element | JSX.Element[];
+  grayscale?: boolean;
 }
 
 interface LoaderType {
@@ -128,8 +126,11 @@ export const Loader = (props: Props): any => {
             };
           });
 
+        const filter = `blur(5px)${props.grayscale ? " grayscale(1)" : ""}`;
+        const style = { ...props.style, filter };
+
         return (
-          <div className={`loaders__overlay-skeleton`} style={props.style}>
+          <div className={`loaders__overlay-skeleton`} style={style}>
             {children(props.children)}
           </div>
         );

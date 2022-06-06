@@ -1,5 +1,8 @@
+import { Wine } from "../../Wine/models/wine.models";
+
 export interface Winery {
   _id: number;
+  seo: string;
   name: string;
   region?: string;
   country?: string;
@@ -13,6 +16,8 @@ export interface Winery {
   rate?: number;
   ratings?: number;
   wines?: number;
+  mostPopular?: Array<Wine>;
+  topRated?: Array<Wine>;
 }
 
 export interface WineryQuery {

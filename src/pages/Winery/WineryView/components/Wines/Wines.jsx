@@ -7,7 +7,7 @@ export function Wines(props) {
 
   useEffect(() => {
     (async () => {
-      loadMoreWines()
+      loadMoreWines();
     })();
   }, [props.winery]);
 
@@ -36,14 +36,22 @@ export function Wines(props) {
     <div className="winery-details">
       <>
         <h2>Most popular</h2>
-        <p>From {props?.winery?.name}</p>
-        <WineSlider wines={wines.popular} loading={!!wines?.loading?.popular} />
+        <p>From {props.winery?.name}</p>
+        <WineSlider
+          wines={wines.popular}
+          loading={!!wines?.loading?.popular}
+          repeat={props.winery?.wines || 8}
+        />
       </>
 
       <>
         <h2>Best rated</h2>
-        <p>From {props?.winery?.name}</p>
-        <WineSlider wines={wines.top} loading={!!wines?.loading?.top} />
+        <p>From {props.winery?.name}</p>
+        <WineSlider
+          wines={wines.top}
+          loading={!!wines?.loading?.top}
+          repeat={props.winery?.wines || 8}
+        />
       </>
     </div>
   );

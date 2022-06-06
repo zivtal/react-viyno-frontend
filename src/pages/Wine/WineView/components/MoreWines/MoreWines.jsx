@@ -40,7 +40,11 @@ export function MoreWines(props) {
         <h2>{props.title ? props.title : "More wines"}</h2>
       </Loader>
       {props.wine?.winery ? <p>From {props.wine?.winery}</p> : null}
-      <WineSlider wines={wines?.data} loading={isLoading} />
+      <WineSlider
+        wines={wines?.data}
+        loading={isLoading}
+        repeat={props.wine?.wineryProducts || 8}
+      />
     </div>
   );
 }

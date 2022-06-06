@@ -12,6 +12,7 @@ interface Props {
   loading?: boolean;
   isFlexMode?: boolean;
   demo?: any;
+  repeat?: number;
   title?: string;
 }
 
@@ -38,7 +39,7 @@ export const WineSlider = (props: Props) => {
 
   const data: Array<Wine> = !props.loading
     ? props.wines || []
-    : Array(8).fill(WINE_DEMO);
+    : Array(props.repeat || 8).fill(WINE_DEMO);
 
   const sliderStyle = () => {
     const sec = 2;
@@ -127,5 +128,5 @@ export const WineSlider = (props: Props) => {
         </div>
       </div>
     </>
-  ):null;
+  ) : null;
 };

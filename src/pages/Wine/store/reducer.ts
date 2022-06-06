@@ -80,7 +80,7 @@ export default (state: PostState = INITIAL_STATE, action: ReducerAction) => {
     case SET_WINES_FILTER: {
       return {
         ...state,
-        filter: action[WINES_FILTER] || INITIAL_STATE[WINES_FILTER],
+        [WINES_FILTER]: action[WINES_FILTER] || INITIAL_STATE[WINES_FILTER],
         [WINES]:
           JSON.stringify(action[WINES_FILTER]) ===
           JSON.stringify(state[WINES_FILTER])

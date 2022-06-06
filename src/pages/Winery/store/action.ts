@@ -1,9 +1,10 @@
-import { getCurrentPosition } from '../../../services/util.service';
-import { wineryService } from '../service/winery.service';
+// @ts-ignore
+import { getCurrentPosition } from "../../../services/util.service";
+import { wineryService } from "../service/winery.service";
 import { SET_WINERIES, SET_WINERY } from "./types";
 
 export function loadWineries() {
-  return async (dispatch, getState) => {
+  return async (dispatch: Function, getState: Function) => {
     const { filterBy } = getState().wineryModule;
     try {
       const wineries = await wineryService.query(filterBy);
@@ -14,10 +15,8 @@ export function loadWineries() {
   };
 }
 
-// loadWinery(1);
-
-export function loadWinery(id) {
-  return async (dispatch) => {
+export function loadWinery(id: string | number) {
+  return async (dispatch: Function) => {
     try {
       const location = await getCurrentPosition();
       const winery = await wineryService.getById(id, { ...location });

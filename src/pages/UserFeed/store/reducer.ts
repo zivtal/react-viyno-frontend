@@ -10,6 +10,7 @@ import {
 } from "./types";
 import { Post } from "../models/post.model";
 import { BaseRecords } from "../../../shared/models/base-records.model";
+import { baseRecordUpdate } from "../../../services/base-record.service";
 
 interface ReducerAction {
   type: string;
@@ -120,44 +121,18 @@ export default (state = INITIAL_STATE, action: ReducerAction) => {
     case SET_REACTION: {
       const { _id, ilike } = action.like;
 
-      const _update = (
-        posts: BaseRecords<Post>,
-        like: boolean,
-        postId: number
-      ): BaseRecords<Post> => {
-        return {
-          ...posts,
-          data: posts.data.map((data: Post) => {
-            if (data._id === postId) {
-              const ilike = like ? 1 : 0;
-              const likes = () => {
-                if (ilike === data?.ilike) {
-                  return data.likes;
-                }
-
-                return data.likes + (ilike ? +1 : -1);
-              };
-
-              return {
-                ...data,
-                ilike,
-                likes: likes(),
-              };
-            }
-
-            return data.reply
-              ? {
-                  ...data,
-                  reply: _update(data.reply, like, postId),
-                }
-              : data;
-          }),
-        };
-      };
-
       return {
         ...state,
-        [POSTS]: _update(state[POSTS], ilike, _id),
+        [POSTS]: baseRecordUpdate<Post>(
+          state[POSTS],
+          {
+            key: "_id",
+            value: _id,
+            recursiveKey: "reply",
+          },
+          { ilike: ilike ? 1 : 0 },
+          { likes: "ilike" }
+        ),
       };
     }
 

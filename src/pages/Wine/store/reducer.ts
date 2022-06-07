@@ -24,8 +24,8 @@ import {
   WINE_RECENT_REVIEWS,
 } from "./types";
 import { Wine, WineState } from "../models/wine.model";
-import { BaseRecords } from "../../../shared/models/base-records.model";
 import { Post } from "../../UserFeed/models/post.model";
+import { baseRecordAppend } from "../../../services/base-record.service";
 
 interface ReducerAction {
   type: string;
@@ -131,23 +131,11 @@ export default (state: WineState = INITIAL_STATE, action: ReducerAction) => {
       return {
         ...state,
         [WINES_CACHE]: state[WINES_CACHE].map((wine: Wine) => {
-          const helpfulReviews: BaseRecords<Post> = {
-            data: [
-              ...(wine[WINE_HELPFUL_REVIEWS]?.data?.filter(
-                ({ _id: postId }) =>
-                  !action[WINE_HELPFUL_REVIEWS].data?.find(
-                    ({ _id }: Post) => _id === postId
-                  )
-              ) || []),
-              ...(action[WINE_HELPFUL_REVIEWS].data || []),
-            ],
-            page:
-              action[WINE_HELPFUL_REVIEWS].page ||
-              wine[WINE_HELPFUL_REVIEWS]?.page,
-            total:
-              action[WINE_HELPFUL_REVIEWS].total ||
-              wine[WINE_HELPFUL_REVIEWS]?.total,
-          };
+          const helpfulReviews = baseRecordAppend<Post>(
+            action[WINE_HELPFUL_REVIEWS],
+            wine[WINE_HELPFUL_REVIEWS],
+            "_id"
+          );
 
           return wine.seo === action.wineSeo || wine._id === action.wineId
             ? {
@@ -163,23 +151,11 @@ export default (state: WineState = INITIAL_STATE, action: ReducerAction) => {
       return {
         ...state,
         [WINES_CACHE]: state[WINES_CACHE].map((wine: Wine) => {
-          const recentReviews: BaseRecords<Post> = {
-            data: [
-              ...(wine[WINE_RECENT_REVIEWS]?.data?.filter(
-                ({ _id: postId }) =>
-                  !action[WINE_RECENT_REVIEWS].data?.find(
-                    ({ _id }: Post) => _id === postId
-                  )
-              ) || []),
-              ...(action[WINE_RECENT_REVIEWS].data || []),
-            ],
-            page:
-              action[WINE_RECENT_REVIEWS].page ||
-              wine[WINE_RECENT_REVIEWS]?.page,
-            total:
-              action[WINE_RECENT_REVIEWS].total ||
-              wine[WINE_RECENT_REVIEWS]?.total,
-          };
+          const recentReviews = baseRecordAppend<Post>(
+            action[WINE_RECENT_REVIEWS],
+            wine[WINE_RECENT_REVIEWS],
+            "_id"
+          );
 
           return wine.seo === action.wineSeo || wine._id === action.wineId
             ? {

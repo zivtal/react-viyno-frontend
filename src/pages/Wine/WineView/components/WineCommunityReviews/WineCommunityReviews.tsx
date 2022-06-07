@@ -119,6 +119,35 @@ const WinePreviews = ({
   );
 };
 
+const ReviewMenu = ({
+  review,
+  onSet,
+}: {
+  review?: string;
+  onSet: Function;
+}) => {
+  const reviews = ["Helpful", "Recent", "You"];
+
+  return (
+    <div className="review-menu flex">
+      {reviews.map((title, index) => (
+        <span
+          onClick={() => onSet(reviews[index])}
+          style={{
+            color:
+              review === reviews[index]
+                ? "var(--base-color1)"
+                : "var(--base-text)",
+          }}
+          key={`COMMENT_${index}`}
+        >
+          {title}
+        </span>
+      ))}
+    </div>
+  );
+};
+
 export const WineCommunityReviews = (props: { wine?: Wine }) => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -126,11 +155,12 @@ export const WineCommunityReviews = (props: { wine?: Wine }) => {
   const user = useSelector((state: MainState) => state.authModule.user);
 
   const [activeId, setActiveId] = useState(null);
-  const [review, setReviewSection] = useState("Helpful");
+  const [selectedCategory, setSelectedCategory] = useState("Helpful");
   const [rate, setRate] = useState(null);
 
   const getQuery = (name: string) => {
     const queryParams = new URLSearchParams(location.search);
+
     return queryParams.get(name)?.split("-") || [];
   };
 
@@ -157,29 +187,6 @@ export const WineCommunityReviews = (props: { wine?: Wine }) => {
     return () => {};
   }, [props.wine?._id, location.search, user]);
 
-  const ReviewMenu = () => {
-    const reviews = ["Helpful", "Recent", "You"];
-
-    return (
-      <div className="review-menu flex">
-        {reviews.map((title, index) => (
-          <span
-            onClick={() => setReviewSection(reviews[index])}
-            style={{
-              color:
-                review === reviews[index]
-                  ? "var(--base-color1)"
-                  : "var(--base-text)",
-            }}
-            key={`COMMENT_${index}`}
-          >
-            {title}
-          </span>
-        ))}
-      </div>
-    );
-  };
-
   const reviews: Reviews = {
     Helpful: {
       state: props.wine?.helpfulReviews,
@@ -200,14 +207,14 @@ export const WineCommunityReviews = (props: { wine?: Wine }) => {
         <div className="reviews-list">
           <h1>Community reviews</h1>
 
-          <ReviewMenu />
+          <ReviewMenu onSet={setSelectedCategory} review={selectedCategory} />
 
           <div className="community-reviews__list">
             <WinePreviews
-              reviews={reviews[review].state}
+              reviews={reviews[selectedCategory].state}
               activeId={activeId}
               setActiveId={setActiveId}
-              onLoadMore={reviews[review].load}
+              onLoadMore={reviews[selectedCategory].load}
             />
           </div>
         </div>

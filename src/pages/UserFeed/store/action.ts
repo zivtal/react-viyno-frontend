@@ -6,22 +6,38 @@ import {
   GET_REPLIES,
   SET_REPLIES,
   SET_REACTION,
-  GET_MY_REVIEWS,
   SET_MY_REVIEWS,
-  GET_RECENT_REVIEWS,
-  MY_REVIEWS,
-  SET_RECENT_REVIEWS,
-  RECENT_REVIEWS,
-  SET_HELPFUL_REVIEWS,
-  HELPFUL_REVIEWS,
-  GET_HELPFUL_REVIEWS,
+  UPDATE_POSTS,
 } from "./types";
 import { BaseQueries } from "../../../shared/models/base-queries";
 import { Post } from "../models/post.model";
 import { container } from "tsyringe";
 import PostApiService from "../service/post.service2";
+import { Pagination } from "../../../shared/models/pagination";
+import { MY_WINE_REVIEWS } from "../../Wine/store/types";
 
 // const postApiService = container.resolve(PostApiService);
+
+export function getPostsUpdate(page?: Pagination) {
+  return async (dispatch: Function, state: Function) => {
+    const lastPostId = state().postModule.posts.data[0]?._id;
+
+    try {
+      const posts = await postService[GET_POSTS]({
+        page,
+        filter: { gt_id: lastPostId },
+      });
+
+      dispatch({ type: UPDATE_POSTS, posts });
+
+      if (posts.page.total - 1 > posts.page.index) {
+        getPostsUpdate({ index: posts.page.index++ });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+}
 
 export function getPosts(queries?: BaseQueries) {
   return async (dispatch: Function, state: Function) => {
@@ -82,87 +98,21 @@ export function setPostReaction(id: number, state: number | boolean) {
   };
 }
 
-export function getMyReviews(id?: string | number) {
+export function getMyReviews() {
   return async (dispatch: Function, state: Function) => {
     const user = state().authModule.user;
 
-    if (!id || !user) {
-      dispatch({ type: SET_MY_REVIEWS, [MY_REVIEWS]: [] });
+    if (!user) {
+      dispatch({ type: SET_MY_REVIEWS, [MY_WINE_REVIEWS]: [] });
       return;
     }
 
     try {
       dispatch({ type: SET_POST_STATE_LOADING, loading: true });
-      const res = await postService[GET_MY_REVIEWS](id, {
-        sort: { createdAt: 0 },
-      });
-      dispatch({ type: SET_MY_REVIEWS, [MY_REVIEWS]: res });
-    } catch (err) {
-      console.error(err);
-    } finally {
-      dispatch({ type: SET_POST_STATE_LOADING, loading: false });
-    }
-  };
-}
-
-export function getRecentReviews(
-  id?: string | number,
-  vintage?: number,
-  force?: boolean
-) {
-  return async (dispatch: Function, state: Function) => {
-    const queries = vintage ? { filter: { eqVintage: vintage } } : {};
-
-    if (!id) {
-      dispatch({ type: SET_RECENT_REVIEWS, [RECENT_REVIEWS]: [] });
-      return;
-    }
-
-    const index = force
-      ? undefined
-      : state().postModule[RECENT_REVIEWS]?.page?.index;
-
-    try {
-      dispatch({ type: SET_POST_STATE_LOADING, loading: true });
-      const res = await postService[GET_RECENT_REVIEWS](id, {
-        ...queries,
-        page: { index: index !== undefined ? index + 1 : 0 },
-        sort: { createdAt: 0 },
-      });
-      dispatch({ type: SET_RECENT_REVIEWS, [RECENT_REVIEWS]: res });
-    } catch (err) {
-      console.error(err);
-    } finally {
-      dispatch({ type: SET_POST_STATE_LOADING, loading: false });
-    }
-  };
-}
-
-export function getHelpfulReviews(
-  id?: string | number,
-  vintage?: number,
-  force?: boolean
-) {
-  return async (dispatch: Function, state: Function) => {
-    const queries = vintage ? { filter: { eqVintage: vintage } } : {};
-
-    if (!id) {
-      dispatch({ type: SET_HELPFUL_REVIEWS, [HELPFUL_REVIEWS]: [] });
-      return;
-    }
-
-    const index = force
-      ? undefined
-      : state().postModule[RECENT_REVIEWS]?.page?.index;
-
-    try {
-      dispatch({ type: SET_POST_STATE_LOADING, loading: true });
-      const res = await postService[GET_HELPFUL_REVIEWS](id, {
-        ...queries,
-        page: { index: index !== undefined ? index + 1 : 0 },
-        sort: { createdAt: 0 },
-      });
-      dispatch({ type: SET_HELPFUL_REVIEWS, [HELPFUL_REVIEWS]: res });
+      // const res = await postService[GET_MY_REVIEWS](id, {
+      //   sort: { createdAt: 0 },
+      // });
+      // dispatch({ type: SET_MY_REVIEWS, [MY_REVIEWS]: res });
     } catch (err) {
       console.error(err);
     } finally {

@@ -10,6 +10,8 @@ import {
   WINES_SORT,
 } from "../store/types";
 import { BaseFilter } from "../../../shared/models/base-filter";
+import { BaseRecords } from "../../../shared/models/base-records.model";
+import { Post } from "../../UserFeed/models/post.model";
 
 export interface WineState {
   [WINES]: Array<Wine>;
@@ -160,6 +162,9 @@ export interface Wine {
   wineryProducts?: number;
   wineryRate?: number;
   wineryRatings?: number;
+  helpfulReviews?: BaseRecords<Post>;
+  myReviews?: BaseRecords<Post>;
+  recentReviews?: BaseRecords<Post>;
 }
 
 export interface WineQuery extends BaseQueries {

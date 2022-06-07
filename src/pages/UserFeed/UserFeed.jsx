@@ -8,7 +8,7 @@ import { ReviewPreview } from "../Wine/WineView/components/WineCommunityReviews/
 import { WineSlider } from "../Wine/WineView/components/WineSlider/WineSlider";
 import { postServiceOld } from "./service/post.api-service";
 import { Loader } from "../../components/Loader/Loader";
-import { getPosts, getReplies } from "./store/action";
+import { getPosts, getPostsUpdate, getReplies } from "./store/action";
 import { getWines } from "../Wine/store/action";
 import { REVIEW_DEMO } from "../Wine/WineView/constants/wine";
 import { POSTS } from "./store/types";
@@ -33,8 +33,6 @@ export const UserFeed = () => {
 
   const [postActiveId, setPostActiveId] = useState(null);
 
-  const [feed, setFeed] = useState(null);
-
   useLayoutEffect(() => {
     if (wines?.length) {
       return;
@@ -48,9 +46,7 @@ export const UserFeed = () => {
   useEffect(() => {
     if (posts.data?.length) {
       (async () => {
-        dispatch(
-          getPosts({ filter: { gtCreatedAt: posts.data[0].createdAt } })
-        );
+        dispatch(getPostsUpdate());
       })();
 
       return;

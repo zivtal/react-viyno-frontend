@@ -3,10 +3,7 @@ import { httpService } from "../../../services/http-client/http.service";
 import {
   ADD_POST,
   ADD_REVIEW,
-  GET_HELPFUL_REVIEWS,
-  GET_MY_REVIEWS,
   GET_POSTS,
-  GET_RECENT_REVIEWS,
   GET_REPLIES,
   GET_REVIEW_STRUCTURE,
   SET_REACTION,
@@ -17,6 +14,11 @@ import {
 import { BaseQueries } from "../../../shared/models/base-queries";
 import { WineQuery, WineStructure } from "../../Wine/models/wine.model";
 import { Post } from "../models/post.model";
+import {
+  GET_WINE_HELPFUL_REVIEWS,
+  GET_MY_WINE_REVIEWS,
+  GET_WINE_RECENT_REVIEWS,
+} from "../../Wine/store/types";
 
 const API = "post";
 
@@ -83,20 +85,26 @@ export const postService = {
     );
   },
 
-  [GET_MY_REVIEWS]: (wineId: string | number, queries?: WineQuery) => {
-    return httpService.post(API + "/" + GET_MY_REVIEWS + "/" + wineId, queries);
-  },
-
-  [GET_HELPFUL_REVIEWS]: (wineId: string | number, queries?: WineQuery) => {
+  [GET_MY_WINE_REVIEWS]: (wineId: string | number, queries?: WineQuery) => {
     return httpService.post(
-      API + "/" + GET_HELPFUL_REVIEWS + "/" + wineId,
+      API + "/" + GET_MY_WINE_REVIEWS + "/" + wineId,
       queries
     );
   },
 
-  [GET_RECENT_REVIEWS]: (wineId: string | number, queries?: WineQuery) => {
+  [GET_WINE_HELPFUL_REVIEWS]: (
+    wineId: string | number,
+    queries?: WineQuery
+  ) => {
     return httpService.post(
-      API + "/" + GET_RECENT_REVIEWS + "/" + wineId,
+      API + "/" + GET_WINE_HELPFUL_REVIEWS + "/" + wineId,
+      queries
+    );
+  },
+
+  [GET_WINE_RECENT_REVIEWS]: (wineId: string | number, queries?: WineQuery) => {
+    return httpService.post(
+      API + "/" + GET_WINE_RECENT_REVIEWS + "/" + wineId,
       queries
     );
   },

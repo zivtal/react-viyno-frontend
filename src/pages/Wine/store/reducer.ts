@@ -18,8 +18,14 @@ import {
   WINE_SECTIONS,
   WINES_CACHE,
   ADD_WINE_CACHE,
+  SET_WINE_HELPFUL_REVIEWS,
+  SET_WINE_RECENT_REVIEWS,
+  WINE_HELPFUL_REVIEWS,
+  WINE_RECENT_REVIEWS,
 } from "./types";
 import { Wine, WineState } from "../models/wine.model";
+import { BaseRecords } from "../../../shared/models/base-records.model";
+import { Post } from "../../UserFeed/models/post.model";
 
 interface ReducerAction {
   type: string;
@@ -113,9 +119,75 @@ export default (state: WineState = INITIAL_STATE, action: ReducerAction) => {
     case SET_WINE: {
       return {
         ...state,
-        [WINES_CACHE]: state[WINES_CACHE].map((wine: Wine) =>
-          wine.seo !== action.wine.seo ? wine : { ...wine, ...action.wine.seo }
-        ),
+        [WINES_CACHE]: state[WINES_CACHE].map((wine: Wine) => {
+          return wine.seo === action.wine?.seo || wine._id === action.wine?._id
+            ? { ...wine, ...action.wine }
+            : wine;
+        }),
+      };
+    }
+
+    case SET_WINE_HELPFUL_REVIEWS: {
+      return {
+        ...state,
+        [WINES_CACHE]: state[WINES_CACHE].map((wine: Wine) => {
+          const helpfulReviews: BaseRecords<Post> = {
+            data: [
+              ...(wine[WINE_HELPFUL_REVIEWS]?.data?.filter(
+                ({ _id: postId }) =>
+                  !action[WINE_HELPFUL_REVIEWS].data?.find(
+                    ({ _id }: Post) => _id === postId
+                  )
+              ) || []),
+              ...(action[WINE_HELPFUL_REVIEWS].data || []),
+            ],
+            page:
+              action[WINE_HELPFUL_REVIEWS].page ||
+              wine[WINE_HELPFUL_REVIEWS]?.page,
+            total:
+              action[WINE_HELPFUL_REVIEWS].total ||
+              wine[WINE_HELPFUL_REVIEWS]?.total,
+          };
+
+          return wine.seo === action.wineSeo || wine._id === action.wineId
+            ? {
+                ...wine,
+                [WINE_HELPFUL_REVIEWS]: helpfulReviews,
+              }
+            : wine;
+        }),
+      };
+    }
+
+    case SET_WINE_RECENT_REVIEWS: {
+      return {
+        ...state,
+        [WINES_CACHE]: state[WINES_CACHE].map((wine: Wine) => {
+          const recentReviews: BaseRecords<Post> = {
+            data: [
+              ...(wine[WINE_RECENT_REVIEWS]?.data?.filter(
+                ({ _id: postId }) =>
+                  !action[WINE_RECENT_REVIEWS].data?.find(
+                    ({ _id }: Post) => _id === postId
+                  )
+              ) || []),
+              ...(action[WINE_RECENT_REVIEWS].data || []),
+            ],
+            page:
+              action[WINE_RECENT_REVIEWS].page ||
+              wine[WINE_RECENT_REVIEWS]?.page,
+            total:
+              action[WINE_RECENT_REVIEWS].total ||
+              wine[WINE_RECENT_REVIEWS]?.total,
+          };
+
+          return wine.seo === action.wineSeo || wine._id === action.wineId
+            ? {
+                ...wine,
+                [WINE_RECENT_REVIEWS]: recentReviews,
+              }
+            : wine;
+        }),
       };
     }
 

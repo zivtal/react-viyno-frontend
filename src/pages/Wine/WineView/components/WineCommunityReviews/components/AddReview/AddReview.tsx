@@ -23,7 +23,7 @@ interface Props extends BaseProps {
   rateValue: number | null;
   onSet: Function;
   onClose: Function;
-  reviews: BaseRecords<Post>;
+  reviews?: BaseRecords<Post>;
 }
 
 export const AddReview = (props: Props): JSX.Element | null => {
@@ -64,7 +64,7 @@ export const AddReview = (props: Props): JSX.Element | null => {
       setDescription("");
       setId(null);
     } else {
-      const review = (props.reviews.data || []).find(
+      const review = (props.reviews?.data || []).find(
         (review: Post) => review.vintage === vintage
       );
 
@@ -113,7 +113,7 @@ export const AddReview = (props: Props): JSX.Element | null => {
       );
 
       const prevRate =
-        (props.reviews.data || []).find(
+        (props.reviews?.data || []).find(
           (review: Post) => review.vintage === vintage
         )?.rate || 0;
 

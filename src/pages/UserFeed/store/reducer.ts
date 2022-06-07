@@ -1,18 +1,12 @@
 import {
   ADD_POST,
-  CLEAR_WINE_REVIEWS,
-  HELPFUL_REVIEWS,
-  MY_REVIEWS,
   POSTS,
-  RECENT_REVIEWS,
   SET_CACHE_POSTS,
-  SET_HELPFUL_REVIEWS,
-  SET_MY_REVIEWS,
   SET_POST_STATE_LOADING,
   SET_POSTS,
   SET_REACTION,
-  SET_RECENT_REVIEWS,
   SET_REPLIES,
+  UPDATE_POSTS,
 } from "./types";
 import { Post } from "../models/post.model";
 import { BaseRecords } from "../../../shared/models/base-records.model";
@@ -24,29 +18,11 @@ interface ReducerAction {
 
 export interface PostState {
   [POSTS]: BaseRecords<Post>;
-  [MY_REVIEWS]: BaseRecords<Post>;
-  [HELPFUL_REVIEWS]: BaseRecords<Post>;
-  [RECENT_REVIEWS]: BaseRecords<Post>;
   loading: boolean;
 }
 
 const INITIAL_STATE: PostState = {
   [POSTS]: {
-    data: [],
-    page: {},
-    total: 0,
-  },
-  [MY_REVIEWS]: {
-    data: [],
-    page: {},
-    total: 0,
-  },
-  [HELPFUL_REVIEWS]: {
-    data: [],
-    page: {},
-    total: 0,
-  },
-  [RECENT_REVIEWS]: {
     data: [],
     page: {},
     total: 0,
@@ -63,6 +39,21 @@ export default (state = INITIAL_STATE, action: ReducerAction) => {
           data: [...state[POSTS].data, ...(action.posts?.data || [])],
           page: { ...action.posts?.page },
           total: action.posts?.total,
+        },
+      };
+    }
+
+    case UPDATE_POSTS: {
+      const newPosts = action.posts?.data || [];
+
+      return {
+        ...state,
+        [POSTS]: {
+          ...state[POSTS],
+          data: [...newPosts, ...state[POSTS].data].slice(
+            0,
+            state[POSTS].data.length
+          ),
         },
       };
     }
@@ -110,66 +101,6 @@ export default (state = INITIAL_STATE, action: ReducerAction) => {
       return {
         ...state,
         [POSTS]: _update(state[POSTS], replies, postId),
-      };
-    }
-
-    case SET_MY_REVIEWS: {
-      return {
-        ...state,
-        [MY_REVIEWS]: action[MY_REVIEWS] || INITIAL_STATE[MY_REVIEWS],
-      };
-    }
-
-    case SET_RECENT_REVIEWS: {
-      if (!action[RECENT_REVIEWS]) {
-        return {
-          ...state,
-          [RECENT_REVIEWS]: INITIAL_STATE[RECENT_REVIEWS],
-        };
-      }
-
-      return {
-        ...state,
-        [RECENT_REVIEWS]: action[RECENT_REVIEWS]?.page?.index
-          ? {
-              ...action[RECENT_REVIEWS],
-              data: [
-                ...action[RECENT_REVIEWS]?.data,
-                ...(state[RECENT_REVIEWS]?.data || []),
-              ],
-            }
-          : action[RECENT_REVIEWS],
-      };
-    }
-
-    case SET_HELPFUL_REVIEWS: {
-      if (!action[HELPFUL_REVIEWS]) {
-        return {
-          ...state,
-          [HELPFUL_REVIEWS]: INITIAL_STATE[HELPFUL_REVIEWS],
-        };
-      }
-
-      return {
-        ...state,
-        [HELPFUL_REVIEWS]: action[HELPFUL_REVIEWS]?.page?.index
-          ? {
-              ...action[HELPFUL_REVIEWS],
-              data: [
-                ...action[HELPFUL_REVIEWS]?.data,
-                ...(state[HELPFUL_REVIEWS]?.data || []),
-              ],
-            }
-          : action[HELPFUL_REVIEWS],
-      };
-    }
-
-    case CLEAR_WINE_REVIEWS: {
-      return {
-        ...state,
-        [MY_REVIEWS]: INITIAL_STATE[MY_REVIEWS],
-        [RECENT_REVIEWS]: INITIAL_STATE[RECENT_REVIEWS],
-        [HELPFUL_REVIEWS]: INITIAL_STATE[HELPFUL_REVIEWS],
       };
     }
 
@@ -227,9 +158,6 @@ export default (state = INITIAL_STATE, action: ReducerAction) => {
       return {
         ...state,
         [POSTS]: _update(state[POSTS], ilike, _id),
-        [MY_REVIEWS]: _update(state[MY_REVIEWS], ilike, _id),
-        [RECENT_REVIEWS]: _update(state[RECENT_REVIEWS], ilike, _id),
-        [HELPFUL_REVIEWS]: _update(state[HELPFUL_REVIEWS], ilike, _id),
       };
     }
 

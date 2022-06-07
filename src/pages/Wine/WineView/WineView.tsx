@@ -28,19 +28,18 @@ export const WineView = (props: any): JSX.Element => {
     (state: MainState) => state.wineModule
   );
 
+  const wine = wines.find((wine) => wine.seo === props.match.params.id);
+
   useEffect(() => {
-    if (!props.match.params.id) {
+    if (!props.match.params.id || wine?.seo === props.match.params.id) {
       return;
     }
 
+    window.scrollTo(0, 0);
     dispatch(getWine(props.match.params.id));
   }, [props.match.params.id]);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [wines]);
-
-  const wine = wines.find((wine) => wine.seo === props.match.params.id);
+  useEffect(() => {}, [props.match.params.id]);
 
   return (
     <Loader

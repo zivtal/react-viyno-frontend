@@ -1,6 +1,6 @@
 import { BaseRecords } from "../shared/models/base-records.model";
 
-export const baseRecordAppend = <T>(
+const append = <T>(
   insert?: BaseRecords<T>,
   state?: BaseRecords<T>,
   key?: string
@@ -24,7 +24,7 @@ export const baseRecordAppend = <T>(
   };
 };
 
-export const baseRecordInsert = <T>(
+const insert = <T>(
   insert?: BaseRecords<T>,
   state?: BaseRecords<T>,
   key?: string
@@ -48,7 +48,7 @@ export const baseRecordInsert = <T>(
   };
 };
 
-export const baseRecordOverwrite = <T>(
+const overwrite = <T>(
   insert?: BaseRecords<T>,
   state?: BaseRecords<T>,
   key?: string
@@ -72,7 +72,7 @@ export const baseRecordOverwrite = <T>(
   };
 };
 
-export const baseRecordUpdate = <T>(
+const update = <T>(
   state: BaseRecords<T>,
   unique: {
     key: string;
@@ -100,7 +100,7 @@ export const baseRecordUpdate = <T>(
       return unique.recursiveKey && content[unique.recursiveKey]
         ? {
             ...content,
-            [unique.recursiveKey]: baseRecordUpdate(
+            [unique.recursiveKey]: update(
               content[unique.recursiveKey] as BaseRecords<T>,
               unique,
               insert,
@@ -110,4 +110,11 @@ export const baseRecordUpdate = <T>(
         : content;
     }),
   };
+};
+
+export const baseRecords = {
+  append,
+  insert,
+  overwrite,
+  update,
 };

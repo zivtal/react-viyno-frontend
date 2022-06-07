@@ -25,7 +25,7 @@ import {
 } from "./types";
 import { Wine, WineState } from "../models/wine.model";
 import { Post } from "../../UserFeed/models/post.model";
-import { baseRecordAppend } from "../../../services/base-record.service";
+import { baseRecords } from "../../../services/base-records.service";
 
 interface ReducerAction {
   type: string;
@@ -131,7 +131,7 @@ export default (state: WineState = INITIAL_STATE, action: ReducerAction) => {
       return {
         ...state,
         [WINES_CACHE]: state[WINES_CACHE].map((wine: Wine) => {
-          const helpfulReviews = baseRecordAppend<Post>(
+          const helpfulReviews = baseRecords.append<Post>(
             action[WINE_HELPFUL_REVIEWS],
             wine[WINE_HELPFUL_REVIEWS],
             "_id"
@@ -151,7 +151,7 @@ export default (state: WineState = INITIAL_STATE, action: ReducerAction) => {
       return {
         ...state,
         [WINES_CACHE]: state[WINES_CACHE].map((wine: Wine) => {
-          const recentReviews = baseRecordAppend<Post>(
+          const recentReviews = baseRecords.append<Post>(
             action[WINE_RECENT_REVIEWS],
             wine[WINE_RECENT_REVIEWS],
             "_id"

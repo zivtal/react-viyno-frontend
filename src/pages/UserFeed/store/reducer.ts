@@ -10,7 +10,7 @@ import {
 } from "./types";
 import { Post } from "../models/post.model";
 import { BaseRecords } from "../../../shared/models/base-records.model";
-import { baseRecordUpdate } from "../../../services/base-record.service";
+import { baseRecords } from "../../../services/base-records.service";
 
 interface ReducerAction {
   type: string;
@@ -123,7 +123,7 @@ export default (state = INITIAL_STATE, action: ReducerAction) => {
 
       return {
         ...state,
-        [POSTS]: baseRecordUpdate<Post>(
+        [POSTS]: baseRecords.update<Post>(
           state[POSTS],
           {
             key: "_id",

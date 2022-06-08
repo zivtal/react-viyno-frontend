@@ -8,7 +8,10 @@ function type(file: string): string | null {
   return ext ? ext[ext.length - 1] : null;
 }
 
-export function getImgSrcFromBase64(data: string, type?: string): string {
+export function getImgSrcFromBase64(
+  data: string,
+  type: string = "png"
+): string {
   if (!data) {
     return "";
   }

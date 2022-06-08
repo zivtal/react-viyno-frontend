@@ -21,6 +21,5 @@ export interface Post {
   ratings?: number;
 
   userName?: string;
-  photoData?: string;
-  photoType?: string;
+  userPhoto?: string;
 }

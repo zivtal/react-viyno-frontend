@@ -8,7 +8,7 @@ export const PostUserInfo = ({ review, isMinimal }) => {
     <div className="community-user-info">
       <img
         src={
-          getImgSrcFromBase64(review.photoData, review.photoType) ||
+          getImgSrcFromBase64(review.userPhoto) ||
           tryRequire("imgs/icons/user-profile.svg")
         }
         onError={(ev) =>

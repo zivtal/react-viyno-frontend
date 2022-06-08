@@ -8,6 +8,7 @@ import { tryRequire } from "../../../../../../../services/require.service";
 import "./ReplyPreview.scss";
 import { setPostReaction } from "../../../../../../UserFeed/store/action";
 import { getImgSrcFromBase64 } from "../../../../../../../services/media/media.service";
+import { MainState } from "../../../../../../../store/models/store.models";
 
 export const ReplyPreview = ({
   reply,
@@ -18,7 +19,7 @@ export const ReplyPreview = ({
   setSrc,
 }) => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.authModule.user);
+  const user = useSelector((state: MainState) => state.authModule.user);
 
   const setLike = (data, type = "reply") => {
     if (!user) {
@@ -34,7 +35,7 @@ export const ReplyPreview = ({
     <>
       <div className={`reply-preview ${reply.replyId ? "reply-to-reply" : ""}`}>
         <img
-          src={getImgSrcFromBase64(reply.photoData, reply.photoType)}
+          src={getImgSrcFromBase64(reply.userPhoto)}
           onError={(ev) =>
             (ev.target.src = tryRequire("imgs/icons/user-profile.svg"))
           }

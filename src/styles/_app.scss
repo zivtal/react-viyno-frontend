@@ -9,6 +9,7 @@
 }
 
 .community-button {
+  user-select: none;
   cursor: pointer;
   display: flex;
   padding: 4px 8px;
@@ -24,8 +25,7 @@
   &:hover {
     @media not all and (pointer: coarse) {
       box-shadow: 0 4px 4px 0 rgba(51, 48, 48, 0.2),
-      0 -8px 24px 0 rgba(234, 224, 218, 0.3);
+        0 -8px 24px 0 rgba(234, 224, 218, 0.3);
     }
   }
 }
-

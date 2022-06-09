@@ -11,7 +11,13 @@ import { extractConditionKey } from "../../../services/dev.service";
 import { Loader } from "../../../components/Loader/Loader";
 import "./WineSearch.scss";
 import { MainState } from "../../../store/models/store.models";
-import { WINE_KEYWORDS, WINES, WINES_FILTER, WINES_SORT } from "../store/types";
+import {
+  SET_WINES_PAGINATION,
+  WINE_KEYWORDS,
+  WINES,
+  WINES_FILTER,
+  WINES_SORT,
+} from "../store/types";
 
 export const WineSearch = (props) => {
   const dispatch = useDispatch();
@@ -40,7 +46,10 @@ export const WineSearch = (props) => {
   const isFiltered = () => filter && Object.keys(filter).length;
 
   useEffect(() => {
-    if (!keywords) return;
+    if (!keywords) {
+      return;
+    }
+
     dispatch(
       setWinesFilter(
         Object.values(keywords.query).reduce(
@@ -59,7 +68,7 @@ export const WineSearch = (props) => {
     debounce(
       async () => {
         try {
-          dispatch(getWines());
+          setTimeout(() => dispatch(getWines()));
           // window.scrollTo(0, 0);
         } catch {}
       },

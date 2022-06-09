@@ -14,25 +14,25 @@ import { BaseRecords } from "../../../shared/models/base-records.model";
 
 export const wineService = {
   [GET_WINE]: (id: string, queries: any): Promise<Wine> => {
-    return httpService.get(BASE_API + GET_WINE + "/" + id, null, queries);
+    return httpService.post(BASE_API + GET_WINE + "/" + id, queries);
   },
 
   [SEARCH_WINES]: (queries?: WineQuery): Promise<BaseRecords<Wine>> => {
     queries = _clearEmptyQueries(queries);
 
-    return httpService.get(BASE_API + SEARCH_WINES, null, queries);
+    return httpService.post(BASE_API + SEARCH_WINES, queries);
   },
 
   [GET_WINES]: (queries?: WineQuery): Promise<BaseRecords<Wine>> => {
     queries = _clearEmptyQueries(queries);
 
-    return httpService.get(BASE_API + GET_WINES, null, queries);
+    return httpService.post(BASE_API + GET_WINES, queries);
   },
 
   [GET_WINE_KEYWORDS]: (queries?: WineKeywordsReq) => {
     queries = _clearEmptyQueries(queries);
 
-    return httpService.get(BASE_API + GET_WINE_KEYWORDS, null, queries);
+    return httpService.get(BASE_API + GET_WINE_KEYWORDS, queries);
   },
 
   [ADD_WINE]: (wine: Wine) => {

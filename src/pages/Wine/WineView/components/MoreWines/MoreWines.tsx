@@ -30,7 +30,7 @@ export function MoreWines(props: Props): JSX.Element {
             eqWinery: props.wine?.winery,
             neSeo: props.wine?.seo,
           },
-          page: { size: 8 },
+          page: { index: 0, size: 8 },
         });
         setWines(res?.data || []);
       } catch (e) {

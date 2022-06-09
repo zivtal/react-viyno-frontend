@@ -34,7 +34,7 @@ import { Wine, WineKeywordsReq } from "../models/wine.model";
 import { postService } from "../../UserFeed/service/post.api-service";
 import { SET_MY_REVIEWS } from "../../UserFeed/store/types";
 
-export const setWinesPagination = (pagination: Pagination) => {
+export const setWinesPagination = (pagination?: Pagination) => {
   return (dispatch: Function) => {
     dispatch({ type: SET_WINES_PAGINATION, pagination });
   };
@@ -74,11 +74,12 @@ export const getWines = () => {
   return async (dispatch: Function, state: Function) => {
     const { filter, sort, page } = state().wineModule;
 
-    if (page.index !== undefined) {
-      page.index++;
-    }
-
     try {
+      if (page.index && page.index === page.total - 1) {
+        return;
+      }
+
+      page.index = page.index + 1 || 0;
       dispatch({ type: SET_WINES_LOADING, loading: true });
       const wines = await wineService[GET_WINES]({ filter, sort, page });
       dispatch({ type: SET_WINES, [WINES]: wines });
@@ -178,7 +179,7 @@ export function getHelpfulReviews(id?: string | number, vintage?: number) {
       const res = await postService[GET_WINE_HELPFUL_REVIEWS](id, {
         ...queries,
         page: { index, size: 3 },
-        sort: { createdAt: 0 },
+        sort: { likes: 0, replies: 0 },
       });
 
       dispatch({

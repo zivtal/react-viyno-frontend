@@ -73,12 +73,14 @@ export default (state: WineState = INITIAL_STATE, action: ReducerAction) => {
         JSON.stringify(action[WINES_FILTER]) !==
         JSON.stringify(state[WINES_FILTER]);
 
+      console.log(isChanged);
+
       return {
         ...state,
         [WINES_FILTER]: action[WINES_FILTER] || INITIAL_STATE[WINES_FILTER],
         [WINES]: isChanged ? INITIAL_STATE[WINES] : state[WINES],
-        page: isChanged ? INITIAL_STATE.page : state.page,
-        total: isChanged ? INITIAL_STATE.total : state.total,
+        page: isChanged ? {} : state.page,
+        total: isChanged ? 0 : state.total,
       };
     }
 

@@ -31,7 +31,7 @@ export function getPostsUpdate(page?: Pagination) {
       dispatch({ type: UPDATE_POSTS, posts });
 
       if (posts.page.total - 1 > posts.page.index) {
-        getPostsUpdate({ index: posts.page.index++ });
+        getPostsUpdate({ ...posts.page, index: posts.page.index++ });
       }
     } catch (err) {
       console.error(err);
@@ -41,15 +41,16 @@ export function getPostsUpdate(page?: Pagination) {
 
 export function getPosts(queries?: BaseQueries) {
   return async (dispatch: Function, state: Function) => {
-    try {
-      const page = state().postModule.posts.page;
-      dispatch({ type: SET_POST_STATE_LOADING, loading: true });
+    const { filter, sort, page } = state().postModule.posts;
 
-      if (!queries && page?.total && page?.index < page?.total) {
-        queries = { page: { index: page.index + 1 } };
+    try {
+      if (page.index && page.index === page.total - 1) {
+        return;
       }
 
-      const posts = await postService[GET_POSTS](queries);
+      page.index = page.index + 1 || 0;
+      dispatch({ type: SET_POST_STATE_LOADING, loading: true });
+      const posts = await postService[GET_POSTS]({ filter, sort, page });
       dispatch({ type: SET_POSTS, posts });
     } catch (err) {
       console.error(err);
@@ -73,8 +74,8 @@ export function getReplies(postId: number) {
       }
 
       const queries = page
-        ? { page: { ...page, index: page.index + 1, size: 3 } }
-        : { page: { size: 3 } };
+        ? { page: { ...page, index: page.index + 1 || 0, size: 3 } }
+        : { page: { index: 0, size: 3 } };
       const replies = await postService[GET_REPLIES](postId, queries);
 
       dispatch({ type: SET_REPLIES, postId, replies });

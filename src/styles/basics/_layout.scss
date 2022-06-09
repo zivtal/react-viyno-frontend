@@ -25,7 +25,6 @@
   height: 100vh;
 
   .content {
-    width: calc(100% - 22px);
     overflow-y: auto;
 
     .fit-media,
@@ -33,15 +32,24 @@
       // padding: 0 10px;
       max-width: $normal-breakpoint;
       margin: 0 auto;
+
       @include for-mobile-layout {
+        width: 100%;
         max-width: initial;
       }
+
+      @include from-tablet-layout {
+        width: calc(100% - 22px);
+      }
+
       @include for-tablet-layout {
         max-width: $mobile-breakpoint;
       }
+
       @include for-normal-layout {
         max-width: $tablet-breakpoint;
       }
+
       @include for-wide-layout {
         max-width: $normal-breakpoint;
       }

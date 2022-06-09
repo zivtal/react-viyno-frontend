@@ -39,8 +39,8 @@ export const WineEdit = (props) => {
     style: queries.get("style") || "",
     grapes: queries.get("grapes") || "",
     pairings: queries.get("pairings") || "",
-    base64ImageSmall: null,
-    base64ImageLarge: null,
+    imageSmall: null,
+    imageLarge: null,
     imageType: null,
     bold: null,
     tannic: null,
@@ -99,8 +99,8 @@ export const WineEdit = (props) => {
     const image = await imageUpload(ev.target.files[0], [800, 300]);
     setEdit({
       ...edit,
-      base64ImageLarge: image.data[0],
-      base64ImageSmall: image.data[1],
+      imageLarge: image.data[0],
+      imageSmall: image.data[1],
       imageType: image.extension,
     });
 

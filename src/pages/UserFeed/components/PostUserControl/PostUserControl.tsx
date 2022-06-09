@@ -4,6 +4,7 @@ import { tryRequire } from "../../../../services/require.service";
 import { setPostReaction } from "../../store/action";
 import { MainState } from "../../../../store/models/store.models";
 import { Post } from "../../models/post.model";
+import { CustomButton } from "../../../../components/CustomButton/CustomButton";
 
 interface Props {
   post: Post;
@@ -26,36 +27,27 @@ export const PostUserControl = (props: Props) => {
 
   return (
     <div className="review-comments">
-      <div
-        className="community-button"
-        onClick={(ev) => {
-          ev.stopPropagation();
+      <CustomButton
+        label={props.post.likes}
+        iconName={props.post.ilike ? "ilike" : "like"}
+        minWidth={50}
+        onClick={() => {
           user
             ? setLike(props.post)
             : props.setAuthCb?.(() => setLike(props.post));
         }}
-      >
-        <img
-          src={
-            props.post.ilike
-              ? tryRequire(`imgs/icons/ilike.svg`)
-              : tryRequire(`imgs/icons/like.svg`)
-          }
-          alt="Like"
-        />
-        <span>{props.post.likes}</span>
-      </div>
-      <div
-        className="community-button"
+      />
+
+      <CustomButton
+        label={props.post.replies}
+        iconName="comment"
+        minWidth={50}
         onClick={() =>
           props.setActiveId(
             props.activeId === props.post._id ? null : props.post._id
           )
         }
-      >
-        <img src={tryRequire(`imgs/icons/comment.svg`)} alt="Comment" />
-        <span>{props.post.replies}</span>
-      </div>
+      />
     </div>
   );
 };

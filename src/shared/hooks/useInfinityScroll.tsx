@@ -11,8 +11,10 @@ const useInfinityScroll = (
   // })();
 
   const infinityScroll = async () => {
-    const element = document.querySelector(className || ".App > .content");
-    const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+    const element = document.querySelector(
+      className || ".App > .content"
+    ) as HTMLDivElement;
+    const { scrollTop, clientHeight, scrollHeight } = element;
 
     if (scrollTop + clientHeight >= scrollHeight * 0.8) {
       element?.removeEventListener("scroll", infinityScroll);

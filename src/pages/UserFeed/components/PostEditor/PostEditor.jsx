@@ -9,6 +9,7 @@ import {
   getImgSrcFromBase64,
 } from "../../../../services/media/media.service";
 import { MainState } from "../../../../store/models/store.models";
+import { CustomButton } from "../../../../components/CustomButton/CustomButton";
 
 export const PostEditor = ({ onSubmit, value, data, max = 512, inClass }) => {
   const el = useRef(null);
@@ -118,16 +119,14 @@ export const PostEditor = ({ onSubmit, value, data, max = 512, inClass }) => {
               <Attachments
                 attachments={post?.attach || []}
                 id={data?.id}
-                onSubmit={(attach) => setPost({ ...post, attach })}
+                onSet={(attach) => setPost({ ...post, attach })}
               />
             ) : null}
           </div>
         </div>
 
         <div className="button-control">
-          <Loader if={isUploading} type="float-1" size={36} />
-
-          <label className="community-button">
+          <CustomButton iconName="add-image" loading={isUploading}>
             <input
               type="file"
               accept="image/*"
@@ -135,28 +134,17 @@ export const PostEditor = ({ onSubmit, value, data, max = 512, inClass }) => {
               onChange={(ev) => upload(ev, "image")}
               hidden
             />
+          </CustomButton>
 
-            <img
-              src={tryRequire("imgs/icons/add-image.svg")}
-              alt="Upload image"
-            />
-          </label>
-
-          <button
-            className="send-button"
+          <CustomButton
+            label="Send"
+            iconName="send"
+            iconSize={12}
             onClick={() => {
               onSubmit(beforeSubmit(), true);
               setPost({ description: "", attach: [] });
             }}
-          >
-            <span>Send</span>
-
-            <img
-              className="send-button"
-              src={tryRequire("imgs/icons/send.svg")}
-              alt="Submit"
-            />
-          </button>
+          />
         </div>
       </div>
     </>

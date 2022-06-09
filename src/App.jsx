@@ -48,8 +48,8 @@ export function App() {
   return (
     <Router>
       <div className="App">
-        <main className="container">
-          <AppHeader />
+        <AppHeader />
+        <div className="content">
           <Switch>
             {/* <Route exact path="/Wine/add">
               {user ? <WineEditPage /> : <Redirect to="/wine" />}
@@ -66,7 +66,7 @@ export function App() {
             <Route component={Login} path="/login" />
             <Route component={UserFeed} path="/" />
           </Switch>
-        </main>
+        </div>
       </div>
     </Router>
   );

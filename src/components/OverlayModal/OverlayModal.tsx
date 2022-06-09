@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./OverlayModal.scss";
 
 interface OverlayModalProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -7,20 +7,6 @@ interface OverlayModalProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const OverlayModal = (props: OverlayModalProps): JSX.Element | null => {
-  const [isShown, setIsShown] = useState<boolean>(false);
-
-  useEffect(() => {
-    setIsShown(props.if);
-  }, [props.if]);
-
-  useEffect(() => {
-    if (isShown) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "initial";
-    }
-  }, [isShown]);
-
   const slots = () => {
     if (!props.children) {
       return null;
@@ -34,12 +20,6 @@ export const OverlayModal = (props: OverlayModalProps): JSX.Element | null => {
       if (!ch.props?.slot) {
         return ch;
       }
-
-      const generateClass = (): any => {
-        const retClass = ch.props?.slot
-          ? `overlay-modal__${ch.props.slot}`
-          : "";
-      };
 
       const className =
         (ch.props?.slot ? `overlay-modal__${ch.props.slot}` : "") +
@@ -61,12 +41,10 @@ export const OverlayModal = (props: OverlayModalProps): JSX.Element | null => {
       return;
     }
 
-    document.body.style.overflow = "initial";
-    setIsShown(false);
     props.onClose();
   };
 
-  return isShown ? (
+  return props.if ? (
     <div className="overlay-background full" onClick={() => onClose()}>
       {slots()}
     </div>

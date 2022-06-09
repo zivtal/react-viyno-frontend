@@ -1,27 +1,34 @@
 import React from "react";
 
-const useInfinityScroll = (cb: Function, deps: any, isEnabled: boolean) => {
+const useInfinityScroll = (
+  cb: Function,
+  deps: any,
+  isEnabled: boolean,
+  className: string
+) => {
   // (async () => {
   //   await cb();
   // })();
 
   const infinityScroll = async () => {
+    const element = document.querySelector(className || ".App > .content");
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
 
     if (scrollTop + clientHeight >= scrollHeight * 0.8) {
-      window.removeEventListener("scroll", infinityScroll);
+      element?.removeEventListener("scroll", infinityScroll);
 
       await cb();
     }
   };
 
   React.useEffect(() => {
+    const element = document.querySelector(className || ".App > .content");
     if (deps && isEnabled) {
-      window.addEventListener("scroll", infinityScroll);
+      element?.addEventListener("scroll", infinityScroll);
     }
 
     return () => {
-      window.removeEventListener("scroll", infinityScroll);
+      element?.removeEventListener("scroll", infinityScroll);
     };
   }, deps);
 };

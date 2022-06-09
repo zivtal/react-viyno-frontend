@@ -185,7 +185,14 @@ export const WineCommunityReviews = (props: { wine?: Wine }) => {
     }
 
     return () => {};
-  }, [props.wine?._id, location.search, user]);
+  }, [props.wine?._id, user]);
+
+  useEffect(() => {
+    const vintage = +getQuery("year")?.toString();
+
+    dispatch(getRecentReviews(props.wine?._id, vintage));
+    dispatch(getHelpfulReviews(props.wine?._id, vintage));
+  }, [location.search]);
 
   const reviews: Reviews = {
     Helpful: {

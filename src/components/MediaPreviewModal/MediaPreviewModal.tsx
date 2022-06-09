@@ -12,17 +12,12 @@ interface MediaPreviewModal {
 export const MediaPreviewModal = (
   props: MediaPreviewModal
 ): JSX.Element | null => {
-  useEffect(() => {
-    if (props.url) {
-      document.body.style.overflowX = "hidden";
-      return;
-    }
-
-    document.body.style.overflowX = "initial";
-  }, [props.url]);
+  const beforeClose = () => {
+    props.onClose?.();
+  };
 
   return props.url ? (
-    <OverlayModal if={!!props.url} onClose={() => props.onClose()}>
+    <OverlayModal if={!!props.url} onClose={() => beforeClose()}>
       {/*<div slot="overlay">*/}
       {/*  <button className="media-preview__navigation-button">*/}
       {/*    <img src={tryRequire("imgs/icons/prev.svg")} alt="Previous" />*/}
@@ -35,7 +30,7 @@ export const MediaPreviewModal = (
 
       <div slot="header">
         <div className="media-preview__close">
-          <CloseButton onClick={() => props.onClose()}></CloseButton>
+          <CloseButton onClick={() => beforeClose()}></CloseButton>
         </div>
       </div>
 

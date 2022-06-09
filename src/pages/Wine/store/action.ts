@@ -141,9 +141,12 @@ export function getRecentReviews(id?: string | number, vintage?: number) {
       return;
     }
 
+    const wine = state().wineModule[WINES_CACHE].find(
+      (wine: Wine) => wine._id === id
+    );
+
     const index =
-      (state().wineModule[WINES_CACHE].find((wine: Wine) => wine._id === id)
-        ?.helpfulReviews?.page?.index || -1) + 1;
+      wine.vintage === vintage ? wine?.recentReviews?.page?.index + 1 || 0 : 0;
 
     try {
       const res = await postService[GET_WINE_RECENT_REVIEWS](id, {
@@ -156,6 +159,11 @@ export function getRecentReviews(id?: string | number, vintage?: number) {
         type: SET_WINE_RECENT_REVIEWS,
         wineId: id,
         [WINE_RECENT_REVIEWS]: res,
+      });
+
+      dispatch({
+        type: SET_WINE,
+        wine: { _id: id, vintage },
       });
     } catch (err) {
       console.error(err);
@@ -171,9 +179,12 @@ export function getHelpfulReviews(id?: string | number, vintage?: number) {
       return;
     }
 
+    const wine = state().wineModule[WINES_CACHE].find(
+      (wine: Wine) => wine._id === id
+    );
+
     const index =
-      (state().wineModule[WINES_CACHE].find((wine: Wine) => wine._id === id)
-        ?.helpfulReviews?.page?.index || -1) + 1;
+      wine.vintage === vintage ? wine?.helpfulReviews?.page?.index + 1 || 0 : 0;
 
     try {
       const res = await postService[GET_WINE_HELPFUL_REVIEWS](id, {
@@ -186,6 +197,11 @@ export function getHelpfulReviews(id?: string | number, vintage?: number) {
         type: SET_WINE_HELPFUL_REVIEWS,
         wineId: id,
         [WINE_HELPFUL_REVIEWS]: res,
+      });
+
+      dispatch({
+        type: SET_WINE,
+        wine: { _id: id, vintage },
       });
     } catch (err) {
       console.error(err);

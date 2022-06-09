@@ -46,8 +46,8 @@ export function MoreWines(props: Props): JSX.Element {
     <div className="more-wines">
       <Loader if={isLoading} type="overlay-skeleton">
         <h2>{props.title ? props.title : "More wines"}</h2>
+        {props.wine?.winery ? <p>From {props.wine?.winery}</p> : null}
       </Loader>
-      {props.wine?.winery ? <p>From {props.wine?.winery}</p> : null}
       <WineSlider
         wines={wines}
         loading={isLoading}

@@ -37,7 +37,7 @@ export const CustomButton = (props: IconProps) => {
           width={iconSize}
         />
       ) : null}
-      {props.label ? <span>{props.label}</span> : null}
+      {props.label !== undefined ? <span>{props.label}</span> : null}
       {props.children}
     </label>
   );

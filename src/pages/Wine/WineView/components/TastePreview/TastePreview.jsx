@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { postServiceOld } from "../../../../UserFeed/service/post.api-service";
+import { postService } from "../../../../UserFeed/service/post.api-service";
 import { StarRate } from "../../../../../components/StarRate/StarRate";
 import { tryRequire } from "../../../../../services/require.service";
 import { OverlayModal } from "../../../../../components/OverlayModal/OverlayModal";
 import { debounce } from "../../../../../services/debounce.service";
 import { toKebabCase } from "../../../../../services/dev.service";
+import { GET_WINE_REVIEWS } from "../../../store/types";
 
 export function TastePreview(props) {
   const { wine, query } = props;
@@ -40,8 +41,8 @@ export function TastePreview(props) {
 
     (async () => {
       setReviews(
-        await postServiceOld.getByWineId(wine._id, {
-          filter: { inDescription: searchQuery },
+        await postService[GET_WINE_REVIEWS]({
+          filter: { eqWineId: wine._id, inDescription: searchQuery },
         })
       );
     })();
@@ -152,10 +153,11 @@ export function TastePreview(props) {
         if (reviews.page.index < reviews.page.total - 1) {
           const { scrollTop, scrollHeight, clientHeight } = ev.target;
           if (scrollHeight - clientHeight - scrollTop < clientHeight * 0.1) {
-            const res = await postServiceOld.getByWineId(wine._id, {
-              filter: { inDescription: searchQuery },
+            const res = await postService[GET_WINE_REVIEWS]({
+              filter: { eqWineId: wine._id, inDescription: searchQuery },
               page: { index: reviews.page.index + 1 },
             });
+
             if (res)
               setReviews({ ...res, data: [...reviews.data, ...res.data] });
           }

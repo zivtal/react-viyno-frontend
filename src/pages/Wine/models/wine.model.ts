@@ -168,5 +168,7 @@ export interface Wine {
 }
 
 export interface WineQuery extends BaseQueries {
+  seo?: string;
+  _id?: number;
   vintage?: number;
 }

@@ -18,7 +18,9 @@ import {
   GET_WINE_HELPFUL_REVIEWS,
   GET_MY_WINE_REVIEWS,
   GET_WINE_RECENT_REVIEWS,
+  GET_WINE_REVIEWS,
 } from "../../Wine/store/types";
+import { queries } from "@testing-library/react";
 
 const API = "post";
 
@@ -112,10 +114,13 @@ export const postService = {
   [SET_REPLY]: (reply: Post) => {
     return httpService.post(API + "/" + SET_REPLY, reply);
   },
+
+  [GET_WINE_REVIEWS]: (queries: WineQuery) => {
+    return httpService.post(API + "/" + GET_WINE_REVIEWS, queries);
+  },
 };
 
 export const postServiceOld = {
-  getByWineId,
   review,
   post,
   reply,
@@ -139,8 +144,4 @@ async function post(postId: number, content: any, queries?: BaseQueries) {
     content,
     queries
   );
-}
-
-async function getByWineId(wineId: string | number, queries?: BaseQueries) {
-  return httpService.get(API + "/wine/" + wineId, null, queries);
 }

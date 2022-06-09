@@ -3,6 +3,7 @@ export const GET_WINES = "getWines";
 export const SEARCH_WINES = "searchWines";
 export const GET_WINE_KEYWORDS = "getWineKeywords";
 export const ADD_WINE = "addWine";
+export const GET_WINE_REVIEWS = "getWineReviews";
 export const GET_MY_WINE_REVIEWS = "getMyWineReviews";
 export const GET_WINE_RECENT_REVIEWS = "getWineRecentReviews";
 export const GET_WINE_HELPFUL_REVIEWS = "getWineHelpfulReviews";

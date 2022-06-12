@@ -6,12 +6,12 @@ import { CustomButton } from "../CustomButton/CustomButton";
 interface PaginationProps {
   total: number;
   current: number;
-  maxPagesToShow?: number;
-  onPageSelect: Function;
+  shown?: number;
+  onSelect: Function;
 }
 
 export const PaginationControl = (props: PaginationProps) => {
-  const maxShown = props.maxPagesToShow || 10;
+  const maxShown = props.shown || 10;
 
   // const pageControl = () => Array().fill();
 

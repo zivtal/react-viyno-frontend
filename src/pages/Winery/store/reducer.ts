@@ -1,5 +1,7 @@
 import {
   ADD_WINERY_CACHE,
+  SET_MOST_POPULAR_WINES,
+  SET_TOP_RATED_WINES,
   SET_WINERIES,
   SET_WINERIES_FILTER,
   SET_WINERIES_LOADING,
@@ -103,6 +105,34 @@ export default (state: WineryState = INITIAL_STATE, action: any) => {
         [WINERIES]: isChanged ? INITIAL_STATE[WINERIES] : state[WINERIES],
         page: isChanged ? INITIAL_STATE.page : state.page,
         total: isChanged ? INITIAL_STATE.total : state.total,
+      };
+    }
+
+    case SET_MOST_POPULAR_WINES: {
+      return {
+        ...state,
+        [WINERIES_CACHE]: state[WINERIES_CACHE].map((winery) =>
+          winery.name !== action.name
+            ? winery
+            : {
+                ...winery,
+                mostPopular: action.wines,
+              }
+        ),
+      };
+    }
+
+    case SET_TOP_RATED_WINES: {
+      return {
+        ...state,
+        [WINERIES_CACHE]: state[WINERIES_CACHE].map((winery) =>
+          winery.name !== action.name
+            ? winery
+            : {
+                ...winery,
+                topRated: action.wines,
+              }
+        ),
       };
     }
 

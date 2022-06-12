@@ -1,17 +1,18 @@
 .custom-button {
   user-select: none;
   display: flex;
-  padding: 3px 8px;
   border: 1px solid var(--base-background);
   border-radius: 50px;
   background-color: var(--base-light1);
   width: max-content;
 
   &__content {
+    padding: 3px 8px;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 4px;
+    height: 100%;
 
     img {
       object-fit: scale-down;

@@ -17,6 +17,7 @@ import {
   getMyWineReviews,
   getRecentReviews,
 } from "../../../store/action";
+import { PaginationControl } from "../../../../../components/PaginationControl/PaginationControl";
 
 interface Reviews {
   [key: string]: {
@@ -113,6 +114,8 @@ const WinePreviews = ({
           </div>
         </div>
       ) : null}
+
+      {/*<PaginationControl current={0} total={10} onPageSelect={() => null} />*/}
     </>
   ) : (
     <div>No reviews found</div> // TODO: Add no content component

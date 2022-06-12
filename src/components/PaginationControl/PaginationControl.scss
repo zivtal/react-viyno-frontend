@@ -1,0 +1,11 @@
+.pagination-control {
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  .custom-button {
+    border: 0;
+    font-size: x-small;
+  }
+}

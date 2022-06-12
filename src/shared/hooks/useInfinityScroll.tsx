@@ -6,9 +6,17 @@ const useInfinityScroll = (
   isEnabled: boolean,
   className: string
 ) => {
-  // (async () => {
-  //   await cb();
-  // })();
+  // const element = document.querySelector(
+  //   className || ".App > .content"
+  // ) as HTMLDivElement;
+  //
+  // if (element) {
+  //   while (element.scrollHeight < element.clientHeight * 1.2) {
+  //     (async () => {
+  //       await cb();
+  //     })();
+  //   }
+  // }
 
   const infinityScroll = async () => {
     const element = document.querySelector(
@@ -24,7 +32,10 @@ const useInfinityScroll = (
   };
 
   React.useEffect(() => {
-    const element = document.querySelector(className || ".App > .content");
+    const element = document.querySelector(
+      className || ".App > .content"
+    ) as HTMLDivElement;
+
     if (deps && isEnabled) {
       element?.addEventListener("scroll", infinityScroll);
     }

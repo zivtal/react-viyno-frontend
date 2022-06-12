@@ -50,7 +50,12 @@ export function getPosts(queries?: BaseQueries) {
 
       page.index = page.index + 1 || 0;
       dispatch({ type: SET_POST_STATE_LOADING, loading: true });
-      const posts = await postService[GET_POSTS]({ filter, sort, page });
+      const posts = await postService[GET_POSTS]({
+        filter,
+        sort,
+        page,
+        ...(queries || {}),
+      });
       dispatch({ type: SET_POSTS, posts });
     } catch (err) {
       console.error(err);

@@ -5,6 +5,8 @@ import { BaseProps } from "../../../../../shared/models/base-props";
 import { Winery } from "../../../models/winery.model";
 import { Wine } from "../../../../Wine/models/wine.model";
 import { GET_WINES } from "../../../../Wine/store/types";
+import { useDispatch } from "react-redux";
+import { getMostPopularWines, getTopRatedWines } from "../../../store/action";
 
 interface Props extends BaseProps {
   winery: Winery | undefined;
@@ -21,6 +23,7 @@ interface LocalWineState {
 }
 
 export function Wines(props: Props): JSX.Element {
+  const dispatch = useDispatch();
   const [wines, setWines] = useState<LocalWineState>({
     loading: { top: true, popular: true },
   });
@@ -29,12 +32,15 @@ export function Wines(props: Props): JSX.Element {
     (async () => {
       loadMoreWines();
     })();
-  }, [props.winery]);
+  }, [props.winery?.name]);
 
   const loadMoreWines = async () => {
     if (!props.winery) {
       return;
     }
+
+    // dispatch(getMostPopularWines(props.winery.name));
+    // dispatch(getTopRatedWines(props.winery.name));
 
     const top = await wineService[GET_WINES]({
       filter: { eqWinery: props.winery.name },

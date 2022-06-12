@@ -5,6 +5,8 @@ import {
   ADD_WINERY_CACHE,
   GET_WINERIES,
   GET_WINERY,
+  SET_MOST_POPULAR_WINES,
+  SET_TOP_RATED_WINES,
   SET_WINERIES,
   SET_WINERIES_LOADING,
   WINERIES_CACHE,
@@ -13,6 +15,7 @@ import {
 } from "./types";
 import { Winery, WineryQuery } from "../models/winery.model";
 import { wineService } from "../../Wine/service/wine.service";
+import { GET_WINES } from "../../Wine/store/types";
 
 export function getWinery(id: string | number, queries?: WineryQuery) {
   return async (dispatch: Function, state: Function) => {
@@ -59,5 +62,27 @@ export function getWineries() {
     } finally {
       dispatch({ type: SET_WINERIES_LOADING, loading: false });
     }
+  };
+}
+
+export function getMostPopularWines(wineryName: string) {
+  return async (dispatch: Function) => {
+    const wines = await wineService[GET_WINES]({
+      filter: { eqWinery: wineryName },
+      sort: { ratings: 0 },
+    });
+
+    dispatch({ type: SET_MOST_POPULAR_WINES, name: wineryName, wines });
+  };
+}
+
+export function getTopRatedWines(wineryName: string) {
+  return async (dispatch: Function) => {
+    const wines = await wineService[GET_WINES]({
+      filter: { eqWinery: wineryName },
+      sort: { rate: 0 },
+    });
+
+    dispatch({ type: SET_TOP_RATED_WINES, name: wineryName, wines });
   };
 }

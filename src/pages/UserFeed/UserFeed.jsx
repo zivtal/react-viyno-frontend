@@ -44,18 +44,16 @@ export const UserFeed = () => {
   }, []);
 
   useEffect(() => {
-    if (posts.data?.length) {
+    if (!posts.data?.length) {
       (async () => {
-        dispatch(getPostsUpdate());
+        dispatch(getPosts());
       })();
-
-      return;
     }
 
     (async () => {
-      dispatch(getPosts());
+      dispatch(getPostsUpdate());
     })();
-  }, [user]);
+  }, [location.pathname]);
 
   useInfinityScroll(
     async () => {

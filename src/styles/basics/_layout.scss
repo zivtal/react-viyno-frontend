@@ -27,18 +27,19 @@
   .content {
     overflow-y: auto;
 
+    @include from-tablet-layout {
+      width: calc(100% - 22px);
+    }
+
     .fit-media,
     > :not(.full) {
+      // padding: 0 10px;
       max-width: $normal-breakpoint;
       margin: 0 auto;
 
       @include for-mobile-layout {
         width: 100%;
         max-width: initial;
-      }
-
-      @include from-tablet-layout {
-        width: calc(100% - 22px);
       }
 
       @include for-tablet-layout {

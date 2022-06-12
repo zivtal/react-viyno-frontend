@@ -6,6 +6,7 @@ import { tryRequire } from "../../../../services/require.service";
 import { toKebabCase } from "../../../../services/dev.service";
 import { MainState } from "../../../../store/models/store.models";
 import { WINE_KEYWORDS } from "../../../../pages/Wine/store/types";
+import { OverlayModal } from "../../../OverlayModal/OverlayModal";
 
 export function MainPopupMenu(props) {
   const rtl = document.dir === "rtl";
@@ -143,7 +144,10 @@ export function MainPopupMenu(props) {
               <li
                 className={cell.isBold ? `bold` : ""}
                 key={"SUBMENU_" + idx1 + "_" + idx2}
-                onClick={() => history.push(cell.path)}
+                onClick={() => {
+                  history.push(cell.path);
+                  close?.();
+                }}
               >
                 {cell.img ? <img src={cell.img} /> : null}
                 <span>{cell.title}</span>
@@ -160,18 +164,12 @@ export function MainPopupMenu(props) {
     : { top: `${top()}px`, left: `${left()}px` };
 
   return (
-    <div
-      className="background-dimm"
-      onClick={close}
-      style={
-        !isMobile
-          ? { height: document.documentElement.scrollHeight + "px" }
-          : null
-      }
-    >
+    <div className="background-dimm" onClick={close}>
+      {/*<OverlayModal if={true} onClose={() => close?.()}>*/}
       <div className="popup-menu hover-box" style={position}>
         {tableRender("wines")}
       </div>
+      {/*</OverlayModal>*/}
     </div>
   );
 }

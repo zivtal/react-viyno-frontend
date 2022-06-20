@@ -171,11 +171,7 @@ export function getRecentReviews(id?: string | number, vintage?: number) {
   };
 }
 
-export function getHelpfulReviews(
-  id?: string | number,
-  index?: number,
-  vintage?: number
-) {
+export function getHelpfulReviews(id?: string | number, vintage?: number) {
   return async (dispatch: Function, state: Function) => {
     const queries = vintage ? { filter: { eqVintage: vintage } } : {};
 
@@ -187,7 +183,7 @@ export function getHelpfulReviews(
       (wine: Wine) => wine._id === id
     );
 
-    index ??=
+    const index =
       wine.vintage === vintage ? wine?.helpfulReviews?.page?.index + 1 || 0 : 0;
 
     try {

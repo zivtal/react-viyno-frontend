@@ -29,7 +29,6 @@ export const CustomButton = (props: IconProps) => {
 
   const button = (
     <label className="custom-button__content" onClick={(ev) => onClick(ev)}>
-      {" "}
       {props.iconName ? (
         <img
           src={tryRequire("imgs/icons/" + props.iconName + ".svg")}

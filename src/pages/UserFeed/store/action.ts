@@ -90,7 +90,11 @@ export function getReplies(postId: number) {
   };
 }
 
-export function setPostReaction(id: number, state: number | boolean) {
+export function setPostReaction(
+  id: number,
+  state: number | boolean,
+  wineId?: number
+) {
   return async (dispatch: Function) => {
     try {
       const res = await postService[SET_REACTION](id, {

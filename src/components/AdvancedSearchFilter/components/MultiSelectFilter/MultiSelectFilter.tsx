@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useRef } from "react";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import {useHistory, useLocation} from "react-router-dom";
+// @ts-ignore
 import useChangeEffect from "../../../../shared/hooks/useChangeEffect";
 import { tryRequire } from "../../../../services/require.service";
 import {
@@ -11,17 +11,24 @@ import {
 } from "../../../../services/dev.service";
 import { MainState } from "../../../../store/models/store.models";
 
-export const MultiSelectFilter = ({ title, query, data, max = 8 }) => {
+interface Props {
+  title: string;
+  query: string;
+  data: any;
+  max: number;
+}
+
+export const MultiSelectFilter = ({ title, query, data, max = 8 }: Props) => {
   const location = useLocation();
   const history = useHistory();
   const filter = useSelector((state: MainState) => state.wineModule.filter);
   const queries = new URLSearchParams(location.search);
-  const elInput = useRef(null);
-  const [dataToShow, setDataToShow] = useState([]);
-  const [select, setSelect] = useState([]);
+  const elInput = useRef<any>(null);
+  const [dataToShow, setDataToShow] = useState<Array<any>>([]);
+  const [select, setSelect] = useState<Array<string>>([]);
 
   useChangeEffect(() => {
-    const setQuery = (name, value) => {
+    const setQuery = (name: string, value: string) => {
       if (value) queries.set(name, value);
       else queries.delete(name);
       history.replace({ search: queries.toString() });
@@ -33,11 +40,14 @@ export const MultiSelectFilter = ({ title, query, data, max = 8 }) => {
   useEffect(() => {
     const selected = filter[query]?.split("|") || [];
     setSelect(selected);
-    const val = select.reduce((result, val) => {
+    const val = select.reduce((result: Array<any>, val: string) => {
       const extract = data.find(
-        (item) => (item.seo || item.name?.toLowerCase()) === val
+        (item: any) => (item.seo || item.name?.toLowerCase()) === val
       );
-      if (extract) result.push(extract);
+      if (extract) {
+        result.push(extract);
+      }
+
       return result;
     }, []);
     setDataToShow([
@@ -45,9 +55,13 @@ export const MultiSelectFilter = ({ title, query, data, max = 8 }) => {
     ]);
   }, [filter[query]]);
 
-  const toggleSelect = (type) => {
-    if (!type) return;
+  const toggleSelect = (type: string) => {
+    if (!type) {
+      return;
+    }
+
     type = type.toLowerCase();
+
     if (select.includes(type)) {
       setSelect(select.filter((val) => val !== type));
     } else {
@@ -55,26 +69,26 @@ export const MultiSelectFilter = ({ title, query, data, max = 8 }) => {
     }
   };
 
-  const onSearch = ({ target }) => {
+  const onSearch = ({ target }: { target: any }) => {
     if (!target.value) {
-      const show = data.filter(({ name, seo }) =>
+      const show = data.filter(({ name, seo }: { name: string; seo: string }) =>
         select.includes(seo?.replace("-", " ") || name?.toLowerCase())
       );
       setDataToShow(show.length ? show : data.slice(0, max));
     } else {
       const re = new RegExp(`^(${target.value})`, "gi");
       const notInUse = data.filter(
-        ({ name, seo }) =>
+        ({ name, seo }: { name: string; seo: string }) =>
           !select.includes(seo) && !select.includes(name?.toLowerCase())
       );
       const result = notInUse.filter(
-        ({ name, seo }) => name?.match(re) || seo?.replace("-", " ").match(re)
+        ({ name, seo }: { name: string; seo: string }) => name?.match(re) || seo?.replace("-", " ").match(re)
       );
       {
         const re = new RegExp(`(${target.value})`, "gi");
         result.push(
           ...notInUse.filter(
-            ({ name, seo }) =>
+            ({ name, seo }: { name: string; seo: string }) =>
               name?.match(re) || seo?.replace("-", " ").match(re)
           )
         );
@@ -83,12 +97,12 @@ export const MultiSelectFilter = ({ title, query, data, max = 8 }) => {
     }
   };
 
-  const handleKey = ({ key, target }) => {
+  const handleKey = ({ key, target }: { key: string; target: any }) => {
     if (key === "Enter") {
       const find = target.value.toLowerCase();
       const res =
         data.find(
-          ({ name, seo }) =>
+          ({ name, seo }: { name: string; seo: string }) =>
             name?.toLowerCase() === find ||
             seo?.replace("-", " ").toLowerCase() === find
         ) || dataToShow[0];

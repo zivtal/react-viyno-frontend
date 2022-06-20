@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { lazy, useEffect } from "react";
+import { useEffect } from "react";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch, useSelector } from "react-redux";

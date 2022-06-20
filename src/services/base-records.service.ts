@@ -3,18 +3,18 @@ import { BaseRecords } from "../shared/models/base-records.model";
 const append = <T>(
   insert?: BaseRecords<T>,
   state?: BaseRecords<T>,
-  key?: string
+  uniqueKey?: string
 ): BaseRecords<T> => {
   if (!state || !insert?.page?.index) {
     return (insert || state) as BaseRecords<T>;
   }
 
   return {
-    data: key
+    data: uniqueKey
       ? [
           ...(state?.data?.filter(
-            ({ [key]: val1 }: any) =>
-              !insert.data?.find(({ [key]: val2 }: any) => val1 === val2)
+            ({ [uniqueKey]: val1 }: any) =>
+              !insert.data?.find(({ [uniqueKey]: val2 }: any) => val1 === val2)
           ) || []),
           ...(insert.data || []),
         ]
@@ -27,19 +27,19 @@ const append = <T>(
 const insert = <T>(
   insert?: BaseRecords<T>,
   state?: BaseRecords<T>,
-  key?: string
+  uniqueKey?: string
 ): BaseRecords<T> => {
   if (!state || !insert?.page?.index) {
     return (insert || state) as BaseRecords<T>;
   }
 
   return {
-    data: key
+    data: uniqueKey
       ? [
           ...(insert?.data || []),
           ...(state?.data?.filter(
-            ({ [key]: val1 }: any) =>
-              !insert.data?.find(({ [key]: val2 }: any) => val1 === val2)
+            ({ [uniqueKey]: val1 }: any) =>
+              !insert.data?.find(({ [uniqueKey]: val2 }: any) => val1 === val2)
           ) || []),
         ]
       : [...(insert?.data || []), ...(state?.data || [])],
@@ -51,19 +51,19 @@ const insert = <T>(
 const overwrite = <T>(
   insert?: BaseRecords<T>,
   state?: BaseRecords<T>,
-  key?: string
+  uniqueKey?: string
 ): BaseRecords<T> => {
   if (!state || !insert?.page?.index) {
     return (insert || state) as BaseRecords<T>;
   }
 
   return {
-    data: key
+    data: uniqueKey
       ? [
           ...(insert?.data || []),
           ...(state?.data?.filter(
-            ({ [key]: val1 }: any) =>
-              !insert?.data?.find(({ [key]: val2 }: any) => val1 === val2)
+            ({ [uniqueKey]: val1 }: any) =>
+              !insert?.data?.find(({ [uniqueKey]: val2 }: any) => val1 === val2)
           ) || []),
         ].slice(0, state?.data.length || insert?.data.length)
       : [...(insert?.data || []), ...(state?.data || [])],

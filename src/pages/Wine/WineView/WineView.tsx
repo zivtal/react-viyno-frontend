@@ -1,4 +1,4 @@
-import React from "react";
+import React, {lazy} from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
@@ -14,11 +14,6 @@ import { getWine } from "../store/action";
 import { WINE_DEMO } from "./constants/wine";
 import { WINES_CACHE } from "../store/types";
 import "./WineView.scss";
-
-// const WineHeader = lazy(() =>
-//     import(/* webpackChunkName: wine */ './components/WineHeader/WineHeader')
-//         .then(module => ({ default: module.WineHeader }))
-// );
 
 export const WineView = (props: any): JSX.Element => {
   const state = useLocation<Location>().state as any;

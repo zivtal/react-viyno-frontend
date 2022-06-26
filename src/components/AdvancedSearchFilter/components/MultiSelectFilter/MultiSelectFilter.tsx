@@ -126,8 +126,8 @@ export const MultiSelectFilter = ({ title, query, data, max = 8 }: Props) => {
           ></input>
         </div>
         {dataToShow.map((item, idx) => {
-          const { name, seo, country } = item;
-          const key = seo || toKebabCase(name);
+          const { title, value, country } = item;
+          const key = value || toKebabCase(title);
           const png =
             tryRequire(
               `imgs/icons/${extractConditionKey(query)?.key}/${key}.png`
@@ -140,11 +140,11 @@ export const MultiSelectFilter = ({ title, query, data, max = 8 }: Props) => {
             <button
               key={`BUTTON_${key}${idx}`}
               className={`${
-                select.includes(seo || name.toLowerCase())
+                select.includes(value || title?.toLowerCase())
                   ? "selected bgi"
                   : "bgi"
               }`}
-              onClick={() => toggleSelect(seo || name)}
+              onClick={() => toggleSelect(value || title)}
               style={png || svg ? { textAlign: "left" } : {}}
             >
               {png || svg ? (
@@ -160,10 +160,10 @@ export const MultiSelectFilter = ({ title, query, data, max = 8 }: Props) => {
                         : {}
                     }
                   />
-                  <span>{name}</span>
+                  <span>{title}</span>
                 </>
               ) : (
-                name
+                title
               )}
             </button>
           );

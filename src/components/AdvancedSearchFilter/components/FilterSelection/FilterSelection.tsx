@@ -14,8 +14,8 @@ interface Props {
 interface Selection {
   condition: string;
   key: string;
-  name?: string;
-  seo?: string;
+  title?: string;
+  value?: string;
   query: string;
 }
 
@@ -37,7 +37,7 @@ export const FilterSelection = (props: Props) => {
         const objKey = key as ObjectKey;
         content.forEach((filter: string) => {
           const keyword = props.keywords.data[objKey].find(
-            (val: any) => val.seo === filter || val.name?.toLowerCase() === filter
+            (val: any) => val.value === filter || val.title?.toLowerCase() === filter
           );
           selection.push({
             ...keyword,
@@ -51,12 +51,12 @@ export const FilterSelection = (props: Props) => {
     setSelect(selection);
   }, [props.filter]);
 
-  const removeFilter = ({ query, seo, name, condition }: Selection) => {
+  const removeFilter = ({ query, value, title, condition }: Selection) => {
     setQuery(
       query,
       props.filter[condition]
         .split("|")
-        .filter((val: string) => val !== (seo || name?.toLowerCase()))
+        .filter((val: string) => val !== (value || title?.toLowerCase()))
         .join("|")
     );
   };
@@ -76,7 +76,7 @@ export const FilterSelection = (props: Props) => {
           className="remove-button bgi"
           key={idx}
         >
-          {selected.name || selected.seo}
+          {selected.title || selected.value}
         </button>
       ))}
     </div>

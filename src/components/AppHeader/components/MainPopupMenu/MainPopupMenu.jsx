@@ -21,15 +21,15 @@ export function MainPopupMenu(props) {
   const _generateMenu = (data, section, add, folder) => {
     folder ??= `imgs/icons/${section}`;
     const res = [
-      ...data.slice(0, 10).map(({ name, seo, country }) => {
+      ...data.slice(0, 10).map(({ title, value, country }) => {
         return {
-          title: name,
+          title,
           img:
-            tryRequire(`${folder}/${seo || toKebabCase(name)}.svg`) ||
+            tryRequire(`${folder}/${value || toKebabCase(title)}.svg`) ||
             tryRequire(`${folder}/${toKebabCase(country)}.svg`) ||
             tryRequire(`${folder}/${toKebabCase(country)}.png`),
-          seo: seo || toKebabCase(name),
-          path: `/wine?${section}=${seo || toKebabCase(name)}`,
+          value: value || toKebabCase(title),
+          path: `/wine?${section}=${value || toKebabCase(title)}`,
           ...add,
         };
       }),

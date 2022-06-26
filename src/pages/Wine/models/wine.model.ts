@@ -60,7 +60,6 @@ export interface WineStyle {
   seo: string;
   name: string;
   country?: string;
-  regional?: string;
   grapes?: string;
   type?: string;
   count?: number;

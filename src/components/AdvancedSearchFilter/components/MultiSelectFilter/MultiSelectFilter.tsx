@@ -71,15 +71,16 @@ export const MultiSelectFilter = ({ title, query, data, max = 8 }: Props) => {
 
   const onSearch = ({ target }: { target: any }) => {
     if (!target.value) {
-      const show = data.filter(({ name, seo }: { name: string; seo: string }) =>
-        select.includes(seo?.replace("-", " ") || name?.toLowerCase())
+      console.log(data);
+      const show = data.filter(({ title, value }: { title: string; value: string }) =>
+        select.includes(value?.replace("-", " ") || title?.toLowerCase())
       );
       setDataToShow(show.length ? show : data.slice(0, max));
     } else {
       const re = new RegExp(`^(${target.value})`, "gi");
       const notInUse = data.filter(
-        ({ name, seo }: { name: string; seo: string }) =>
-          !select.includes(seo) && !select.includes(name?.toLowerCase())
+        ({ title, value }: { title: string; value: string }) =>
+          !select.includes(value) && !select.includes(title?.toLowerCase())
       );
       const result = notInUse.filter(
         ({ name, seo }: { name: string; seo: string }) => name?.match(re) || seo?.replace("-", " ").match(re)
@@ -88,8 +89,8 @@ export const MultiSelectFilter = ({ title, query, data, max = 8 }: Props) => {
         const re = new RegExp(`(${target.value})`, "gi");
         result.push(
           ...notInUse.filter(
-            ({ name, seo }: { name: string; seo: string }) =>
-              name?.match(re) || seo?.replace("-", " ").match(re)
+            ({ title, value }: { title: string; value: string }) =>
+              title?.match(re) || value?.replace("-", " ").match(re)
           )
         );
       }
@@ -102,12 +103,12 @@ export const MultiSelectFilter = ({ title, query, data, max = 8 }: Props) => {
       const find = target.value.toLowerCase();
       const res =
         data.find(
-          ({ name, seo }: { name: string; seo: string }) =>
-            name?.toLowerCase() === find ||
-            seo?.replace("-", " ").toLowerCase() === find
+          ({ title, value }: { title: string; value: string }) =>
+            title?.toLowerCase() === find ||
+            value?.replace("-", " ").toLowerCase() === find
         ) || dataToShow[0];
       if (res) {
-        toggleSelect(res?.seo || res?.name);
+        toggleSelect(res?.value || res?.title);
         elInput.current.value = "";
       }
     }

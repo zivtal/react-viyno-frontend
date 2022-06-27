@@ -6,7 +6,6 @@ import { tryRequire } from "../../../../services/require.service";
 import { toKebabCase } from "../../../../services/dev.service";
 import { MainState } from "../../../../store/models/store.models";
 import { WINE_KEYWORDS } from "../../../../pages/Wine/store/types";
-import { OverlayModal } from "../../../OverlayModal/OverlayModal";
 
 export function MainPopupMenu(props) {
   const rtl = document.dir === "rtl";
@@ -52,7 +51,7 @@ export function MainPopupMenu(props) {
             isBold: true,
           },
           ..._generateMenu(
-            keywords.data["wine styles"]
+            keywords.data.wineStyles
               .filter(({ type }) => type === "red")
               .slice(0, 10),
             "style",
@@ -68,7 +67,7 @@ export function MainPopupMenu(props) {
             isBold: true,
           },
           ..._generateMenu(
-            keywords.data["wine styles"]
+            keywords.data.wineStyles
               .filter(({ type }) => type === "white")
               .slice(0, 10),
             "style",
@@ -77,7 +76,7 @@ export function MainPopupMenu(props) {
           ),
         ],
         _generateMenu(
-          keywords.data["wine type"].filter(
+          keywords.data.wineType.filter(
             ({ name }) => name !== "red" && name !== "white"
           ),
           "type",
@@ -85,24 +84,24 @@ export function MainPopupMenu(props) {
         ),
       ],
       grapes: [
-        _generateMenu(keywords.data["grapes"].slice(0, 10), "grapes"),
-        _generateMenu(keywords.data["grapes"].slice(10, 20), "grapes"),
-        _generateMenu(keywords.data["grapes"].slice(20, 30), "grapes"),
+        _generateMenu(keywords.data.grapes.slice(0, 10), "grapes"),
+        _generateMenu(keywords.data.grapes.slice(10, 20), "grapes"),
+        _generateMenu(keywords.data.grapes.slice(20, 30), "grapes"),
       ],
       pairings: [
-        _generateMenu(keywords.data["food pairings"].slice(0, 10), "pairings"),
-        _generateMenu(keywords.data["food pairings"].slice(10, 20), "pairings"),
-        _generateMenu(keywords.data["food pairings"].slice(20, 30), "pairings"),
+        _generateMenu(keywords.data.foodPairings.slice(0, 10), "pairings"),
+        _generateMenu(keywords.data.foodPairings.slice(10, 20), "pairings"),
+        _generateMenu(keywords.data.foodPairings.slice(20, 30), "pairings"),
       ],
       regions: [
         _generateMenu(
-          keywords.data["regions"].slice(0, 10),
+          keywords.data.regions.slice(0, 10),
           "region",
           {},
           "imgs/icons/country"
         ),
         _generateMenu(
-          keywords.data["regions"].slice(10, 20),
+          keywords.data.regions.slice(10, 20),
           "region",
           {},
           "imgs/icons/country"

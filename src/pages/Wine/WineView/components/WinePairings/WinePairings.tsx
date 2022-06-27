@@ -18,19 +18,19 @@ const FoodPairing = (props: Props): JSX.Element => {
 
   return (
     <>
-      {(props.wine?.pairings || []).map((seo: string, index: number) => {
-        const name = keywords?.data["food pairings"]?.find(
-          (val) => val.seo === seo
-        )?.name;
+      {(props.wine?.pairings || []).map((value: string, index: number) => {
+        const name = keywords?.data.foodPairings?.find(
+          (val) => val.value === value
+        )?.title;
         const goTo = () => {
-          dispatch(setWinesFilter({ inPairings: seo }));
-          history.push(`/wine?pairings=${seo}`);
+          dispatch(setWinesFilter({ inPairings: value }));
+          history.push(`/wine?pairings=${value}`);
         };
 
         return (
           <div onClick={goTo} className="meal" key={index}>
             <div className="image-container">
-              <img src={tryRequire(`imgs/food/${seo}.jpg`)} />
+              <img src={tryRequire(`imgs/food/${value}.jpg`)} />
             </div>
             <h3>{name}</h3>
           </div>

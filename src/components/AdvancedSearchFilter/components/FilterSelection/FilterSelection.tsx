@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { extractConditionKey } from "../../../../services/dev.service";
-import {useHistory, useLocation} from 'react-router-dom'
-import {BaseFilter} from '../../../../shared/models/base-filter'
-import {WineKeywords} from '../../../../pages/Wine/models/wine.model'
+import { useHistory, useLocation } from "react-router-dom";
+import { BaseFilter } from "../../../../shared/models/base-filter";
+import { WineKeywords } from "../../../../pages/Wine/models/wine.model";
+import { SelectItem } from "../../../../shared/models/select-item";
 
 interface Props {
   count: number;
@@ -28,7 +29,7 @@ export const FilterSelection = (props: Props) => {
   useEffect(() => {
     const selection: Array<Selection> = [];
     try {
-      type ObjectKey = keyof typeof props.keywords.data
+      type ObjectKey = keyof typeof props.keywords.data;
       Object.keys(props.filter).forEach((conditionKey: string) => {
         const key = Object.entries(props.keywords.query)
           .filter((val) => val[1] === conditionKey)
@@ -36,8 +37,11 @@ export const FilterSelection = (props: Props) => {
         const content = props.filter[conditionKey].split("|");
         const objKey = key as ObjectKey;
         content.forEach((filter: string) => {
-          const keyword = props.keywords.data[objKey].find(
-            (val: any) => val.value === filter || val.title?.toLowerCase() === filter
+          const keyword = (
+            props.keywords.data[objKey] as Array<SelectItem>
+          ).find(
+            (val: any) =>
+              val.value === filter || val.title?.toLowerCase() === filter
           );
           selection.push({
             ...keyword,

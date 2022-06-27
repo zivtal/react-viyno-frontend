@@ -12,6 +12,7 @@ import {
 import { BaseFilter } from "../../../shared/models/base-filter";
 import { BaseRecords } from "../../../shared/models/base-records.model";
 import { Post } from "../../UserFeed/models/post.model";
+import { SelectItem } from "../../../shared/models/select-item";
 
 export interface WineState {
   [WINES]: Array<Wine>;
@@ -25,50 +26,14 @@ export interface WineState {
   loading: boolean;
 }
 
-export interface WineSort {
-  rate?: number;
-  ratings?: number;
-  _id?: number;
-}
-
-export interface WineFilter {
-  search?: string;
-  eqType?: string;
-  "in+Grapes"?: string;
-  inRegion?: string;
-  inCountry?: string;
-  inPairings?: string;
-  inStyle?: string;
-}
-
-export interface WineType {
-  name: string;
-}
-
-export interface WineGrapes {
-  seo: string;
-  name: string;
-  count?: number;
-}
-
-export interface WineRegion {
-  name: string;
+export interface WineRegion extends SelectItem {
   country?: string;
 }
 
-export interface WineStyle {
-  seo: string;
-  name: string;
+export interface WineStyle extends SelectItem {
   country?: string;
   grapes?: string;
   type?: string;
-  count?: number;
-}
-
-export interface WineFoodPairing {
-  seo: string;
-  name: string;
-  count?: number;
 }
 
 export interface WineStructure {
@@ -76,11 +41,6 @@ export interface WineStructure {
   tannic?: number;
   sweet?: number;
   acidic?: number;
-}
-
-export interface Country {
-  name: string;
-  flag?: string;
 }
 
 export interface WineBaseSection {
@@ -101,12 +61,12 @@ export interface WineSections {
 
 export interface WineKeywords {
   data: {
-    "wine type": Array<WineType>;
-    grapes: Array<WineGrapes>;
+    wineType: Array<SelectItem>;
+    grapes: Array<SelectItem>;
     regions: Array<WineRegion>;
-    countries: Array<Country>;
-    "wine styles": Array<WineStyle>;
-    "food pairings": Array<WineFoodPairing>;
+    countries: Array<SelectItem>;
+    wineStyles: Array<WineStyle>;
+    foodPairings: Array<SelectItem>;
   };
   query: {
     [key: string]: string;

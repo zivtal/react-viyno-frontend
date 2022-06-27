@@ -48,14 +48,14 @@ export function WineHeader(props: Props): JSX.Element {
         title: data?.region,
         path: `/wine?region=${data?.region?.toLowerCase()}`,
       },
-      ...(data?.grapes || []).map((seo: string) => {
+      ...(data?.grapes || []).map((value: string) => {
         const name = keywords?.data?.grapes?.find(
-          (grape) => grape.seo === seo
-        )?.name;
+          (grape) => grape.value === value
+        )?.title;
 
         return {
           title: name,
-          path: `/wine?grapes=${seo}`,
+          path: `/wine?grapes=${value}`,
         };
       }),
     ];

@@ -1,13 +1,12 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { tryRequire } from "../../../../services/require.service";
 import { setPostReaction } from "../../store/action";
 import { MainState } from "../../../../store/models/store.models";
-import { Post } from "../../models/post.model";
+import { FullPost } from "../../models/post.model";
 import { CustomButton } from "../../../../components/CustomButton/CustomButton";
 
 interface Props {
-  post: Post;
+  post: FullPost;
   activeId: number | null;
   setActiveId: Function;
   setAuthCb?: Function;
@@ -17,7 +16,7 @@ export const PostUserControl = (props: Props) => {
   const dispatch = useDispatch();
   const user = useSelector((state: MainState) => state.authModule.user);
 
-  const setLike = (data: Post) => {
+  const setLike = (data: FullPost) => {
     if (!user) {
       return;
     }

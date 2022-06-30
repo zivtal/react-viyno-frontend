@@ -1,69 +1,75 @@
-import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { tryRequire } from "../../../../services/require.service";
-import { Attachments } from "../../../../components/Attachments/Attachments";
+import {
+  Attachment,
+  Attachments,
+} from "../../../../components/Attachments/Attachments";
 import { cleanUpEmptyFields } from "../../../../services/object.service";
-import { Loader } from "../../../../components/Loader/Loader";
 import {
   cloudUpload,
   getImgSrcFromBase64,
 } from "../../../../services/media/media.service";
 import { MainState } from "../../../../store/models/store.models";
 import { CustomButton } from "../../../../components/CustomButton/CustomButton";
-import { Reply } from "../../models/post.model";
+import { Post, Reply } from "../../models/post.model";
+import { useRef, useState } from "react";
+import React from "react";
 
 interface Props {
-  value: Partial<Reply>;
+  value?: Post;
+  data?: Partial<Reply>;
+  max?: number;
+  onSubmit: Function;
+  inClass?: string;
 }
 
-export const PostEditor = ({ onSubmit, value, data, max = 512, inClass }) => {
-  const el = useRef(null);
+export const PostEditor = (props: Props) => {
+  const el = useRef<HTMLTextAreaElement | null>(null);
   const user = useSelector((state: MainState) => state.authModule.user);
   const [height, setHeight] = useState(1.25);
   const [isUploading, setUploading] = useState(false);
-  const [post, setPost] = useState({
-    description: value?.description || "",
-    attach: value?.attach || [],
-  });
+  const [post, setPost] = useState<Post>({ ...(props.value || {}) } as Post);
 
   if (!user) return null;
 
   const beforeSubmit = () => {
-    const res = {
-      _id: post._id || null,
+    const req = {
+      _id: post?._id || null,
       description: post.description,
-      attach: (post.attach || []).map(({ url }) => url).join("|"),
-      ...(data || {}),
+      attach: post?.attach,
+      ...(props.data || {}),
     };
-    return cleanUpEmptyFields(res);
+
+    return cleanUpEmptyFields(req);
   };
 
-  const setContent = (value) => {
+  const setContent = (value: string) => {
     setPost({ ...post, description: value });
     const lineSize = 1.25;
-    const width = el.current.getBoundingClientRect()?.width; // 679 = 90
+    const width = el.current?.getBoundingClientRect()?.width; // 679 = 90
     const height =
-      value?.split("\n").reduce((sum, val) => {
-        const lines = val.length ? Math.ceil(val.length / (width / 7.55)) : 1;
+      value?.split("\n").reduce((sum: number, val: string) => {
+        const lines = val.length
+          ? Math.ceil(val.length / ((width || 1) / 7.55))
+          : 1;
         return (sum += lines * lineSize);
       }, 0) || 0;
     setHeight(Math.max(height, 1.25));
   };
 
-  const handleKey = (ev) => {
+  const handleKey = (ev: any) => {
     switch (ev.keyCode) {
       case 13:
         if (ev.ctrlKey) {
           setContent(post.description ? post.description + "\n" : "\n");
         } else {
           ev.preventDefault();
-          onSubmit(beforeSubmit(), true);
+          props.onSubmit(beforeSubmit(), true);
           setPost({ description: "", attach: [] });
         }
         break;
 
       case 27:
-        onSubmit(beforeSubmit(), false);
+        props.onSubmit(beforeSubmit(), false);
         setPost({ description: "", attach: [] });
         break;
 
@@ -72,32 +78,29 @@ export const PostEditor = ({ onSubmit, value, data, max = 512, inClass }) => {
     }
   };
 
-  const handleChange = ({ target }) => {
-    const { value } = target;
+  const handleChange = (ev: any) => {
+    const { value } = ev.target;
     setContent(value);
-    // setPost({ ...post, description: value });
+    setPost({ ...post, description: value });
   };
 
-  const upload = async (ev, type) => {
+  const upload = async (ev: any, type: string) => {
     setUploading(true);
     const urls = await cloudUpload(ev.target.files, type);
     setPost({
       ...post,
-      attach: [...post.attach, ...urls.map((url: string) => ({ url }))],
+      attach: [...(post.attach || []), ...urls.map((url: string) => ({ url }))],
     });
     setUploading(false);
   };
 
   return (
     <>
-      <div className={`user-post-editor ${inClass || ""}`}>
+      <div className={`user-post-editor ${props.inClass || ""}`}>
         <div>
           <img
             className="profile-picture"
             src={getImgSrcFromBase64(user.imageData, user.imageType)}
-            onError={(ev) =>
-              (ev.target.src = tryRequire("imgs/icons/user-profile.svg"))
-            }
             alt="Profile picture"
           />
 
@@ -109,22 +112,23 @@ export const PostEditor = ({ onSubmit, value, data, max = 512, inClass }) => {
               onChange={handleChange}
               value={post.description}
               spellCheck={false}
-              autoFocus={data?.key === "replyId"}
+              autoFocus={!!props.data?.replyId}
               style={{ height: `calc(${height}em + 32px)` }}
-              maxLength={max}
+              maxLength={props.max || 512}
             />
 
             <label>
               <p className="chars-left">
-                {max - (post.description?.length || 0)}
+                {(props.max || 512) - (post.description?.length || 0)}
               </p>
             </label>
 
             {post?.attach?.length ? (
               <Attachments
                 attachments={post?.attach || []}
-                id={data?.id}
-                onSet={(attach) => setPost({ ...post, attach })}
+                onSet={(attach: Array<Attachment>) =>
+                  setPost({ ...post, attach })
+                }
               />
             ) : null}
           </div>
@@ -145,8 +149,9 @@ export const PostEditor = ({ onSubmit, value, data, max = 512, inClass }) => {
             label="Send"
             iconName="send"
             iconSize={12}
+            loading={isUploading}
             onClick={() => {
-              onSubmit(beforeSubmit(), true);
+              props.onSubmit(beforeSubmit(), true);
               setPost({ description: "", attach: [] });
             }}
           />

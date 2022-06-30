@@ -6,12 +6,12 @@ import { PostEditor } from "./components/PostEditor/PostEditor";
 import { PostPreview } from "./components/PostPreview/PostPreview";
 import { ReviewPreview } from "../Wine/WineView/components/WineCommunityReviews/components/ReviewPreview/ReviewPreview";
 import { WineSlider } from "../Wine/WineView/components/WineSlider/WineSlider";
-import { postServiceOld } from "./service/post.api-service";
+import { postService, postServiceOld } from "./service/post.api-service";
 import { Loader } from "../../components/Loader/Loader";
 import { getPosts, getPostsUpdate, getReplies } from "./store/action";
 import { getWines } from "../Wine/store/action";
 import { REVIEW_DEMO } from "../Wine/WineView/constants/wine";
-import { POSTS } from "./store/types";
+import { SET_POST, POSTS } from "./store/types";
 import { WINES } from "../Wine/store/types";
 import { MainState } from "../../store/models/store.models";
 import useInfinityScroll from "../../shared/hooks/useInfinityScroll";
@@ -79,12 +79,12 @@ export const UserFeed = () => {
         setSaved(post);
       }
 
-      if (!post.description && !post.attach) {
+      if (!post.description && !post.attach?.length) {
         return;
       }
 
       try {
-        await postServiceOld.post(post._id, post, { type: "post" });
+        await postService[SET_POST](post);
       } catch (err) {
         setSaved(post);
       }

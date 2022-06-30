@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { postServiceOld } from "../../../../../../UserFeed/service/post.api-service";
+import {
+  postService,
+  postServiceOld,
+} from "../../../../../../UserFeed/service/post.api-service";
 // @ts-ignore
 import { getCurrentPosition } from "../../../../../../../services/util.service";
-import { Attachments } from "../../../../../../../components/Attachments/Attachments";
+import {
+  Attachment,
+  Attachments,
+} from "../../../../../../../components/Attachments/Attachments";
 import { StarRate } from "../../../../../../../components/StarRate/StarRate";
 import { QuickLogin } from "../../../../../../Login/components/QuickLogin/QuickLogin";
 import { tryRequire } from "../../../../../../../services/require.service";
@@ -11,19 +17,20 @@ import { cloudUpload } from "../../../../../../../services/media/media.service";
 import { OverlayModal } from "../../../../../../../components/OverlayModal/OverlayModal";
 import { Wine } from "../../../../../models/wine.model";
 import { BaseRecords } from "../../../../../../../shared/models/base-records.model";
-import { Post } from "../../../../../../UserFeed/models/post.model";
+import { FullPost, Review } from "../../../../../../UserFeed/models/post.model";
 import { MainState } from "../../../../../../../store/models/store.models";
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { SET_WINE } from "../../../../../store/types";
 import { BaseProps } from "../../../../../../../shared/models/base-props";
+import { SET_POST, SET_REVIEW } from "../../../../../../UserFeed/store/types";
 
 interface Props extends BaseProps {
   wine: Wine;
   rateValue: number | null;
   onSet: Function;
   onClose: Function;
-  reviews?: BaseRecords<Post>;
+  reviews?: BaseRecords<FullPost>;
 }
 
 export const AddReview = (props: Props): JSX.Element | null => {
@@ -41,13 +48,13 @@ export const AddReview = (props: Props): JSX.Element | null => {
     return queries.get(name)?.split("-") || [];
   };
 
-  const [id, setId] = useState<number | null>(null);
+  const [id, setId] = useState<number | undefined>();
   const [rate, setRate] = useState<number>(props.rateValue || 0);
   const [vintage, setVintage] = useState<number>(
     +getQuery("year")?.toString() || new Date().getFullYear()
   );
   const [description, setDescription] = useState<string>("");
-  const [attach, setAttach] = useState<Array<string>>([]);
+  const [attach, setAttach] = useState<Array<Attachment>>([]);
   const [isLoginActive, setIsLoginActive] = useState<boolean>(false);
   const user = useSelector((state: MainState) => state.authModule.user);
   const dispatch = useDispatch();
@@ -59,21 +66,26 @@ export const AddReview = (props: Props): JSX.Element | null => {
   }, [props.rateValue, user]);
 
   useEffect(() => {
-    if (!props.reviews) return;
-    if (!vintage) {
-      setDescription("");
-      setId(null);
-    } else {
-      const review = (props.reviews?.data || []).find(
-        (review: Post) => review.vintage === vintage
-      );
-
-      if (review) {
-        setDescription(review.description);
-        setRate(review.rate || 0);
-        setId(review._id);
-      }
+    if (!props.reviews) {
+      return;
     }
+
+    const review = (props.reviews?.data || []).find(
+      (review: FullPost) => review.vintage === vintage
+    );
+
+    if (!vintage || !review) {
+      setAttach([]);
+      setDescription("");
+      setId(undefined);
+
+      return;
+    }
+
+    setAttach(review.attach || []);
+    setDescription(review.description);
+    setRate(review.rate || 0);
+    setId(review._id);
   }, [vintage]);
 
   if (!props.rateValue) {
@@ -85,7 +97,9 @@ export const AddReview = (props: Props): JSX.Element | null => {
   }
 
   const upload = async (ev: any, type: string): Promise<void> => {
-    const res = await cloudUpload(ev.target?.files || [], type);
+    const res = ((await cloudUpload(ev.target?.files || [], type)) || []).map(
+      (url: string) => ({ url })
+    );
 
     setAttach([...attach, ...res]);
   };
@@ -98,23 +112,20 @@ export const AddReview = (props: Props): JSX.Element | null => {
     try {
       const location = (await getCurrentPosition()) || {};
 
-      const body = {
-        attach: attach.join("|"),
+      const post: Review = {
+        wineId: props.wine._id,
+        attach,
         vintage,
         rate,
         description,
         ...location,
       };
 
-      const recent = await postServiceOld.review(
-        props.wine._id || props.wine.seo,
-        id ? { _id: id, ...body } : body,
-        { type: "review" }
-      );
+      const recent = await postService[SET_REVIEW](post);
 
       const prevRate =
         (props.reviews?.data || []).find(
-          (review: Post) => review.vintage === vintage
+          (review: FullPost) => review.vintage === vintage
         )?.rate || 0;
 
       const wineRate = props.wine.rate || 0;
@@ -217,10 +228,7 @@ export const AddReview = (props: Props): JSX.Element | null => {
           </label>
         </form>
 
-        <Attachments
-          attachments={attach.map((url) => ({ url }))}
-          onSet={setAttach}
-        />
+        <Attachments attachments={attach} onSet={setAttach} />
 
         <button className="submit" onClick={validateAndPost}>
           Submit

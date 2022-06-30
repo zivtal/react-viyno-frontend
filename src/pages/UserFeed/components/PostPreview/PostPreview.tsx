@@ -4,18 +4,16 @@ import { MediaPreviewModal } from "../../../../components/MediaPreviewModal/Medi
 import { QuickLogin } from "../../../Login/components/QuickLogin/QuickLogin";
 import { Attachments } from "../../../../components/Attachments/Attachments";
 import { PostUserControl } from "../PostUserControl/PostUserControl";
-// @ts-ignore
 import { OnPostReply } from "../../../Wine/WineView/components/WineCommunityReviews/components/OnPostReply/OnPostReply";
-// @ts-ignore
 import { PostUserInfo } from "../PostUserInfo/PostUserInfo";
 import { MainState } from "../../../../store/models/store.models";
-import { Post } from "../../models/post.model";
+import { FullPost, Reply } from "../../models/post.model";
 import { postService } from "../../service/post.api-service";
 import { SET_REPLY } from "../../store/types";
 import React from "react";
 
 interface Props {
-  post: Post;
+  post: FullPost;
   activeId: number | null;
   setActiveId: Function;
   setReplyState: Function;
@@ -29,17 +27,21 @@ interface SavedReply {
 export const PostPreview = (props: Props) => {
   const user = useSelector((state: MainState) => state.authModule.user);
   const [authCb, setAuthCb] = useState<Function | undefined>();
-  const [savedReply, setSavedReply] = useState<SavedReply | null>(null);
+  const [savedReply, setSavedReply] = useState<Partial<Reply> | null>(null);
   const [src, setSrc] = useState<string | null>(null);
 
-  const setReply = async (reply: Post, isSubmit: boolean) => {
+  if (!props.post?._id) {
+    return null;
+  }
+
+  const setReply = async (reply: Reply, isSubmit: boolean) => {
     setSavedReply({ description: reply.description, attach: reply.attach });
     if (isSubmit) {
       try {
         const res = await postService[SET_REPLY]({
-          replyId: props.post._id,
           ...reply,
-        });
+          replyId: props.post?._id,
+        } as Reply);
         //console.log("PostPreview", reply);
         // TODO: Update posts after reply
       } catch (err) {
@@ -74,9 +76,7 @@ export const PostPreview = (props: Props) => {
           {props.post.attach ? (
             <Attachments
               max={2}
-              attachments={props.post?.attach
-                ?.split("|")
-                .map((url) => ({ url }))}
+              attachments={props.post?.attach || []}
               className={"user-feed-preview"}
               onPreview={setSrc}
             />

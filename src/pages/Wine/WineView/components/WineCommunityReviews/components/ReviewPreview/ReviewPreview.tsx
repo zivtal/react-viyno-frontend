@@ -11,12 +11,12 @@ import { PostUserControl } from "../../../../../../UserFeed/components/PostUserC
 import { tryRequire } from "../../../../../../../services/require.service";
 import { setPostReaction } from "../../../../../../UserFeed/store/action";
 import { MainState } from "../../../../../../../store/models/store.models";
-import { Post } from "../../../../../../UserFeed/models/post.model";
+import { FullPost } from "../../../../../../UserFeed/models/post.model";
 import React from "react";
 import { BaseProps } from "../../../../../../../shared/models/base-props";
 
 interface Props extends BaseProps {
-  review: Post;
+  review: FullPost;
   activeId: number | null;
   setActiveId: Function;
 }
@@ -33,7 +33,7 @@ export const ReviewPreview = ({
   const [savedReply, setSavedReply] = useState();
   const [src, setSrc] = useState(null);
 
-  const setLike = async (data: Post, type = "review") => {
+  const setLike = async (data: FullPost, type = "review") => {
     if (!user) {
       return;
     }
@@ -41,7 +41,7 @@ export const ReviewPreview = ({
     dispatch(setPostReaction(data._id, !!data?.ilike));
   };
 
-  const setReply = async (reply: Post) => {
+  const setReply = async (reply: FullPost) => {
     // console.log("ReviewPreview", reply);
     // TODO: setReply
   };
@@ -100,7 +100,7 @@ export const ReviewPreview = ({
             {review.attach ? (
               <Attachments
                 max={2}
-                attachments={review.attach.split("|").map((url) => ({ url }))}
+                attachments={review.attach || []}
                 className={"user-feed-preview"}
                 onPreview={setSrc}
               />

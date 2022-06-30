@@ -1,8 +1,8 @@
 // @ts-ignore
 import { httpService } from "../../../services/http-client/http.service";
 import {
-  ADD_POST,
-  ADD_REVIEW,
+  SET_POST,
+  SET_REVIEW,
   GET_POSTS,
   GET_REPLIES,
   GET_REVIEW_STRUCTURE,
@@ -13,14 +13,13 @@ import {
 } from "../store/types";
 import { BaseQueries } from "../../../shared/models/base-queries";
 import { WineQuery, WineStructure } from "../../Wine/models/wine.model";
-import { Post } from "../models/post.model";
+import { FullPost, Post, Reply } from "../models/post.model";
 import {
   GET_WINE_HELPFUL_REVIEWS,
   GET_MY_WINE_REVIEWS,
   GET_WINE_RECENT_REVIEWS,
   GET_WINE_REVIEWS,
 } from "../../Wine/store/types";
-import { queries } from "@testing-library/react";
 
 const API = "post";
 
@@ -51,24 +50,12 @@ export const postService = {
     );
   },
 
-  [ADD_REVIEW]: (
-    wineId: string | number,
-    review: Post,
-    queries?: BaseQueries
-  ) => {
-    return httpService.post(
-      API + "/" + ADD_REVIEW + "/" + wineId,
-      review,
-      queries
-    );
+  [SET_REVIEW]: (post: Partial<FullPost>) => {
+    return httpService.post(API + "/" + SET_REVIEW, post);
   },
 
-  [ADD_POST]: (postId: number, content: any, queries?: BaseQueries) => {
-    return httpService.post(
-      API + "/" + ADD_POST + (postId ? "/" + postId : ""),
-      content,
-      queries
-    );
+  [SET_POST]: (post: Partial<Post>) => {
+    return httpService.post(API + "/" + SET_POST, post);
   },
 
   [UPDATE_POST]: (postId: number, content: any, queries?: BaseQueries) => {
@@ -111,7 +98,7 @@ export const postService = {
     );
   },
 
-  [SET_REPLY]: (reply: Post) => {
+  [SET_REPLY]: (reply: Reply) => {
     return httpService.post(API + "/" + SET_REPLY, reply);
   },
 

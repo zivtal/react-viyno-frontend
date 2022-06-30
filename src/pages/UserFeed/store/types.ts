@@ -2,8 +2,8 @@
 export const GET_POSTS = "getPosts";
 export const SET_REPLY = "setReply";
 export const GET_REPLIES = "getReplies";
-export const ADD_REVIEW = "addReview";
-export const ADD_POST = "addPost";
+export const SET_REVIEW = "setReview";
+export const SET_POST = "setPost";
 export const UPDATE_POST = "updatePost";
 export const SET_REACTION = "setReaction";
 export const GET_REVIEW_STRUCTURE = "getReviewStructure";

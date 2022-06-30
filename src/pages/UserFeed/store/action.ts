@@ -10,7 +10,7 @@ import {
   UPDATE_POSTS,
 } from "./types";
 import { BaseQueries } from "../../../shared/models/base-queries";
-import { Post } from "../models/post.model";
+import { FullPost } from "../models/post.model";
 import { container } from "tsyringe";
 import PostApiService from "../service/post.service2";
 import { Pagination } from "../../../shared/models/pagination";
@@ -73,7 +73,7 @@ export function getReplies(postId?: number) {
   return async (dispatch: Function, state: Function) => {
     try {
       const review = state().postModule.posts.data.find(
-        (post: Post) => post._id === postId
+        (post: FullPost) => post._id === postId
       );
 
       const page = review?.reply?.page;
@@ -95,10 +95,14 @@ export function getReplies(postId?: number) {
 }
 
 export function setPostReaction(
-  id: number,
-  state: number | boolean,
+  id?: number,
+  state?: number | boolean,
   wineId?: number
 ) {
+  if (!id) {
+    return;
+  }
+
   return async (dispatch: Function) => {
     try {
       const res = await postService[SET_REACTION](id, {

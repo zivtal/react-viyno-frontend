@@ -32,7 +32,7 @@ export async function loadFile(
   });
 }
 
-function dataToFile(data: string, type: string): any {
+function dataToFile(data: string, type?: string): any {
   if (!data) {
     return;
   }
@@ -175,7 +175,6 @@ export async function cloudUpload(files: FileList, type: string): Promise<any> {
         switch (type) {
           case "image":
             const data = await resizeImage(file, 1280);
-            // @ts-ignore
             const blob = dataToFile(data);
             FORM_DATA.append(type, blob || file);
             break;

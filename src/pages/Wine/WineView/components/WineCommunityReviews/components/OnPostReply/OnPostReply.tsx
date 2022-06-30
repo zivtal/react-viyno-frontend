@@ -2,17 +2,16 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // @ts-ignore
 import { ReplyToReply } from "../ReplyToReply/ReplyToReply";
-// @ts-ignore
 import { PostEditor } from "../../../../../../UserFeed/components/PostEditor/PostEditor";
 import { tryRequire } from "../../../../../../../services/require.service";
 import { Loader } from "../../../../../../../components/Loader/Loader";
 import { getReplies } from "../../../../../../UserFeed/store/action";
 import { MainState } from "../../../../../../../store/models/store.models";
-import { Post } from "../../../../../../UserFeed/models/post.model";
+import { FullPost } from "../../../../../../UserFeed/models/post.model";
 import { Pagination } from "../../../../../../../shared/models/pagination";
 
 interface Props {
-  post?: Post;
+  post?: FullPost;
   value?: any;
   setReply: Function;
   setAuthCb: Function;

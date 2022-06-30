@@ -1,5 +1,5 @@
 import { BaseRecords } from "../../../shared/models/base-records.model";
-import { Post } from "../models/post.model";
+import { FullPost } from "../models/post.model";
 import ApiService from "../../../services/http-client/api.service";
 import { inject, singleton } from "tsyringe";
 import { GET_POSTS } from "../store/types";
@@ -11,8 +11,8 @@ export default class PostApiService {
 
   private readonly postApi: string = "/post/";
 
-  public getPosts(queries?: BaseQueries): Promise<BaseRecords<Post>> {
-    return this.apiService.post<BaseRecords<Post>>(
+  public getPosts(queries?: BaseQueries): Promise<BaseRecords<FullPost>> {
+    return this.apiService.post<BaseRecords<FullPost>>(
       this.postApi + GET_POSTS,
       queries
     );

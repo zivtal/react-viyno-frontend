@@ -11,7 +11,7 @@ import {
 } from "../store/types";
 import { BaseFilter } from "../../../shared/models/base-filter";
 import { BaseRecords } from "../../../shared/models/base-records.model";
-import { Post } from "../../UserFeed/models/post.model";
+import { FullPost } from "../../UserFeed/models/post.model";
 import { SelectItem } from "../../../shared/models/select-item";
 
 export interface WineState {
@@ -121,9 +121,9 @@ export interface Wine {
   wineryProducts?: number;
   wineryRate?: number;
   wineryRatings?: number;
-  helpfulReviews?: BaseRecords<Post>;
-  myReviews?: BaseRecords<Post>;
-  recentReviews?: BaseRecords<Post>;
+  helpfulReviews?: BaseRecords<FullPost>;
+  myReviews?: BaseRecords<FullPost>;
+  recentReviews?: BaseRecords<FullPost>;
 }
 
 export interface WineQuery extends BaseQueries {

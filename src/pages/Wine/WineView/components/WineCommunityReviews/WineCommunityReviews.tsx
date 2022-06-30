@@ -8,7 +8,7 @@ import { tryRequire } from "../../../../../services/require.service";
 import { getImgSrcFromBase64 } from "../../../../../services/media/media.service";
 import { MainState } from "../../../../../store/models/store.models";
 import { useLocation } from "react-router-dom";
-import { Post } from "../../../../UserFeed/models/post.model";
+import { FullPost } from "../../../../UserFeed/models/post.model";
 import { BaseRecords } from "../../../../../shared/models/base-records.model";
 import { Wine } from "../../../models/wine.model";
 import {
@@ -20,7 +20,7 @@ import { PaginationControl } from "../../../../../components/PaginationControl/P
 
 interface Reviews {
   [key: string]: {
-    state?: BaseRecords<Post>;
+    state?: BaseRecords<FullPost>;
     set: Function;
     load?: Function;
   };
@@ -63,7 +63,7 @@ export const setReplyState = () => {};
 interface WinePreviewsProps {
   demo?: any;
   loading?: boolean;
-  reviews?: BaseRecords<Post>;
+  reviews?: BaseRecords<FullPost>;
   activeId: number | null;
   setActiveId: Function;
   onLoadMore?: Function;

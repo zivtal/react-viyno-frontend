@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRef } from "react";
 import { useSelector } from "react-redux";
-import {useHistory, useLocation} from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 // @ts-ignore
 import useChangeEffect from "../../../../shared/hooks/useChangeEffect";
 import { tryRequire } from "../../../../services/require.service";
@@ -71,9 +71,9 @@ export const MultiSelectFilter = ({ title, query, data, max = 8 }: Props) => {
 
   const onSearch = ({ target }: { target: any }) => {
     if (!target.value) {
-      console.log(data);
-      const show = data.filter(({ title, value }: { title: string; value: string }) =>
-        select.includes(value?.replace("-", " ") || title?.toLowerCase())
+      const show = data.filter(
+        ({ title, value }: { title: string; value: string }) =>
+          select.includes(value?.replace("-", " ") || title?.toLowerCase())
       );
       setDataToShow(show.length ? show : data.slice(0, max));
     } else {
@@ -83,7 +83,8 @@ export const MultiSelectFilter = ({ title, query, data, max = 8 }: Props) => {
           !select.includes(value) && !select.includes(title?.toLowerCase())
       );
       const result = notInUse.filter(
-        ({ name, seo }: { name: string; seo: string }) => name?.match(re) || seo?.replace("-", " ").match(re)
+        ({ name, seo }: { name: string; seo: string }) =>
+          name?.match(re) || seo?.replace("-", " ").match(re)
       );
       {
         const re = new RegExp(`(${target.value})`, "gi");

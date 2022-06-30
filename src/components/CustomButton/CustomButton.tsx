@@ -23,7 +23,6 @@ export const CustomButton = (props: IconProps) => {
 
   const onClick = (ev: any) => {
     ev.stopPropagation();
-
     props.onClick?.();
   };
 

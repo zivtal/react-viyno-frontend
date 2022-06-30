@@ -145,7 +145,7 @@ export const ReplyPreview = ({
           <PostEditor
             onSubmit={set}
             data={ids.length > 2 ? { replyId: ids[1] } : { replyId: reply._id }}
-            value={{ content: reply.name + " ", attach: [] }}
+            value={{ description: reply.name + " ", attach: [] }}
             inClass={"reply-to-reply"}
           />
         ) : null}

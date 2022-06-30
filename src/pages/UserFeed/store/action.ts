@@ -65,7 +65,11 @@ export function getPosts(queries?: BaseQueries) {
   };
 }
 
-export function getReplies(postId: number) {
+export function getReplies(postId?: number) {
+  if (!postId) {
+    return;
+  }
+
   return async (dispatch: Function, state: Function) => {
     try {
       const review = state().postModule.posts.data.find(

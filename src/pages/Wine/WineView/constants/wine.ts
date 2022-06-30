@@ -3,10 +3,6 @@ export const WINE_DEMO = {
   winery: "Zenato",
   ratings: 45827,
   rate5: 5827,
-  rate4: 0,
-  rate3: 0,
-  rate2: 0,
-  rate1: 0,
   rate: 5,
   region: "Veneto",
   country: "Italy",
@@ -18,61 +14,6 @@ export const WINE_DEMO = {
   pairings: ["beef", "lamb", "game", "blue-cheese"],
   type: "red",
   style: "italian amarone",
-  tastes: [
-    {
-      name: "earthy",
-      mentions: [
-        {
-          keyword: "balsamic",
-          count: 2,
-        },
-        {
-          keyword: "honey",
-          count: 1,
-        },
-      ],
-      color: "#b59b6f",
-      total: 3,
-    },
-    {
-      name: "red fruit",
-      mentions: [
-        {
-          keyword: "cherry",
-          count: 2,
-        },
-      ],
-      color: "#b3140a",
-      total: 2,
-    },
-    {
-      name: "vegetal",
-      mentions: [
-        {
-          keyword: "tomato",
-          count: 1,
-        },
-      ],
-      color: "#9c9a2a",
-      total: 1,
-    },
-    {
-      name: "yeasty",
-      mentions: [
-        {
-          keyword: "cheese",
-          count: 1,
-        },
-      ],
-      color: "#c38349",
-      total: 1,
-    },
-  ],
-  wineryOverview:
-    "The Zenato winery possesses a strong link to the richness of its local history and culture, and continues to develop this connection today. The estate is based in a territory that surrounds Lake Garda, with an extraordinary microclimate that allows for an optimal growing season. Cherishing a ‘frank and simple’ approach to life, Zenato is committed to producing affordable wine of exceptional quality. With a passion for the land and a dedication to vigorous research, innovation and quality improvement, Sergio Zenato strived to eclipse past results. He crafted wines that are known for their quality and consistency.",
-  wineryProducts: 5,
-  wineryRate: 4.8,
-  wineryRatings: 597728,
 };
 
 export const REVIEW_DEMO = {

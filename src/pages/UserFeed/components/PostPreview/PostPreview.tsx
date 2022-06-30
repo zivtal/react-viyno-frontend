@@ -92,12 +92,12 @@ export const PostPreview = (props: Props) => {
 
         {props.activeId === props.post._id ? (
           <OnPostReply
-            review={props.post}
+            post={props.post}
             value={savedReply}
             setReply={setReply}
             setAuthCb={setAuthCb}
             setSrc={setSrc}
-            setReplyState={props.setReplyState}
+            // setReplyState={setReplyState}
           />
         ) : null}
       </div>

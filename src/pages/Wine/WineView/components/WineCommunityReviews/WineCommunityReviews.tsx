@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { AddReview } from "./components/AddReview/AddReview";
 import { ReviewStat } from "./components/ReviewStat/ReviewStat";
 import { StarRate } from "../../../../../components/StarRate/StarRate";
-// @ts-ignore
 import { ReviewPreview } from "./components/ReviewPreview/ReviewPreview";
 import { tryRequire } from "../../../../../services/require.service";
 import { getImgSrcFromBase64 } from "../../../../../services/media/media.service";

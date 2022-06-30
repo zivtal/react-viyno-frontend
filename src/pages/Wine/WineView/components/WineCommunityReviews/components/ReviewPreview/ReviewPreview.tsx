@@ -6,7 +6,6 @@ import { MediaPreviewModal } from "../../../../../../../components/MediaPreviewM
 import { QuickLogin } from "../../../../../../Login/components/QuickLogin/QuickLogin";
 // @ts-ignore
 import { OnPostReply } from "../OnPostReply/OnPostReply";
-// @ts-ignore
 import { PostUserInfo } from "../../../../../../UserFeed/components/PostUserInfo/PostUserInfo";
 import { PostUserControl } from "../../../../../../UserFeed/components/PostUserControl/PostUserControl";
 import { tryRequire } from "../../../../../../../services/require.service";
@@ -31,7 +30,7 @@ export const ReviewPreview = ({
 
   const user = useSelector((state: MainState) => state.authModule.user);
   const [authCb, setAuthCb] = useState<Function>(() => {});
-  const [savedReply, setSavedReply] = useState(null);
+  const [savedReply, setSavedReply] = useState();
   const [src, setSrc] = useState(null);
 
   const setLike = async (data: Post, type = "review") => {
@@ -118,9 +117,8 @@ export const ReviewPreview = ({
 
         {activeId === review._id ? (
           <OnPostReply
-            review={review}
+            post={review}
             value={savedReply}
-            setLike={setLike}
             setReply={setReply}
             setAuthCb={setAuthCb}
             setSrc={setSrc}

@@ -10,6 +10,11 @@ import {
 } from "../../../../services/media/media.service";
 import { MainState } from "../../../../store/models/store.models";
 import { CustomButton } from "../../../../components/CustomButton/CustomButton";
+import { Reply } from "../../models/post.model";
+
+interface Props {
+  value: Partial<Reply>;
+}
 
 export const PostEditor = ({ onSubmit, value, data, max = 512, inClass }) => {
   const el = useRef(null);
@@ -17,7 +22,7 @@ export const PostEditor = ({ onSubmit, value, data, max = 512, inClass }) => {
   const [height, setHeight] = useState(1.25);
   const [isUploading, setUploading] = useState(false);
   const [post, setPost] = useState({
-    content: value?.description || "",
+    description: value?.description || "",
     attach: value?.attach || [],
   });
 

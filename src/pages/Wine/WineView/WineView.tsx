@@ -1,4 +1,4 @@
-import React, {lazy} from "react";
+import React, { lazy } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
@@ -30,11 +30,14 @@ export const WineView = (props: any): JSX.Element => {
       return;
     }
 
-    window.scrollTo(0, 0);
     dispatch(getWine(props.match.params.id));
   }, [props.match.params.id]);
 
-  useEffect(() => {}, [props.match.params.id]);
+  useEffect(() => {
+    const element = document.querySelector(".App > .content") as HTMLDivElement;
+
+    element.scrollTo(0, 0);
+  }, [props.match.params.id]);
 
   return (
     <Loader

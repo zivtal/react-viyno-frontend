@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useHistory, useLocation } from "react-router-dom";
-// @ts-ignore
 import { StarRateDisplay } from "../../../../../components/StarRateDisplay/StarRateDisplay";
 import { Wine, WineKeywords } from "../../../models/wine.model";
 import { MainState } from "../../../../../store/models/store.models";
@@ -82,7 +81,6 @@ export function WineHeader(props: Props): JSX.Element {
 
   return (
     <section className="wine-header full">
-      {/*<Loader if={props.loading} type="overlay-skeleton">*/}
       <div className="information fit-media">
         <div className="picture">
           {data?.imageData ? (
@@ -118,7 +116,6 @@ export function WineHeader(props: Props): JSX.Element {
           <StarRateDisplay rate={data?.rate} ratings={data?.ratings} />
         </div>
       </div>
-      {/*</Loader>*/}
     </section>
   );
 }

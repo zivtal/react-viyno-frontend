@@ -23,3 +23,9 @@ export interface Post {
   userName?: string;
   userPhoto?: string;
 }
+
+export interface Reply {
+  _id?: number;
+  description: string;
+  attach: Array<string> | string;
+}

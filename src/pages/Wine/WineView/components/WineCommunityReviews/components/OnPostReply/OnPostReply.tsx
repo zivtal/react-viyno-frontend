@@ -1,25 +1,38 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+// @ts-ignore
 import { ReplyToReply } from "../ReplyToReply/ReplyToReply";
+// @ts-ignore
 import { PostEditor } from "../../../../../../UserFeed/components/PostEditor/PostEditor";
 import { tryRequire } from "../../../../../../../services/require.service";
 import { Loader } from "../../../../../../../components/Loader/Loader";
 import { getReplies } from "../../../../../../UserFeed/store/action";
 import { MainState } from "../../../../../../../store/models/store.models";
+import { Post } from "../../../../../../UserFeed/models/post.model";
+import { Pagination } from "../../../../../../../shared/models/pagination";
 
-export const OnPostReply = ({ review, value, setReply, setAuthCb, setSrc }) => {
+interface Props {
+  post?: Post;
+  value?: any;
+  setReply: Function;
+  setAuthCb: Function;
+  setSrc: Function;
+  setReplyState?: Function;
+}
+
+export const OnPostReply = (props: Props) => {
   const dispatch = useDispatch();
 
   const user = useSelector((state: MainState) => state.authModule.user);
-  const [isLoading, setLoading] = useState(null);
-  const page = review?.reply?.page;
+  const [isLoading, setLoading] = useState(false);
+  const page = props.post?.reply?.page;
 
   return (
     <>
-      {!isLoading && page && page?.index < page?.total - 1 ? (
+      {!isLoading && page && (page?.index || 0) < (page?.total || 0) - 1 ? (
         <div
           className="load-more"
-          onClick={() => dispatch(getReplies(review._id))}
+          onClick={() => dispatch(getReplies(props.post?._id))}
         >
           <div className="community-button">
             <img
@@ -34,19 +47,19 @@ export const OnPostReply = ({ review, value, setReply, setAuthCb, setSrc }) => {
       <Loader if={isLoading} type="float-1" size={36} />
 
       <ReplyToReply
-        review={review}
-        set={setReply}
-        ids={[review._id]}
-        setAuthCb={setAuthCb}
-        setSrc={setSrc}
+        review={props.post}
+        set={props.setReply}
+        ids={[props.post?._id]}
+        setAuthCb={props.setAuthCb}
+        setSrc={props.setSrc}
         onLoadMore={() => console.log}
       />
 
       {user ? (
         <PostEditor
-          value={value}
-          data={{ replyId: review?._id }}
-          onSubmit={setReply}
+          value={props.value}
+          data={{ replyId: props.post?._id }}
+          onSubmit={props.setReply}
         />
       ) : null}
     </>

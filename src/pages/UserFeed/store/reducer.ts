@@ -69,7 +69,7 @@ export default (state = INITIAL_STATE, action: ReducerAction) => {
       return post
         ? {
             ...state,
-            [POSTS]: { ...state[POSTS], data },
+            [POSTS]: baseRecords.addData<FullPost>([post], state[POSTS]),
           }
         : state;
     }

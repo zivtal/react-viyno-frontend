@@ -49,8 +49,8 @@ const insert = <T>(
 };
 
 const overwrite = <T>(
-  insert?: BaseRecords<T>,
-  state?: BaseRecords<T>,
+  insert: BaseRecords<T>,
+  state: BaseRecords<T>,
   uniqueKey?: string
 ): BaseRecords<T> => {
   if (!state || !insert?.page?.index) {
@@ -115,7 +115,26 @@ const update = <T>(
   };
 };
 
+const addData = <T>(
+  insert: Array<T>,
+  state: BaseRecords<T>,
+  append = false,
+  overwrite = true
+): BaseRecords<T> => {
+  const count = overwrite
+    ? state?.data.length - insert.length + 1
+    : state?.data.length + insert.length + 1;
+
+  return {
+    ...state,
+    data: append
+      ? [...(state?.data || []), ...insert].slice(overwrite ? 1 : 0, count)
+      : [...insert, ...(state?.data || [])].slice(0, count),
+  };
+};
+
 export const baseRecords = {
+  addData,
   append,
   insert,
   overwrite,

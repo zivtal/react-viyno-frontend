@@ -66,7 +66,10 @@ const overwrite = <T>(
               !insert?.data?.find(({ [uniqueKey]: val2 }: any) => val1 === val2)
           ) || []),
         ].slice(0, state?.data.length || insert?.data.length)
-      : [...(insert?.data || []), ...(state?.data || [])],
+      : [...(insert?.data || []), ...(state?.data || [])].slice(
+          0,
+          state?.data.length || insert?.data.length
+        ),
     page: state?.page || insert?.page,
     total: state?.total || insert?.total,
   };

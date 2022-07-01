@@ -106,29 +106,3 @@ export const postService = {
     return httpService.post(API + "/" + GET_WINE_REVIEWS, queries);
   },
 };
-
-export const postServiceOld = {
-  review,
-  post,
-  reply,
-};
-
-async function review(
-  wineId: string | number,
-  review: any,
-  queries?: { type: string }
-) {
-  return httpService.post(API + "/" + wineId, review, queries);
-}
-
-async function reply(reviewId: number, content: any, queries?: BaseQueries) {
-  return httpService.put(API + "/reply/" + reviewId, content, queries);
-}
-
-async function post(postId: number, content: any, queries?: BaseQueries) {
-  return httpService.post(
-    `${API}${postId ? `/${postId}` : ""}`,
-    content,
-    queries
-  );
-}

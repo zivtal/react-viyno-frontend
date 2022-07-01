@@ -4,16 +4,22 @@ import { Link } from "react-router-dom";
 import { Attachments } from "../../../../../../../components/Attachments/Attachments";
 import { MediaPreviewModal } from "../../../../../../../components/MediaPreviewModal/MediaPreviewModal";
 import { QuickLogin } from "../../../../../../Login/components/QuickLogin/QuickLogin";
-// @ts-ignore
 import { OnPostReply } from "../OnPostReply/OnPostReply";
 import { PostUserInfo } from "../../../../../../UserFeed/components/PostUserInfo/PostUserInfo";
 import { PostUserControl } from "../../../../../../UserFeed/components/PostUserControl/PostUserControl";
 import { tryRequire } from "../../../../../../../services/require.service";
 import { setPostReaction } from "../../../../../../UserFeed/store/action";
 import { MainState } from "../../../../../../../store/models/store.models";
-import { FullPost } from "../../../../../../UserFeed/models/post.model";
+import { FullPost, Reply } from "../../../../../../UserFeed/models/post.model";
 import React from "react";
 import { BaseProps } from "../../../../../../../shared/models/base-props";
+import { postService } from "../../../../../../UserFeed/service/post.api-service";
+import {
+  SET_REPLY,
+  UPDATE_REPLIES,
+} from "../../../../../../UserFeed/store/types";
+import { baseRecords } from "../../../../../../../services/base-records.service";
+import { authService } from "../../../../../../Login/service/auth.service";
 
 interface Props extends BaseProps {
   review: FullPost;
@@ -21,16 +27,12 @@ interface Props extends BaseProps {
   setActiveId: Function;
 }
 
-export const ReviewPreview = ({
-  review,
-  activeId,
-  setActiveId,
-}: Props): JSX.Element => {
+export const ReviewPreview = (props: Props): JSX.Element => {
   const dispatch = useDispatch();
 
   const user = useSelector((state: MainState) => state.authModule.user);
   const [authCb, setAuthCb] = useState<Function>(() => {});
-  const [savedReply, setSavedReply] = useState();
+  const [savedReply, setSavedReply] = useState<Reply>({} as Reply);
   const [src, setSrc] = useState(null);
 
   const setLike = async (data: FullPost, type = "review") => {
@@ -41,17 +43,23 @@ export const ReviewPreview = ({
     dispatch(setPostReaction(data._id, !!data?.ilike));
   };
 
-  const setReply = async (reply: FullPost) => {
-    // console.log("ReviewPreview", reply);
-    // TODO: setReply
+  const setReply = async (reply: Reply) => {
+    const replyRes = await postService[SET_REPLY]({
+      ...reply,
+      replyId: props.review?._id,
+    } as Reply);
+
+    const userInfo = authService.getUserInformation();
+
+    dispatch({ type: UPDATE_REPLIES, reply: { ...replyRes, ...userInfo } });
   };
 
-  const url = review.vintage
+  const url = props.review.vintage
     ? {
-        pathname: `/wine/${review.seo}`,
-        search: `?year=${review.vintage}`,
+        pathname: `/wine/${props.review.seo}`,
+        search: `?year=${props.review.vintage}`,
       }
-    : { pathname: `/wine/${review.seo}` };
+    : { pathname: `/wine/${props.review.seo}` };
 
   return (
     <>
@@ -61,19 +69,23 @@ export const ReviewPreview = ({
         <div
           className="review-card hover-box"
           onClick={() =>
-            setActiveId(activeId === review._id || !user ? null : review._id)
+            props.setActiveId(
+              props.activeId === props.review._id || !user
+                ? null
+                : props.review._id
+            )
           }
         >
-          {review.wine ? (
+          {props.review.wine ? (
             <Link className="wine-review-title" to={url}>
               <h1>
-                {review.winery} {review.wine} {review.vintage}
+                {props.review.winery} {props.review.wine} {props.review.vintage}
               </h1>
             </Link>
           ) : null}
 
           <div className="review-user" style={{ padding: 0 }}>
-            <PostUserInfo review={review} isMinimal={true} />
+            <PostUserInfo review={props.review} isMinimal={true} />
 
             <div className="user-rating flex align-center">
               <div className="review-rate-summery">
@@ -81,26 +93,26 @@ export const ReviewPreview = ({
                   src={tryRequire("imgs/icons/single-star.svg")}
                   alt="star"
                 />
-                <span className="review-rate-title">{review.rate}</span>
+                <span className="review-rate-title">{props.review.rate}</span>
               </div>
 
-              {!review.wine && review.vintage ? (
+              {!props.review.wine && props.review.vintage ? (
                 <Link
-                  to={{ search: `?year=${review.vintage}` }}
+                  to={{ search: `?year=${props.review.vintage}` }}
                   className="review-vintage"
                 >
-                  {review.vintage}
+                  {props.review.vintage}
                 </Link>
               ) : null}
             </div>
           </div>
 
           <section className="review-content">
-            <span className="review-desc">{review.description}</span>
-            {review.attach ? (
+            <span className="review-desc">{props.review.description}</span>
+            {props.review.attach ? (
               <Attachments
                 max={2}
-                attachments={review.attach || []}
+                attachments={props.review.attach || []}
                 className={"user-feed-preview"}
                 onPreview={setSrc}
               />
@@ -109,20 +121,19 @@ export const ReviewPreview = ({
         </div>
 
         <PostUserControl
-          post={review}
-          activeId={activeId}
-          setActiveId={setActiveId}
+          post={props.review}
+          activeId={props.activeId}
+          setActiveId={props.setActiveId}
           setAuthCb={setAuthCb}
         />
 
-        {activeId === review._id ? (
+        {props.activeId === props.review._id ? (
           <OnPostReply
-            post={review}
+            post={props.review}
             value={savedReply}
             setReply={setReply}
             setAuthCb={setAuthCb}
             setSrc={setSrc}
-            // setReplyState={setReplyState}
           />
         ) : null}
       </div>

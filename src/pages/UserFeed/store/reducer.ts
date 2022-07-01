@@ -7,6 +7,8 @@ import {
   SET_REACTION,
   SET_REPLIES,
   UPDATE_POSTS,
+  UPDATE_REPLIES,
+  CACHE_POSTS,
 } from "./types";
 import { FullPost } from "../models/post.model";
 import { BaseRecords } from "../../../shared/models/base-records.model";
@@ -60,10 +62,16 @@ export default (state = INITIAL_STATE, action: ReducerAction) => {
     }
 
     case SET_POST: {
-      return {
-        ...state,
-        [POSTS]: [action.post, ...state[POSTS].data].slice(-1),
-      };
+      const { post } = action;
+      const count = state[POSTS].data?.length;
+      const data = [post, ...state[POSTS].data].slice(0, count);
+
+      return post
+        ? {
+            ...state,
+            [POSTS]: { ...state[POSTS], data },
+          }
+        : state;
     }
 
     case SET_REPLIES: {
@@ -83,8 +91,8 @@ export default (state = INITIAL_STATE, action: ReducerAction) => {
                 reply: {
                   ...(data.reply || {}),
                   data: [...(data.reply?.data || []), ...replies.data],
-                  page: replies.page,
-                  total: replies.total,
+                  page: replies.page || data.reply?.page || 0,
+                  total: replies.total || data.reply?.total || 0,
                 },
               };
             }
@@ -133,6 +141,15 @@ export default (state = INITIAL_STATE, action: ReducerAction) => {
           { ilike: ilike ? 1 : 0 },
           { likes: "ilike" }
         ),
+      };
+    }
+
+    case UPDATE_REPLIES: {
+      const { reply } = action;
+      console.log("update", reply);
+
+      return {
+        ...state,
       };
     }
 

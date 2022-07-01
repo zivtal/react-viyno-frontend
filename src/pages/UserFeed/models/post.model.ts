@@ -2,14 +2,17 @@ import { BaseRecords } from "../../../shared/models/base-records.model";
 import { Attachment } from "../../../components/Attachments/Attachments";
 
 export interface Post {
+  createdAt?: string | number;
   _id?: number;
   description: string;
   attach?: Array<Attachment>;
+  userId?: number;
+  userName?: string;
+  userPhoto?: string;
+  ratings?: number;
 }
 
 export interface FullPost extends Post {
-  createdAt: string;
-  userId: number;
   replyId?: number;
 
   likes: number;
@@ -22,10 +25,6 @@ export interface FullPost extends Post {
   wine?: string | null;
   vintage?: number | null;
   rate?: number | null;
-  ratings?: number;
-
-  userName?: string;
-  userPhoto?: string;
 }
 
 export interface Reply extends Post {

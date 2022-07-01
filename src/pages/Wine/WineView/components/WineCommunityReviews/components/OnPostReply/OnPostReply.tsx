@@ -7,12 +7,12 @@ import { tryRequire } from "../../../../../../../services/require.service";
 import { Loader } from "../../../../../../../components/Loader/Loader";
 import { getReplies } from "../../../../../../UserFeed/store/action";
 import { MainState } from "../../../../../../../store/models/store.models";
-import { FullPost } from "../../../../../../UserFeed/models/post.model";
+import { FullPost, Post } from "../../../../../../UserFeed/models/post.model";
 import { Pagination } from "../../../../../../../shared/models/pagination";
 
 interface Props {
   post?: FullPost;
-  value?: any;
+  value?: Post;
   setReply: Function;
   setAuthCb: Function;
   setSrc: Function;
@@ -57,7 +57,7 @@ export const OnPostReply = (props: Props) => {
       {user ? (
         <PostEditor
           value={props.value}
-          data={{ replyId: props.post?._id }}
+          autoFocus={true}
           onSubmit={props.setReply}
         />
       ) : null}

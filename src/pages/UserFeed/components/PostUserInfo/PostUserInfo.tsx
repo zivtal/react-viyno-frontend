@@ -9,26 +9,25 @@ interface Props {
   isMinimal?: boolean;
 }
 
-export const PostUserInfo = ({ review, isMinimal }: Props) => {
+export const PostUserInfo = (props: Props) => {
+  const { userName, userPhoto, ratings, createdAt } = props.review;
+
   return (
     <div className="community-user-info">
       <img
         src={
-          review.userPhoto
-            ? getImgSrcFromBase64(review.userPhoto)
+          userPhoto
+            ? getImgSrcFromBase64(userPhoto)
             : tryRequire("imgs/icons/user-profile.svg")
         }
         alt="Reviewer profile"
       />
-      <p style={isMinimal ? { flexDirection: "column" } : {}}>
-        <span className="user-fullname">{review.userName} </span>
-        {!isMinimal && review.ratings ? (
-          <span className="user-ratings">({review.ratings} ratings)</span>
+      <p style={props.isMinimal ? { flexDirection: "column" } : {}}>
+        <span className="user-fullname">{userName} </span>
+        {!props.isMinimal && ratings ? (
+          <span className="user-ratings">({ratings} ratings)</span>
         ) : null}
-        <span className="post-date">
-          {" "}
-          {moment(review.createdAt).format("ll")}
-        </span>
+        <span className="post-date"> {moment(createdAt).format("ll")}</span>
       </p>
     </div>
   );

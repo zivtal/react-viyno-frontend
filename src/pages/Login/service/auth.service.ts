@@ -51,6 +51,7 @@ export const authService = {
   },
 
   getLoggedinUser,
+  getUserInformation,
 };
 
 function _saveLocalUser(user: User) {
@@ -62,4 +63,12 @@ export function getLoggedinUser() {
   return JSON.parse(
     sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER) || "null"
   );
+}
+
+export function getUserInformation() {
+  return (({ fullname, _id, imageData }) => ({
+    userId: _id,
+    userName: fullname,
+    userPhoto: imageData,
+  }))(getLoggedinUser() || {});
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { MediaPreviewModal } from "../../../../components/MediaPreviewModal/MediaPreviewModal";
 import { QuickLogin } from "../../../Login/components/QuickLogin/QuickLogin";
 import { Attachments } from "../../../../components/Attachments/Attachments";
@@ -7,16 +7,16 @@ import { PostUserControl } from "../PostUserControl/PostUserControl";
 import { OnPostReply } from "../../../Wine/WineView/components/WineCommunityReviews/components/OnPostReply/OnPostReply";
 import { PostUserInfo } from "../PostUserInfo/PostUserInfo";
 import { MainState } from "../../../../store/models/store.models";
-import { FullPost, Reply } from "../../models/post.model";
+import { FullPost, Post, Reply } from "../../models/post.model";
 import { postService } from "../../service/post.api-service";
-import { SET_REPLY } from "../../store/types";
+import { SET_REPLIES, SET_REPLY, UPDATE_REPLIES } from "../../store/types";
 import React from "react";
+import { authService } from "../../../Login/service/auth.service";
 
 interface Props {
   post: FullPost;
   activeId: number | null;
   setActiveId: Function;
-  setReplyState: Function;
 }
 
 interface SavedReply {
@@ -25,9 +25,10 @@ interface SavedReply {
 }
 
 export const PostPreview = (props: Props) => {
+  const dispatch = useDispatch();
   const user = useSelector((state: MainState) => state.authModule.user);
   const [authCb, setAuthCb] = useState<Function | undefined>();
-  const [savedReply, setSavedReply] = useState<Partial<Reply> | null>(null);
+  const [savedReply, setSavedReply] = useState<Post | undefined>(undefined);
   const [src, setSrc] = useState<string | null>(null);
 
   if (!props.post?._id) {
@@ -36,14 +37,22 @@ export const PostPreview = (props: Props) => {
 
   const setReply = async (reply: Reply, isSubmit: boolean) => {
     setSavedReply({ description: reply.description, attach: reply.attach });
-    if (isSubmit) {
+    if (isSubmit && user) {
       try {
-        const res = await postService[SET_REPLY]({
+        const replyRes = await postService[SET_REPLY]({
           ...reply,
           replyId: props.post?._id,
         } as Reply);
-        //console.log("PostPreview", reply);
-        // TODO: Update posts after reply
+
+        const userInfo = authService.getUserInformation();
+
+        dispatch({
+          type: UPDATE_REPLIES,
+          reply: {
+            ...replyRes,
+            ...userInfo,
+          },
+        });
       } catch (err) {
         console.error(err);
       }
@@ -97,7 +106,6 @@ export const PostPreview = (props: Props) => {
             setReply={setReply}
             setAuthCb={setAuthCb}
             setSrc={setSrc}
-            // setReplyState={setReplyState}
           />
         ) : null}
       </div>

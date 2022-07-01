@@ -69,20 +69,15 @@ interface WinePreviewsProps {
   onLoadMore?: Function;
 }
 
-const WinePreviews = ({
-  reviews,
-  activeId,
-  setActiveId,
-  onLoadMore,
-}: WinePreviewsProps): JSX.Element | null => {
-  const data = reviews?.data;
+const WinePreviews = (props: WinePreviewsProps): JSX.Element | null => {
+  const data = props.reviews?.data;
 
   if (!data) {
     return null;
   }
 
   const isMore = (): boolean => {
-    const page = reviews?.page;
+    const page = props.reviews?.page;
 
     if (!page?.index || !page?.total) {
       return false;
@@ -96,14 +91,14 @@ const WinePreviews = ({
       {data.map((review, index) => (
         <ReviewPreview
           review={review}
-          activeId={activeId}
-          setActiveId={setActiveId}
+          activeId={props.activeId}
+          setActiveId={props.setActiveId}
           key={index}
         />
       ))}
 
       {isMore() ? (
-        <div className="load-more" onClick={() => onLoadMore?.()}>
+        <div className="load-more" onClick={() => props.onLoadMore?.()}>
           <div className="community-button hover-box">
             <img
               src={tryRequire(`imgs/icons/load-more.svg`)}

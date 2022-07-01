@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  postService,
-  postServiceOld,
-} from "../../../../../../UserFeed/service/post.api-service";
+import { postService } from "../../../../../../UserFeed/service/post.api-service";
 // @ts-ignore
 import { getCurrentPosition } from "../../../../../../../services/util.service";
 import {

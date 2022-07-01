@@ -6,16 +6,18 @@ import { PostEditor } from "./components/PostEditor/PostEditor";
 import { PostPreview } from "./components/PostPreview/PostPreview";
 import { ReviewPreview } from "../Wine/WineView/components/WineCommunityReviews/components/ReviewPreview/ReviewPreview";
 import { WineSlider } from "../Wine/WineView/components/WineSlider/WineSlider";
-import { postService, postServiceOld } from "./service/post.api-service";
+import { postService } from "./service/post.api-service";
 import { Loader } from "../../components/Loader/Loader";
 import { getPosts, getPostsUpdate, getReplies } from "./store/action";
 import { getWines } from "../Wine/store/action";
 import { REVIEW_DEMO } from "../Wine/WineView/constants/wine";
-import { SET_POST, POSTS } from "./store/types";
+import { SET_POST, POSTS, UPDATE_REPLIES } from "./store/types";
 import { WINES } from "../Wine/store/types";
 import { MainState } from "../../store/models/store.models";
 import useInfinityScroll from "../../shared/hooks/useInfinityScroll";
 import "./UserFeed.scss";
+import { SET_USER } from "../Login/store/types";
+import { authService } from "../Login/service/auth.service";
 
 export const UserFeed = () => {
   const location = useLocation();
@@ -84,7 +86,10 @@ export const UserFeed = () => {
       }
 
       try {
-        await postService[SET_POST](post);
+        const postRes = await postService[SET_POST](post);
+        const userInfo = authService.getUserInformation();
+
+        dispatch({ type: SET_POST, post: { ...postRes, ...userInfo } });
       } catch (err) {
         setSaved(post);
       }

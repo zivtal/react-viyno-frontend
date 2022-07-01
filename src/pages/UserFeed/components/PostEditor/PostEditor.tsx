@@ -10,15 +10,15 @@ import {
 } from "../../../../services/media/media.service";
 import { MainState } from "../../../../store/models/store.models";
 import { CustomButton } from "../../../../components/CustomButton/CustomButton";
-import { Post, Reply } from "../../models/post.model";
+import { FullPost, Post, Reply } from "../../models/post.model";
 import { useRef, useState } from "react";
 import React from "react";
 
 interface Props {
   value?: Post;
-  data?: Partial<Reply>;
   max?: number;
   onSubmit: Function;
+  autoFocus?: boolean;
   inClass?: string;
 }
 
@@ -27,16 +27,20 @@ export const PostEditor = (props: Props) => {
   const user = useSelector((state: MainState) => state.authModule.user);
   const [height, setHeight] = useState(1.25);
   const [isUploading, setUploading] = useState(false);
-  const [post, setPost] = useState<Post>({ ...(props.value || {}) } as Post);
+  const [post, setPost] = useState<Post>({
+    ...(props.value || { description: "", attach: [] }),
+  } as Post);
 
-  if (!user) return null;
+  if (!user) {
+    return null;
+  }
 
   const beforeSubmit = () => {
     const req = {
       _id: post?._id || null,
       description: post.description,
       attach: post?.attach,
-      ...(props.data || {}),
+      ...(props.value || {}),
     };
 
     return cleanUpEmptyFields(req);
@@ -112,7 +116,7 @@ export const PostEditor = (props: Props) => {
               onChange={handleChange}
               value={post.description}
               spellCheck={false}
-              autoFocus={!!props.data?.replyId}
+              autoFocus={props.autoFocus}
               style={{ height: `calc(${height}em + 32px)` }}
               maxLength={props.max || 512}
             />

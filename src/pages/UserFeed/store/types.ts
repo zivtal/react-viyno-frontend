@@ -16,6 +16,7 @@ export const SET_POST_STATE_LOADING = "setPostStateLoading";
 export const SET_CACHE_POSTS = "setCachePosts";
 export const SET_LIKE_STATE = "setLikeState";
 export const SET_REPLIES = "setReplies";
+export const UPDATE_REPLIES = "updateReplies";
 export const SET_MY_REVIEWS = "setMyReviews";
 
 // State

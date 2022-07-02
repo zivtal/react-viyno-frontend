@@ -1,6 +1,13 @@
 .taste-preview {
-  height: 80vh;
-  max-width: 800px;
+  @include for-mobile-layout {
+    height: 100%;
+    width: calc(100% - 16px);
+  }
+
+  @include from-tablet-layout {
+    height: 80vh;
+    max-width: 800px;
+  }
 
   .taste-content {
     border-radius: $frmrad;

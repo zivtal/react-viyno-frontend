@@ -1,12 +1,14 @@
-import sections from "../../../../../../../assets/json/scale-sections.json";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { postService } from "../../../../../../UserFeed/service/post.api-service";
 import { camelCaseToSentence } from "../../../../../../../services/dev.service";
 import { GET_REVIEW_STRUCTURE } from "../../../../../../UserFeed/store/types";
-import { Wine } from "../../../../../models/wine.model";
+import { Wine, WineStructure } from "../../../../../models/wine.model";
 import { useSelector } from "react-redux";
 import { MainState } from "../../../../../../../store/models/store.models";
 import { BaseProps } from "../../../../../../../shared/models/base-props";
+import React from "react";
+import { WineStructureSection } from "./models/wine-structure-sections.model";
+import { WINE_STRUCTURE_SECTIONS } from "./constants";
 
 interface Props extends BaseProps {
   wine: Wine;
@@ -14,48 +16,65 @@ interface Props extends BaseProps {
   isMinimal?: boolean;
 }
 
-export function ScaleRate({ wine, onSet, isMinimal = false }: Props) {
+export function ScaleRate(props: Props) {
+  type ObjectKey = keyof WineStructure;
+  const sections = WINE_STRUCTURE_SECTIONS;
+
   const rtl = document.dir === "rtl";
-  const isManualChange = useRef(false);
   const [isDragging, setIsDragging] = useState(false);
-  const [targetElement, setTargetElement] = useState(null);
-  const [wineScale, setScale] = useState();
-  const [loadScale, setLoadedScale] = useState({});
-  const [isSelfRate, setIsSelfRate] = useState({});
+  const [targetElement, setTargetElement] = useState<any>(null);
+  const [isSelfRate, setIsSelfRate] = useState(false);
+
+  const [wineScale, setWineScale] = useState<WineStructure>({});
+  const [loadScale, setLoadedScale] = useState<WineStructure>({});
 
   const user = useSelector((state: MainState) => state.authModule.user);
 
   const barWidth = 15;
   const slideRange = 100 - barWidth;
 
-  useEffect(() => {
-    (async () => {
-      wineChanged();
-      await userChanged();
-    })();
-  }, [wine]);
+  const isManualChange = ((): boolean => {
+    if (!wineScale || !loadScale) {
+      return false;
+    }
+
+    for (const key in wineScale) {
+      if (wineScale[key as ObjectKey] !== loadScale[key as ObjectKey]) {
+        return true;
+      }
+    }
+
+    return false;
+  })();
 
   useEffect(() => {
-    isManualChange.current = false;
-    setScale(loadScale ? { ...loadScale } : null);
+    wineChanged();
+  }, [props.wine]);
+
+  useEffect(() => {
+    (async () => {
+      await userChanged();
+    })();
+  }, [user]);
+
+  useEffect(() => {
+    setWineScale(loadScale ? { ...loadScale } : {});
   }, [loadScale]);
 
   useEffect(() => {
-    if (!wineScale) return;
-    if (!isManualChange.current) {
-      isManualChange.current = true;
+    if (!isManualChange) {
       return;
     }
 
-    onSet?.(wineScale);
-  }, [wineScale]);
+    props.onSet?.(wineScale);
+  }, [wineScale, loadScale]);
 
   const wineChanged = () => {
     const data = {
-      bold: wine?.bold,
-      tannic: wine?.tannic,
-      sweet: wine?.sweet,
-      acidic: wine?.acidic,
+      bold: props.wine?.bold,
+      tannic: props.wine?.tannic,
+      sweet: props.wine?.sweet,
+      acidic: props.wine?.acidic,
     };
 
     setLoadedScale(data);
@@ -63,25 +82,24 @@ export function ScaleRate({ wine, onSet, isMinimal = false }: Props) {
   };
 
   const userChanged = async () => {
-    if (onSet && user) {
-      try {
-        const data = await postService[GET_REVIEW_STRUCTURE](wine._id);
-        setLoadedScale(data);
-        setIsSelfRate(!!data);
-      } catch (err) {}
+    if (!props.wine._id || !props.onSet || !user) {
       return;
     }
 
-    wineChanged();
+    try {
+      const data = await postService[GET_REVIEW_STRUCTURE](props.wine._id);
+      setLoadedScale(data);
+      setIsSelfRate(!!data);
+    } catch (err) {}
   };
 
-  if (!wine || !wineScale) {
+  if (!props.wine || !wineScale) {
     return null;
   }
 
-  const BasedOn = ({ wine }) => {
+  const BasedOn = ({ wine }: { wine: Wine }) => {
     const content = `The taste profile of ${wine?.winery} ${wine?.name} is based on ${wine?.ratings} user reviews`;
-    return !isMinimal && wine?.ratings ? (
+    return !props.isMinimal && wine?.ratings ? (
       <div className="more">
         <h4>Members taste summary</h4>
         <p>{content}</p>
@@ -89,13 +107,13 @@ export function ScaleRate({ wine, onSet, isMinimal = false }: Props) {
     ) : null;
   };
 
-  const startDrag = ({ target }) => {
-    if (isDragging || !onSet) {
+  const startDrag = (ev: any) => {
+    if (isDragging || !props.onSet) {
       return;
     }
 
     setIsDragging(true);
-    setTargetElement(target);
+    setTargetElement(ev.target);
   };
 
   const stopDrag = () => {
@@ -103,7 +121,7 @@ export function ScaleRate({ wine, onSet, isMinimal = false }: Props) {
     setTargetElement(null);
   };
 
-  const setPosition = (ev, scale, isTouch = false) => {
+  const setPosition = (ev: any, key: ObjectKey, isTouch = false) => {
     if (!isDragging) return;
     const bondClient = targetElement.parentElement.getBoundingClientRect();
     const thumbClient = targetElement.getBoundingClientRect();
@@ -112,9 +130,9 @@ export function ScaleRate({ wine, onSet, isMinimal = false }: Props) {
 
     if (rtl) {
       const currPos = Math.min(x - bondClient.left, scaleWidth);
-      setScale({
+      setWineScale({
         ...wineScale,
-        [scale]: Math.min((1 - currPos / scaleWidth) * 100, 100),
+        [key]: Math.min((1 - currPos / scaleWidth) * 100, 100),
       });
       return;
     }
@@ -122,22 +140,24 @@ export function ScaleRate({ wine, onSet, isMinimal = false }: Props) {
     const scaleMin = bondClient.left;
     const thumbLeft = (x - thumbClient.left) / 2;
     const currPos = Math.min(x + thumbLeft - scaleMin, scaleWidth);
-    setScale({
+    setWineScale({
       ...wineScale,
-      [scale]: Math.max((currPos / scaleWidth) * 100, 0),
+      [key]: Math.max((currPos / scaleWidth) * 100, 0),
     });
   };
 
-  return sections.filter((scale) => wineScale[scale.max]).length || onSet ? (
+  return sections.filter(
+    (scale: WineStructureSection) => wineScale[scale.max as ObjectKey]
+  ).length || props.onSet ? (
     <>
       <div className="structure-details">
         <table onMouseLeave={stopDrag}>
           <tbody>
-            {sections.map((scale, index) => {
+            {sections.map((scale: WineStructureSection, index: number) => {
               const position = rtl
-                ? Math.max((wineScale[scale.max] / 100) * slideRange, 0)
-                : Math.max((wineScale[scale.max] / 100) * slideRange, 0);
-              return typeof wineScale[scale.max] === "number" || onSet ? (
+                ? Math.max(((wineScale[scale.max] || 0) / 100) * slideRange, 0)
+                : Math.max(((wineScale[scale.max] || 0) / 100) * slideRange, 0);
+              return typeof wineScale[scale.max] === "number" || props.onSet ? (
                 <tr
                   key={"SCALE_RATE_" + index}
                   onMouseMove={(ev) => setPosition(ev, scale.max)}
@@ -173,7 +193,7 @@ export function ScaleRate({ wine, onSet, isMinimal = false }: Props) {
           </tbody>
         </table>
 
-        <BasedOn wine={wine} />
+        <BasedOn wine={props.wine} />
       </div>
     </>
   ) : null;

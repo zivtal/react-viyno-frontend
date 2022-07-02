@@ -115,28 +115,49 @@ const update = <T>(
   };
 };
 
-const addData = <T>(
+const dataInsert = <T>(
   insert: Array<T>,
   state: BaseRecords<T>,
-  append = false,
-  overwrite = true
+  append = false
 ): BaseRecords<T> => {
-  const count = overwrite
-    ? state?.data.length - insert.length + 1
-    : state?.data.length + insert.length + 1;
+  const count = state?.data.length - insert.length + 1;
 
   return {
     ...state,
     data: append
-      ? [...(state?.data || []), ...insert].slice(overwrite ? 1 : 0, count)
+      ? [...(state?.data || []), ...insert].slice(1, count)
       : [...insert, ...(state?.data || [])].slice(0, count),
   };
 };
 
-export const baseRecords = {
-  addData,
+const dataUpdate = <T>(
+  update: Array<T>,
+  state: BaseRecords<T>,
+  uniqueKey: string
+): BaseRecords<T> => {
+  return {
+    ...state,
+    data: state.data.map((item: T) => {
+      type ObjectKey = keyof T;
+
+      const newRecord = update.find(
+        (updateItem: T) =>
+          updateItem[uniqueKey as ObjectKey] === item[uniqueKey as ObjectKey]
+      );
+
+      return newRecord || item;
+    }),
+  };
+};
+
+export const baseRecord = {
   append,
   insert,
   overwrite,
   update,
+};
+
+export const dataRecord = {
+  insert: dataInsert,
+  update: dataUpdate,
 };

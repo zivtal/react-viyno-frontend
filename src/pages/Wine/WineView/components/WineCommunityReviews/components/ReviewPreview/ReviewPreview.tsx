@@ -18,7 +18,7 @@ import {
   SET_REPLY,
   UPDATE_REPLIES,
 } from "../../../../../../UserFeed/store/types";
-import { baseRecords } from "../../../../../../../services/base-records.service";
+import { baseRecord } from "../../../../../../../services/base-records.service";
 import { authService } from "../../../../../../Login/service/auth.service";
 
 interface Props extends BaseProps {

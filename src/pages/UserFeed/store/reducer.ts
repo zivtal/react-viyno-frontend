@@ -12,7 +12,7 @@ import {
 } from "./types";
 import { FullPost } from "../models/post.model";
 import { BaseRecords } from "../../../shared/models/base-records.model";
-import { baseRecords } from "../../../services/base-records.service";
+import { baseRecord, dataRecord } from "../../../services/base-records.service";
 
 interface ReducerAction {
   type: string;
@@ -69,7 +69,7 @@ export default (state = INITIAL_STATE, action: ReducerAction) => {
       return post
         ? {
             ...state,
-            [POSTS]: baseRecords.addData<FullPost>([post], state[POSTS]),
+            [POSTS]: dataRecord.insert<FullPost>([post], state[POSTS]),
           }
         : state;
     }
@@ -131,7 +131,7 @@ export default (state = INITIAL_STATE, action: ReducerAction) => {
 
       return {
         ...state,
-        [POSTS]: baseRecords.update<FullPost>(
+        [POSTS]: baseRecord.update<FullPost>(
           state[POSTS],
           {
             key: "_id",

@@ -6,21 +6,33 @@ import { OverlayModal } from "../../../../../components/OverlayModal/OverlayModa
 import { debounce } from "../../../../../services/debounce.service";
 import { toKebabCase } from "../../../../../services/dev.service";
 import { GET_WINE_REVIEWS } from "../../../store/types";
+import { Wine, WineQuery, WineTaste } from "../../../models/wine.model";
+import { FullPost } from "../../../../UserFeed/models/post.model";
+import { BaseRecords } from "../../../../../shared/models/base-records.model";
 
-export function TastePreview(props) {
+interface Props {
+  wine: Wine;
+  query: WineQuery;
+  onClose: Function;
+}
+
+export function TastePreview(props: Props) {
   const { wine, query } = props;
-  const [taste, setTaste] = useState(null);
-  const [keyword, setKeyword] = useState("");
-  const [reviews, setReviews] = useState(null);
-  const [searchQuery, setSearchQuery] = useState(null);
+  const [taste, setTaste] = useState<WineTaste | undefined>();
+  const [keyword, setKeyword] = useState<string>("");
+  const [reviews, setReviews] = useState<BaseRecords<FullPost>>(
+    {} as BaseRecords<FullPost>
+  );
+  const [searchQuery, setSearchQuery] = useState<string | undefined>(undefined);
   var moment = require("moment");
 
   useEffect(() => {
-    if (!query) {
-      setTaste(null);
-      setReviews(null);
+    if (!query || !wine.tastes) {
+      setTaste(undefined);
+      setReviews({} as BaseRecords<FullPost>);
       return;
     }
+
     setTaste(wine.tastes.find((taste) => taste.name === query));
   }, [query]);
 
@@ -29,7 +41,7 @@ export function TastePreview(props) {
       setSearchQuery(
         taste
           ? taste.mentions.map((mention) => mention.keyword).join("|")
-          : null
+          : undefined
       );
     })();
   }, [taste]);
@@ -103,7 +115,7 @@ export function TastePreview(props) {
                     </span>
                   </div>
                   <div className="rating">
-                    <StarRate rate={review.rate} />
+                    <StarRate rate={review.rate || 0} />
                   </div>
                 </div>
               </div>
@@ -147,9 +159,13 @@ export function TastePreview(props) {
       );
     });
 
-  const scrollDown = async (ev) => {
+  const scrollDown = async (ev: any) => {
     debounce(
       async () => {
+        if (!reviews.page?.index || !reviews.page?.total) {
+          return;
+        }
+
         if (reviews.page.index < reviews.page.total - 1) {
           const { scrollTop, scrollHeight, clientHeight } = ev.target;
           if (scrollHeight - clientHeight - scrollTop < clientHeight * 0.1) {
@@ -169,7 +185,7 @@ export function TastePreview(props) {
   };
 
   return (
-    <OverlayModal if={taste} onClose={() => props.onClose()}>
+    <OverlayModal if={!!taste} onClose={() => props.onClose()}>
       <section
         slot="content"
         className="taste-preview"

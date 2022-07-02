@@ -1,15 +1,13 @@
 import React from "react";
 import { useSelector } from "react-redux";
-// @ts-ignore
 import { postService } from "../../../../UserFeed/service/post.api-service";
 // @ts-ignore
 import { ScaleRate } from "./components/ScaleRate/ScaleRate";
 // @ts-ignore
 import { TasteFill } from "./components/TasteFill/TasteFill";
-// @ts-ignore
 import { TastePreview } from "../TastePreview/TastePreview";
 import { useState } from "react";
-import { Wine, WineStructure } from "../../../models/wine.model";
+import { Wine, WineQuery, WineStructure } from "../../../models/wine.model";
 import { MainState } from "../../../../../store/models/store.models";
 import { debounce } from "../../../../../services/debounce.service";
 import { UPDATE_REVIEW_STRUCTURE } from "../../../../UserFeed/store/types";
@@ -49,7 +47,11 @@ export function TasteLike(props: Props): JSX.Element {
         <TasteFill tastes={data?.tastes} onClick={setTaste} />
       </section>
 
-      <TastePreview wine={props.wine} query={taste} onClose={setTaste} />
+      <TastePreview
+        wine={props.wine || ({} as Wine)}
+        query={taste || ({} as WineQuery)}
+        onClose={setTaste}
+      />
     </>
   );
 }

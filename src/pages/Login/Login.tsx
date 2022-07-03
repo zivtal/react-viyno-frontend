@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import React from "react";
 import { authService } from "./service/auth.service";
 import { setUser } from "./store/actions";
 import "./Login.scss";
 import { LOGIN, SIGNUP } from "./store/types";
 import { MainState } from "../../store/models/store.models";
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 export const Login = () => {
-  const [isSignUpMode, setIsSignUpMode] = useState(false);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [fullname, setFullname] = useState("");
+  const [isSignUpMode, setIsSignUpMode] = useState<boolean>(false);
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [fullname, setFullname] = useState<string>("");
   const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state: MainState) => state.authModule.user);
@@ -31,7 +31,9 @@ export const Login = () => {
   };
 
   useEffect(() => {
-    if (user) history.goBack();
+    if (user) {
+      history.goBack();
+    }
   }, [user]);
 
   return (

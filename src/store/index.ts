@@ -1,10 +1,8 @@
 import { applyMiddleware, createStore, compose, combineReducers } from "redux";
 import thunk from "redux-thunk";
 import authModule from "../pages/Login/store/reducer";
-// @ts-ignore
-import wineModule from "../pages/Wine/store/reducer"; // TODO: Convert to typescript
-// @ts-ignore
-import wineryModule from "../pages/Winery/store/reducer"; // TODO: Convert to typescript
+import wineModule from "../pages/Wine/store/reducer";
+import wineryModule from "../pages/Winery/store/reducer";
 import postModule from "../pages/UserFeed/store/reducer";
 
 // @ts-ignore

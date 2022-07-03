@@ -13,7 +13,11 @@ import "./WineSearch.scss";
 import { MainState } from "../../../store/models/store.models";
 import { WINE_KEYWORDS, WINES, WINES_FILTER, WINES_SORT } from "../store/types";
 
-export const WineSearch = (props) => {
+interface Props {
+  location: any;
+}
+
+export const WineSearch = (props: Props) => {
   const dispatch = useDispatch();
   const queries = new URLSearchParams(props.location.search);
   const [isShowFilter, setIsShowFilter] = useState(false);
@@ -25,7 +29,6 @@ export const WineSearch = (props) => {
     [WINE_KEYWORDS]: keywords,
     loading,
     page,
-    total,
   } = useSelector((state: MainState) => state.wineModule);
 
   useInfinityScroll(
@@ -34,7 +37,7 @@ export const WineSearch = (props) => {
       dispatch(getWines());
     },
     [wines],
-    page && page.index < page.total
+    (page?.index || 0) < (page?.total || 0)
   );
 
   const isFiltered = () => filter && Object.keys(filter).length;
@@ -74,7 +77,7 @@ export const WineSearch = (props) => {
   return wines && keywords ? (
     <section className="filter-container">
       <div className="control-panel">
-        <FilterSelection filter={filter} keywords={keywords} count={total} />
+        <FilterSelection filter={filter} keywords={keywords} />
 
         <div className="buttons">
           <button
@@ -89,7 +92,7 @@ export const WineSearch = (props) => {
       <div className="wines-filter">
         <nav
           className="filter-menu"
-          style={isShowFilter ? { display: "block" } : null}
+          style={isShowFilter ? { display: "block" } : {}}
         >
           <div className="title">filters</div>
           {/* <ScaleRangeFilter
@@ -105,13 +108,13 @@ export const WineSearch = (props) => {
           </div>
         </nav>
         <div className="wines-result">
-          {total && !isShowFilter ? (
+          {wines.length ? (
             wines.map((wine, index) => (
               <WineCardPreview wine={wine} key={index} />
             ))
-          ) : (
-            <div>No results</div> // TODO: Add no content component
-          )}
+          ) : !loading ? (
+            <div>No results</div>
+          ) : null}
 
           <Loader if={loading} type="float-1" size={36} />
         </div>

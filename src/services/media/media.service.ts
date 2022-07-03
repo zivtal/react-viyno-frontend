@@ -9,7 +9,7 @@ function type(file: string): string | null {
 }
 
 export function getImgSrcFromBase64(
-  data: string,
+  data?: string,
   type: string = "png"
 ): string {
   if (!data) {

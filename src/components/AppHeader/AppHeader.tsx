@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-// @ts-ignore
 import { useHistory, useLocation } from "react-router-dom";
 // @ts-ignore
 import { MainPopupMenu } from "./components/MainPopupMenu/MainPopupMenu";
-// @ts-ignore
 import { UserPopupMenu } from "../../pages/Login/components/UserPopupMenu/UserPopupMenu";
 import {
   CustomInput,
@@ -76,17 +74,6 @@ export function AppHeader(): JSX.Element | null {
 
     history.push(`/wine/${value.seo}`, { wine: value });
   };
-
-  const items = [
-    {
-      text: "test1",
-      value: "val1",
-    },
-    {
-      text: "test2",
-      value: "val2",
-    },
-  ];
 
   return (
     <header className="app-header">

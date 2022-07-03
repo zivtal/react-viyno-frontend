@@ -1,5 +1,4 @@
 import React from "react";
-// @ts-ignore
 import { StarRateDisplay } from "../../../../../../../components/StarRateDisplay/StarRateDisplay";
 import { tryRequire } from "../../../../../../../services/require.service";
 import { Wine } from "../../../../../models/wine.model";

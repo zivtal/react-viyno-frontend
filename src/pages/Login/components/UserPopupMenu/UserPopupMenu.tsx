@@ -7,12 +7,19 @@ import { QuickLogin } from "../QuickLogin/QuickLogin";
 import { tryRequire } from "../../../../services/require.service";
 import { getImgSrcFromBase64 } from "../../../../services/media/media.service";
 import { LOGOUT } from "../../store/types";
+import { MainState } from "../../../../store/models/store.models";
+
+interface QuickMenuProps {
+  el: any;
+  isActive: boolean;
+  onClose: Function;
+}
 
 export const UserPopupMenu = () => {
   const rtl = document.dir === "rtl";
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.authModule.user);
-  const elProfile = useRef(null);
+  const user = useSelector((state: MainState) => state.authModule.user);
+  const elProfile = useRef<any>(null);
   const [isActive, setIsActive] = useState(false);
 
   const logout = async () => {
@@ -20,11 +27,14 @@ export const UserPopupMenu = () => {
     dispatch(setUser(null));
   };
 
-  const QuickMenu = ({ isActive, el, close }) => {
-    if (!el) return null;
-    const top = el.offsetTop + el.clientHeight + 8;
-    const left = el.offsetLeft;
-    const right = window.innerWidth - el.offsetLeft - 32;
+  const QuickMenu = (props: QuickMenuProps) => {
+    if (!props.el) {
+      return null;
+    }
+
+    const top = props.el.offsetTop + props.el.clientHeight + 8;
+    const left = props.el.offsetLeft;
+    const right = window.innerWidth - props.el.offsetLeft - 32;
     const height = document.documentElement.scrollHeight;
     const style = rtl
       ? {
@@ -39,12 +49,12 @@ export const UserPopupMenu = () => {
       <div
         className="background-dimm"
         style={{ height: height + "px" }}
-        onClick={close}
+        onClick={() => props.onClose?.()}
       >
         <div
           className="user-quick-menu hover-box"
           style={style}
-          onClick={close}
+          onClick={() => props.onClose?.()}
         >
           <button onClick={logout}>Logout</button>
         </div>
@@ -67,16 +77,13 @@ export const UserPopupMenu = () => {
           tryRequire("imgs/icons/user-profile.svg")
         }
         onClick={() => setIsActive(!isActive)}
-        onError={(ev) =>
-          (ev.target.src = tryRequire("imgs/icons/user-profile.svg"))
-        }
         style={isActive ? { position: "relative", zIndex: 100 } : {}}
         alt="User profile"
       />
       <QuickMenu
-        isActive={isActive && user}
+        isActive={isActive && !!user}
         el={elProfile.current}
-        close={() => setIsActive(false)}
+        onClose={() => setIsActive(false)}
       />
       <QuickLogin
         isActive={isActive && !user}

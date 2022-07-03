@@ -1,6 +1,6 @@
 import React from "react";
 
-const useChangeEffect = (cb, deps) => {
+const useChangeEffect = (cb: Function, deps: Array<any>) => {
   const isMounted = React.useRef(false);
 
   React.useEffect(() => {

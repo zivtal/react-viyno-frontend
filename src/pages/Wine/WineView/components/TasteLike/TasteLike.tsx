@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { postService } from "../../../../UserFeed/service/post.api-service";
-// @ts-ignore
 import { ScaleRate } from "./components/ScaleRate/ScaleRate";
 // @ts-ignore
 import { TasteFill } from "./components/TasteFill/TasteFill";

@@ -5,9 +5,10 @@ import { useHistory, useLocation } from "react-router-dom";
 import { BaseFilter } from "../../../../shared/models/base-filter";
 import { WineKeywords } from "../../../../pages/Wine/models/wine.model";
 import { SelectItem } from "../../../../shared/models/select-item";
+import { useSelector } from "react-redux";
+import { MainState } from "../../../../store/models/store.models";
 
 interface Props {
-  count: number;
   filter: BaseFilter;
   keywords: WineKeywords;
 }
@@ -21,6 +22,9 @@ interface Selection {
 }
 
 export const FilterSelection = (props: Props) => {
+  const { loading, total } = useSelector(
+    (state: MainState) => state.wineModule
+  );
   const [select, setSelect] = useState<Array<Selection>>([]);
   const history = useHistory();
   const location = useLocation();
@@ -71,9 +75,11 @@ export const FilterSelection = (props: Props) => {
     history.replace({ search: queries.toString() });
   };
 
-  return select.length ? (
+  return (
     <div className="filtered-by">
-      <h1>{props.count} wines found by filtered search:</h1>
+      {!loading && select.length ? (
+        <h1>{total} wines found by filtered search:</h1>
+      ) : null}
       {select.map((selected, idx) => (
         <button
           onClick={() => removeFilter(selected)}
@@ -84,5 +90,5 @@ export const FilterSelection = (props: Props) => {
         </button>
       ))}
     </div>
-  ) : null;
+  );
 };

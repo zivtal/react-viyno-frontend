@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { StarRate } from "../../../../../components/StarRate/StarRate";
-// @ts-ignore
 import { ScaleRate } from "../TasteLike/components/ScaleRate/ScaleRate";
 import { tryRequire } from "../../../../../services/require.service";
 import { toKebabCase } from "../../../../../services/dev.service";
@@ -34,6 +33,7 @@ const WineImage = ({ wine }: { wine: Wine }): JSX.Element => {
         getImgSrcFromBase64(wine.imageData, wine?.imageType) ||
         tryRequire("imgs/bottle.png")
       }
+      alt="Wine Bottle"
     />
   ) : (
     <svg width="100px" height="390px" viewBox="0 0 320 1280">
@@ -56,6 +56,7 @@ const WineBackground = ({ wine }: { wine: Wine }): JSX.Element | null => {
       src={wine.background}
       className={rtl ? "card-wave-rtl" : "card-wave"}
       onError={(ev: any) => (ev.target.style.visibility = "hidden")}
+      alt="Wine background"
     />
   ) : null;
 };
@@ -96,6 +97,7 @@ export const WineCardPreview = ({
               `imgs/icons/country/${toKebabCase(wine.country)}.png`,
               `other country`
             )}
+            alt="Country flag"
           />
 
           <span>

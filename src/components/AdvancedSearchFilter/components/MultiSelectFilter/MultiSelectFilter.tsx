@@ -15,7 +15,7 @@ interface Props {
   title: string;
   query: string;
   data: any;
-  max: number;
+  max?: number;
 }
 
 export const MultiSelectFilter = ({ title, query, data, max = 8 }: Props) => {
@@ -122,7 +122,7 @@ export const MultiSelectFilter = ({ title, query, data, max = 8 }: Props) => {
         <div className="quick-filter-search">
           <input
             ref={elInput}
-            onKeyPress={handleKey}
+            onKeyDown={handleKey}
             onInput={onSearch}
             spellCheck="false"
           ></input>
@@ -161,6 +161,7 @@ export const MultiSelectFilter = ({ title, query, data, max = 8 }: Props) => {
                           }
                         : {}
                     }
+                    alt="Image"
                   />
                   <span>{title}</span>
                 </>

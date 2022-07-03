@@ -44,7 +44,6 @@ export const WinePairings = (props: Props): JSX.Element => {
   const data = !props.loading ? props.wine : props.demo;
 
   return (
-    // <Loader if={props.loading} type="overlay-skeleton">
     <section className="wine-pairings">
       <div className="information">
         <div className="content">
@@ -64,6 +63,5 @@ export const WinePairings = (props: Props): JSX.Element => {
         <FoodPairing wine={data} />
       </div>
     </section>
-    // </Loader>
   );
 };

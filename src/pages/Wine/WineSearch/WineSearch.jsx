@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import useInfinityScroll from "../../../shared/hooks/useInfinityScroll";
 import { useDispatch, useSelector } from "react-redux";
 import { WineCardPreview } from "../WineView/components/WinesPreview/WineCardPreview";
-import { setWinesFilter, setWinesPagination, getWines } from "../store/action";
+import { setWinesFilter, getWines } from "../store/action";
 import { WineFilters } from "./components/WineFilters/WineFilters";
 import { FilterSelection } from "../../../components/AdvancedSearchFilter/components/FilterSelection/FilterSelection";
 import { FilterQuickSort } from "../../../components/AdvancedSearchFilter/components/FilterQuickSort/FilterQuickSort";
@@ -11,13 +11,7 @@ import { extractConditionKey } from "../../../services/dev.service";
 import { Loader } from "../../../components/Loader/Loader";
 import "./WineSearch.scss";
 import { MainState } from "../../../store/models/store.models";
-import {
-  SET_WINES_PAGINATION,
-  WINE_KEYWORDS,
-  WINES,
-  WINES_FILTER,
-  WINES_SORT,
-} from "../store/types";
+import { WINE_KEYWORDS, WINES, WINES_FILTER, WINES_SORT } from "../store/types";
 
 export const WineSearch = (props) => {
   const dispatch = useDispatch();

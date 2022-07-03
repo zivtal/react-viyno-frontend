@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { PostEditor } from "./components/PostEditor/PostEditor";
 import { PostPreview } from "./components/PostPreview/PostPreview";
 import { ReviewPreview } from "../Wine/WineView/components/WineCommunityReviews/components/ReviewPreview/ReviewPreview";
@@ -11,13 +10,22 @@ import { Loader } from "../../components/Loader/Loader";
 import { getPosts, getPostsUpdate, getReplies } from "./store/action";
 import { getWines } from "../Wine/store/action";
 import { REVIEW_DEMO } from "../Wine/WineView/constants/wine";
-import { SET_POST, POSTS, UPDATE_REPLIES } from "./store/types";
+import { SET_POST, POSTS } from "./store/types";
 import { WINES } from "../Wine/store/types";
 import { MainState } from "../../store/models/store.models";
 import useInfinityScroll from "../../shared/hooks/useInfinityScroll";
 import "./UserFeed.scss";
-import { SET_USER } from "../Login/store/types";
 import { authService } from "../Login/service/auth.service";
+import { useLocation } from "react-router-dom";
+import React from "react";
+import { FullPost, Reply } from "./models/post.model";
+
+interface UserProps {
+  loading?: boolean;
+  reviews?: Array<FullPost>;
+  activeId: number | null;
+  setActiveId: Function;
+}
 
 export const UserFeed = () => {
   const location = useLocation();
@@ -62,7 +70,8 @@ export const UserFeed = () => {
       dispatch(getPosts());
     },
     [posts.data],
-    posts.page?.index < posts.page?.total && location.pathname === "/"
+    (posts.page?.index || 0) < (posts.page?.total || 0) &&
+      location.pathname === "/"
   );
 
   useEffect(() => {
@@ -73,10 +82,10 @@ export const UserFeed = () => {
     dispatch(getReplies(postActiveId));
   }, [postActiveId]);
 
-  const UserFeed = (props) => {
-    const [saved, setSaved] = useState(null);
+  const UserFeed = (props: UserProps) => {
+    const [saved, setSaved] = useState<Reply>({} as Reply);
 
-    const submit = async (post, isSave) => {
+    const submit = async (post: Reply, isSave: boolean) => {
       if (isSave) {
         setSaved(post);
       }
@@ -103,7 +112,7 @@ export const UserFeed = () => {
       <section className="user-feed">
         <PostEditor onSubmit={submit} />
 
-        {(data || []).map((review, index) =>
+        {(data || []).map((review: FullPost, index: number) =>
           review.wine ? (
             <ReviewPreview
               key={index}
@@ -130,7 +139,11 @@ export const UserFeed = () => {
         <WineSlider wines={wines} loading={winesLoading} />
       </section>
 
-      <Loader if={postsLoading && !posts.data.length} type="overlay-skeleton">
+      <Loader
+        if={!posts.data.length && postsLoading}
+        type="overlay-skeleton"
+        demo={REVIEW_DEMO}
+      >
         <UserFeed
           reviews={posts?.data}
           activeId={postActiveId}

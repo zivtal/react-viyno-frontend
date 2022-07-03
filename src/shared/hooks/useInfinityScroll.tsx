@@ -4,7 +4,7 @@ const useInfinityScroll = (
   cb: Function,
   deps: any,
   isEnabled: boolean,
-  className: string
+  className?: string
 ) => {
   // const element = document.querySelector(
   //   className || ".App > .content"

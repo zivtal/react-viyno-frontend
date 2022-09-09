@@ -1,7 +1,5 @@
 // @ts-ignore
-import { httpService } from "../../../services/http-client/http.service";
-// @ts-ignore
-import { typeOf } from "../../../services/util.service";
+import { httpService } from "../../../shared/services/http-client/http.service";
 import {
   ADD_WINE,
   GET_WINE,
@@ -10,20 +8,20 @@ import {
   SEARCH_WINES,
 } from "../store/types";
 import { WineKeywordsReq, Wine, WineQuery } from "../models/wine.model";
-import { BaseRecords } from "../../../shared/models/base-records.model";
+import { BaseRecordsModel } from "../../../shared/models/base-records.model";
 
 export const wineService = {
   [GET_WINE]: (id: string, queries: any): Promise<Wine> => {
     return httpService.post(BASE_API + GET_WINE + "/" + id, queries);
   },
 
-  [SEARCH_WINES]: (queries?: WineQuery): Promise<BaseRecords<Wine>> => {
+  [SEARCH_WINES]: (queries?: WineQuery): Promise<BaseRecordsModel<Wine>> => {
     queries = _clearEmptyQueries(queries);
 
     return httpService.post(BASE_API + SEARCH_WINES, queries);
   },
 
-  [GET_WINES]: (queries?: WineQuery): Promise<BaseRecords<Wine>> => {
+  [GET_WINES]: (queries?: WineQuery): Promise<BaseRecordsModel<Wine>> => {
     queries = _clearEmptyQueries(queries);
 
     return httpService.post(BASE_API + GET_WINES, queries);
@@ -74,7 +72,9 @@ function _clearEmptyQueries(queries: any) {
   return _cleanUpEmptyEntries(_cleanUpEmptyFields(queries));
 }
 
-async function getWineUpdate(queries?: WineQuery): Promise<BaseRecords<Wine>> {
+async function getWineUpdate(
+  queries?: WineQuery
+): Promise<BaseRecordsModel<Wine>> {
   queries = _clearEmptyQueries(queries);
   return httpService.get(BASE_API + GET_WINES, null, queries);
 }

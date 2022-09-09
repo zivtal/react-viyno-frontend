@@ -2,18 +2,18 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postService } from "../../../../../../UserFeed/service/post.api-service";
 // @ts-ignore
-import { getCurrentPosition } from "../../../../../../../services/util.service";
+import { getCurrentPosition } from "../../../../../../../shared/services/util.service";
 import {
   Attachment,
   Attachments,
 } from "../../../../../../../components/Attachments/Attachments";
 import { StarRate } from "../../../../../../../components/StarRate/StarRate";
 import { QuickLogin } from "../../../../../../Login/components/QuickLogin/QuickLogin";
-import { tryRequire } from "../../../../../../../services/require.service";
-import { cloudUpload } from "../../../../../../../services/media/media.service";
+import { tryRequire } from "../../../../../../../shared/helpers/require";
+import { cloudUpload } from "../../../../../../../shared/services/media/media.service";
 import { OverlayModal } from "../../../../../../../components/OverlayModal/OverlayModal";
 import { Wine } from "../../../../../models/wine.model";
-import { BaseRecords } from "../../../../../../../shared/models/base-records.model";
+import { BaseRecordsModel } from "../../../../../../../shared/models/base-records.model";
 import { FullPost, Review } from "../../../../../../UserFeed/models/post.model";
 import { MainState } from "../../../../../../../store/models/store.models";
 import React from "react";
@@ -27,7 +27,7 @@ interface Props extends BaseProps {
   rateValue: number | null;
   onSet: Function;
   onClose: Function;
-  reviews?: BaseRecords<FullPost>;
+  reviews?: BaseRecordsModel<FullPost>;
 }
 
 export const AddReview = (props: Props): JSX.Element | null => {

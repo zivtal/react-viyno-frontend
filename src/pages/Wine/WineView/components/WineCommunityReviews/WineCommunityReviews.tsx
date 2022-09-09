@@ -4,12 +4,12 @@ import { AddReview } from "./components/AddReview/AddReview";
 import { ReviewStat } from "./components/ReviewStat/ReviewStat";
 import { StarRate } from "../../../../../components/StarRate/StarRate";
 import { ReviewPreview } from "./components/ReviewPreview/ReviewPreview";
-import { tryRequire } from "../../../../../services/require.service";
-import { getImgSrcFromBase64 } from "../../../../../services/media/media.service";
+import { tryRequire } from "../../../../../shared/helpers/require";
+import { getImgSrcFromBase64 } from "../../../../../shared/services/media/media.service";
 import { MainState } from "../../../../../store/models/store.models";
 import { useLocation } from "react-router-dom";
 import { FullPost } from "../../../../UserFeed/models/post.model";
-import { BaseRecords } from "../../../../../shared/models/base-records.model";
+import { BaseRecordsModel } from "../../../../../shared/models/base-records.model";
 import { Wine } from "../../../models/wine.model";
 import {
   getHelpfulReviews,
@@ -20,7 +20,7 @@ import { PaginationControl } from "../../../../../components/PaginationControl/P
 
 interface Reviews {
   [key: string]: {
-    state?: BaseRecords<FullPost>;
+    state?: BaseRecordsModel<FullPost>;
     set: Function;
     load?: Function;
   };
@@ -63,7 +63,7 @@ export const setReplyState = () => {};
 interface WinePreviewsProps {
   demo?: any;
   loading?: boolean;
-  reviews?: BaseRecords<FullPost>;
+  reviews?: BaseRecordsModel<FullPost>;
   activeId: number | null;
   setActiveId: Function;
   onLoadMore?: Function;

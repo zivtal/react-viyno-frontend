@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import useWindowResize from "../../../../../shared/hooks/useWindowResize";
 // @ts-ignore
-import { minMax } from "../../../../../services/util.service";
+import { minMax } from "../../../../../shared/services/util.service";
 import { WineCardPreview } from "../WinesPreview/WineCardPreview";
 import { Loader } from "../../../../../components/Loader/Loader";
 import { Wine } from "../../../models/wine.model";

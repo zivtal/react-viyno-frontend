@@ -9,7 +9,7 @@ import {
   CustomInputType,
 } from "../CustomInput/CustomInput";
 import { wineService } from "../../pages/Wine/service/wine.service";
-import { tryRequire } from "../../services/require.service";
+import { tryRequire } from "../../shared/helpers/require";
 import { SEARCH_WINES } from "../../pages/Wine/store/types";
 
 export const mediaQuery = { mobile: 540 };

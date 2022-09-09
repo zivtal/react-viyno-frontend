@@ -1,5 +1,3 @@
-// @ts-ignore
-import { getCurrentPosition } from "../../../services/util.service";
 import { wineryService } from "../service/winery.service";
 import {
   ADD_WINERY_CACHE,

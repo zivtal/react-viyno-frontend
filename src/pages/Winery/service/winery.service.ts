@@ -1,5 +1,5 @@
 // @ts-ignore
-import { httpService } from "../../../services/http-client/http.service";
+import { httpService } from "../../../shared/services/http-client/http.service";
 import { BaseQueries } from "../../../shared/models/base-queries";
 import { WineryQuery } from "../models/winery.model";
 import { GET_WINERIES, GET_WINERY } from "../store/types";

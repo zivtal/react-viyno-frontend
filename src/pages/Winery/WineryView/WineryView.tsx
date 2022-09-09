@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { WineryHeader } from "./components/WineryHeader/WineryHeader";
 import { Wines } from "./components/Wines/Wines";
 // @ts-ignore
-import { getCurrentPosition } from "../../../services/util.service";
+import { getCurrentPosition } from "../../../shared/services/util.service";
 import { getWinery } from "../store/action";
 import { Winery } from "../models/winery.model";
 import { MainState } from "../../../store/models/store.models";

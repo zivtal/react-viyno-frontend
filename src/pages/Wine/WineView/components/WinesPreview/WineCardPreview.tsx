@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { StarRate } from "../../../../../components/StarRate/StarRate";
 import { ScaleRate } from "../TasteLike/components/ScaleRate/ScaleRate";
-import { tryRequire } from "../../../../../services/require.service";
-import { toKebabCase } from "../../../../../services/dev.service";
-import { getImgSrcFromBase64 } from "../../../../../services/media/media.service";
+import { tryRequire } from "../../../../../shared/helpers/require";
+import { toKebabCase } from "../../../../../shared/services/dev.service";
+import { getImgSrcFromBase64 } from "../../../../../shared/services/media/media.service";
 import { Wine } from "../../../models/wine.model";
 import "./WineCardPreview.scss";
 

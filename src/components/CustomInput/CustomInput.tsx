@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRef } from "react";
 import { Suggestions } from "./components/Suggestions/Suggestions";
 import { Loader } from "../Loader/Loader";
-import { tryRequire } from "../../services/require.service";
+import { tryRequire } from "../../shared/helpers/require";
 import { CloseButton } from "../CloseButton/CloseButton";
 import useDebounce from "../../shared/hooks/useDebounce";
 import { Dropdown } from "./components/Dropdown/Dropdown";

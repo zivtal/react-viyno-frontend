@@ -1,6 +1,6 @@
 export interface SelectItem {
-    title: string;
-    value: any;
-    image?: File | Blob | string;
-    count?: number;
+  title: string;
+  value: any;
+  image?: string;
+  count?: number;
 }

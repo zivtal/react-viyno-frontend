@@ -1,7 +1,7 @@
 import moment from "moment";
 import React from "react";
-import { tryRequire } from "../../../../services/require.service";
-import { getImgSrcFromBase64 } from "../../../../services/media/media.service";
+import { tryRequire } from "../../../../shared/helpers/require";
+import { getImgSrcFromBase64 } from "../../../../shared/services/media/media.service";
 import { FullPost } from "../../models/post.model";
 
 interface Props {

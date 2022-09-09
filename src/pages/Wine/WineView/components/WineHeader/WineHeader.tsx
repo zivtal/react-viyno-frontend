@@ -4,8 +4,8 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import { StarRateDisplay } from "../../../../../components/StarRateDisplay/StarRateDisplay";
 import { Wine, WineKeywords } from "../../../models/wine.model";
 import { MainState } from "../../../../../store/models/store.models";
-import { toKebabCase } from "../../../../../services/dev.service";
-import { getImgSrcFromBase64 } from "../../../../../services/media/media.service";
+import { toKebabCase } from "../../../../../shared/services/dev.service";
+import { getImgSrcFromBase64 } from "../../../../../shared/services/media/media.service";
 import { BaseProps } from "../../../../../shared/models/base-props";
 
 interface Props extends BaseProps {

@@ -1,6 +1,6 @@
 import React from "react";
-import { tryRequire } from "../../../../../services/require.service";
-import { toKebabCase } from "../../../../../services/dev.service";
+import { tryRequire } from "../../../../../shared/helpers/require";
+import { toKebabCase } from "../../../../../shared/services/dev.service";
 import { BaseProps } from "../../../../../shared/models/base-props";
 import { Winery } from "../../../models/winery.model";
 

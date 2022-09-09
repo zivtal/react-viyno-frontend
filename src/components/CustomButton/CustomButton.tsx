@@ -1,5 +1,5 @@
-import React, { ImgHTMLAttributes } from "react";
-import { tryRequire } from "../../services/require.service";
+import React from "react";
+import { tryRequire } from "../../shared/helpers/require";
 import "./CustomButton.scss";
 import { Loader } from "../Loader/Loader";
 
@@ -33,6 +33,7 @@ export const CustomButton = (props: IconProps) => {
           src={tryRequire("imgs/icons/" + props.iconName + ".svg")}
           height={iconSize}
           width={iconSize}
+          alt={props.iconName}
         />
       ) : null}
       {props.label !== undefined ? <span>{props.label}</span> : null}

@@ -3,12 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 // @ts-ignore
 import { ReplyToReply } from "../ReplyToReply/ReplyToReply";
 import { PostEditor } from "../../../../../../UserFeed/components/PostEditor/PostEditor";
-import { tryRequire } from "../../../../../../../services/require.service";
+import { tryRequire } from "../../../../../../../shared/helpers/require";
 import { Loader } from "../../../../../../../components/Loader/Loader";
 import { getReplies } from "../../../../../../UserFeed/store/action";
 import { MainState } from "../../../../../../../store/models/store.models";
 import { FullPost, Post } from "../../../../../../UserFeed/models/post.model";
-import { Pagination } from "../../../../../../../shared/models/pagination";
 
 interface Props {
   post?: FullPost;

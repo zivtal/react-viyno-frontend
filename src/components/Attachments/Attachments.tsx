@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useRef } from "react";
-import { tryRequire } from "../../services/require.service";
+import { tryRequire } from "../../shared/helpers/require";
 
 export interface Attachment {
   url?: string;

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { postService } from "../../../../UserFeed/service/post.api-service";
 import { StarRate } from "../../../../../components/StarRate/StarRate";
-import { tryRequire } from "../../../../../services/require.service";
+import { tryRequire } from "../../../../../shared/helpers/require";
 import { OverlayModal } from "../../../../../components/OverlayModal/OverlayModal";
-import { debounce } from "../../../../../services/debounce.service";
-import { toKebabCase } from "../../../../../services/dev.service";
+import { debounce } from "../../../../../shared/services/debounce.service";
+import { toKebabCase } from "../../../../../shared/services/dev.service";
 import { GET_WINE_REVIEWS } from "../../../store/types";
 import { Wine, WineQuery, WineTaste } from "../../../models/wine.model";
 import { FullPost } from "../../../../UserFeed/models/post.model";
-import { BaseRecords } from "../../../../../shared/models/base-records.model";
+import { BaseRecordsModel } from "../../../../../shared/models/base-records.model";
 
 interface Props {
   wine: Wine;
@@ -20,8 +20,8 @@ export function TastePreview(props: Props) {
   const { wine, query } = props;
   const [taste, setTaste] = useState<WineTaste | undefined>();
   const [keyword, setKeyword] = useState<string>("");
-  const [reviews, setReviews] = useState<BaseRecords<FullPost>>(
-    {} as BaseRecords<FullPost>
+  const [reviews, setReviews] = useState<BaseRecordsModel<FullPost>>(
+    {} as BaseRecordsModel<FullPost>
   );
   const [searchQuery, setSearchQuery] = useState<string | undefined>(undefined);
   var moment = require("moment");
@@ -29,7 +29,7 @@ export function TastePreview(props: Props) {
   useEffect(() => {
     if (!query || !wine.tastes) {
       setTaste(undefined);
-      setReviews({} as BaseRecords<FullPost>);
+      setReviews({} as BaseRecordsModel<FullPost>);
       return;
     }
 

@@ -73,7 +73,7 @@ export function toKebabCase(value?: string): string | null {
       .replaceAll("&", "and")
       .replace(/(.*?)\s([\d]{4}\s)/gi, "")
       .replace(/\s\((.*?)\)/gi, "")
-      .replace(/\-/g, "")
+      .replace(/-/g, "")
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .match(
@@ -85,7 +85,7 @@ export function toKebabCase(value?: string): string | null {
 }
 
 export function extractConditionKey(cKey: string): ConditionKey {
-  const idx = /([A-Z]|\_)/g.exec(cKey)?.index;
+  const idx = /([A-Z]|_)/g.exec(cKey)?.index;
 
   let key = cKey.slice(idx);
   key = key.charAt(0).toLowerCase() + key.slice(1);

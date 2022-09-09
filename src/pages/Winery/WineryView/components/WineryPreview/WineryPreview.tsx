@@ -1,8 +1,8 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { tryRequire } from "../../../../../services/require.service";
-import { toKebabCase } from "../../../../../services/dev.service";
-import { getImgSrcFromBase64 } from "../../../../../services/media/media.service";
+import { tryRequire } from "../../../../../shared/helpers/require";
+import { toKebabCase } from "../../../../../shared/services/dev.service";
+import { getImgSrcFromBase64 } from "../../../../../shared/services/media/media.service";
 import { Wine } from "../../../../Wine/models/wine.model";
 import { BaseProps } from "../../../../../shared/models/base-props";
 
@@ -26,6 +26,7 @@ export function WineryPreview(props: Props): JSX.Element | null {
               `imgs/icons/country/${toKebabCase(data.country)}.png`,
               `imgs/icons/country/other.png`
             )}
+            alt={data.country}
           />
 
           <p>{data.country}</p>
@@ -65,7 +66,11 @@ export function WineryPreview(props: Props): JSX.Element | null {
       <section className="image">
         <img src={data.background} />
         {data.wineryLogo ? (
-          <img className="logo" src={getImgSrcFromBase64(data.wineryLogo)} />
+          <img
+            className="logo"
+            src={getImgSrcFromBase64(data.wineryLogo)}
+            alt={data.winery}
+          />
         ) : null}
       </section>
     </section>

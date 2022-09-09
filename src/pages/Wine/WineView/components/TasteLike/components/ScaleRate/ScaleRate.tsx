@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { postService } from "../../../../../../UserFeed/service/post.api-service";
-import { camelCaseToSentence } from "../../../../../../../services/dev.service";
+import { camelCaseToSentence } from "../../../../../../../shared/services/dev.service";
 import { GET_REVIEW_STRUCTURE } from "../../../../../../UserFeed/store/types";
 import { Wine, WineStructure } from "../../../../../models/wine.model";
 import { useSelector } from "react-redux";

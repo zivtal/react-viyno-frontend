@@ -1,8 +1,8 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useRef } from "react";
 import { wineService } from "../../../service/wine.service";
-import { debounce } from "../../../../../services/debounce.service";
-import { toKebabCase } from "../../../../../services/dev.service";
+import { debounce } from "../../../../../shared/services/debounce.service";
+import { toKebabCase } from "../../../../../shared/services/dev.service";
 import { GET_WINE_KEYWORDS } from "../../../store/types";
 
 export const EditMultiSelect = ({

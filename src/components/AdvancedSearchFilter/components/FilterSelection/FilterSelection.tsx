@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { extractConditionKey } from "../../../../services/dev.service";
+import { extractConditionKey } from "../../../../shared/services/dev.service";
 import { useHistory, useLocation } from "react-router-dom";
 import { BaseFilter } from "../../../../shared/models/base-filter";
 import { WineKeywords } from "../../../../pages/Wine/models/wine.model";

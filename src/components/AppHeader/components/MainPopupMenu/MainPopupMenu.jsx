@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { mediaQuery } from "../../AppHeader";
-import { tryRequire } from "../../../../services/require.service";
-import { toKebabCase } from "../../../../services/dev.service";
+import { tryRequire } from "../../../../shared/helpers/require";
+import { toKebabCase } from "../../../../shared/services/dev.service";
 import { MainState } from "../../../../store/models/store.models";
 import { WINE_KEYWORDS } from "../../../../pages/Wine/store/types";
 

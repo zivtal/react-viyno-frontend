@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { wineService } from "../../pages/Wine/service/wine.service";
 import { setWineSection } from "../../pages/Wine/store/action";
-import { debounce } from "../../services/debounce.service";
+import { debounce } from "../../shared/services/debounce.service";
 import { GET_WINE_KEYWORDS } from "../../pages/Wine/store/types";
 
 export const HiddenInput = ({

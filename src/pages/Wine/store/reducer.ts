@@ -25,7 +25,7 @@ import {
 } from "./types";
 import { Wine, WineState } from "../models/wine.model";
 import { FullPost } from "../../UserFeed/models/post.model";
-import { baseRecord } from "../../../services/base-records.service";
+import RuntimeBaseRecordsService from "../../../shared/services/runtime-base-records.service";
 
 interface ReducerAction {
   type: string;
@@ -131,7 +131,7 @@ export default (state: WineState = INITIAL_STATE, action: ReducerAction) => {
       return {
         ...state,
         [WINES_CACHE]: state[WINES_CACHE].map((wine: Wine) => {
-          const helpfulReviews = baseRecord.append<FullPost>(
+          const helpfulReviews = RuntimeBaseRecordsService.append<FullPost>(
             action[WINE_HELPFUL_REVIEWS],
             wine[WINE_HELPFUL_REVIEWS],
             "_id"
@@ -151,7 +151,7 @@ export default (state: WineState = INITIAL_STATE, action: ReducerAction) => {
       return {
         ...state,
         [WINES_CACHE]: state[WINES_CACHE].map((wine: Wine) => {
-          const recentReviews = baseRecord.append<FullPost>(
+          const recentReviews = RuntimeBaseRecordsService.append<FullPost>(
             action[WINE_RECENT_REVIEWS],
             wine[WINE_RECENT_REVIEWS],
             "_id"

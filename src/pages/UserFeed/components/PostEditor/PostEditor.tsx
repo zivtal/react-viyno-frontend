@@ -3,14 +3,14 @@ import {
   Attachment,
   Attachments,
 } from "../../../../components/Attachments/Attachments";
-import { cleanUpEmptyFields } from "../../../../services/object.service";
+import { cleanUpEmptyFields } from "../../../../shared/services/object.service";
 import {
   cloudUpload,
   getImgSrcFromBase64,
-} from "../../../../services/media/media.service";
+} from "../../../../shared/services/media/media.service";
 import { MainState } from "../../../../store/models/store.models";
 import { CustomButton } from "../../../../components/CustomButton/CustomButton";
-import { FullPost, Post, Reply } from "../../models/post.model";
+import { Post } from "../../models/post.model";
 import { useRef, useState } from "react";
 import React from "react";
 
@@ -55,7 +55,7 @@ export const PostEditor = (props: Props) => {
         const lines = val.length
           ? Math.ceil(val.length / ((width || 1) / 7.55))
           : 1;
-        return (sum += lines * lineSize);
+        return sum + lines * lineSize;
       }, 0) || 0;
     setHeight(Math.max(height, 1.25));
   };

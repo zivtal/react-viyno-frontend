@@ -8,11 +8,10 @@ import {
   SET_REPLIES,
   UPDATE_POSTS,
   UPDATE_REPLIES,
-  CACHE_POSTS,
 } from "./types";
 import { FullPost } from "../models/post.model";
-import { BaseRecords } from "../../../shared/models/base-records.model";
-import { baseRecord, dataRecord } from "../../../services/base-records.service";
+import { BaseRecordsModel } from "../../../shared/models/base-records.model";
+import RuntimeBaseRecordsService from "../../../shared/services/runtime-base-records.service";
 
 interface ReducerAction {
   type: string;
@@ -20,7 +19,7 @@ interface ReducerAction {
 }
 
 export interface PostState {
-  [POSTS]: BaseRecords<FullPost>;
+  [POSTS]: BaseRecordsModel<FullPost>;
   loading: boolean;
 }
 
@@ -69,7 +68,10 @@ export default (state = INITIAL_STATE, action: ReducerAction) => {
       return post
         ? {
             ...state,
-            [POSTS]: dataRecord.insert<FullPost>([post], state[POSTS]),
+            [POSTS]: RuntimeBaseRecordsService.bulkInsert<FullPost>(
+              [post],
+              state[POSTS]
+            ),
           }
         : state;
     }
@@ -78,10 +80,10 @@ export default (state = INITIAL_STATE, action: ReducerAction) => {
       const { postId, replies } = action;
 
       const _update = (
-        posts: BaseRecords<FullPost>,
-        replies: BaseRecords<FullPost>,
+        posts: BaseRecordsModel<FullPost>,
+        replies: BaseRecordsModel<FullPost>,
         postId: number
-      ): BaseRecords<FullPost> => {
+      ): BaseRecordsModel<FullPost> => {
         return {
           ...posts,
           data: posts.data.map((data: FullPost) => {
@@ -131,7 +133,7 @@ export default (state = INITIAL_STATE, action: ReducerAction) => {
 
       return {
         ...state,
-        [POSTS]: baseRecord.update<FullPost>(
+        [POSTS]: RuntimeBaseRecordsService.update<FullPost>(
           state[POSTS],
           {
             key: "_id",

@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { authService } from "../../service/auth.service";
 import { setUser } from "../../store/actions";
 import { QuickLogin } from "../QuickLogin/QuickLogin";
-import { tryRequire } from "../../../../services/require.service";
-import { getImgSrcFromBase64 } from "../../../../services/media/media.service";
+import { tryRequire } from "../../../../shared/helpers/require";
+import { getImgSrcFromBase64 } from "../../../../shared/services/media/media.service";
 import { LOGOUT } from "../../store/types";
 import { MainState } from "../../../../store/models/store.models";
 

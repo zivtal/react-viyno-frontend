@@ -4,11 +4,11 @@ import { useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 // @ts-ignore
 import useChangeEffect from "../../../../shared/hooks/useChangeEffect";
-import { tryRequire } from "../../../../services/require.service";
+import { tryRequire } from "../../../../shared/helpers/require";
 import {
   extractConditionKey,
   toKebabCase,
-} from "../../../../services/dev.service";
+} from "../../../../shared/services/dev.service";
 import { MainState } from "../../../../store/models/store.models";
 
 interface Props {

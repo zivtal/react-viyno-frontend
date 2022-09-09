@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ServerError from "../../services/http-client/server-error";
+import ServerError from "../services/http-client/server-error";
 import { ErrorResponse } from "../models/error-response";
 
 export interface PromiseInfo<T, S> {

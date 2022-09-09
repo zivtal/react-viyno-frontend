@@ -1,6 +1,6 @@
 import React from "react";
 import { StarRateDisplay } from "../../../../../../../components/StarRateDisplay/StarRateDisplay";
-import { tryRequire } from "../../../../../../../services/require.service";
+import { tryRequire } from "../../../../../../../shared/helpers/require";
 import { Wine } from "../../../../../models/wine.model";
 
 export const ReviewStat = ({ wine }: { wine: Wine }): JSX.Element | null => {

@@ -1,5 +1,5 @@
-import React, { ImgHTMLAttributes } from "react";
-import { tryRequire } from "../../services/require.service";
+import React from "react";
+import { tryRequire } from "../../shared/helpers/require";
 import "./Icon.scss";
 
 interface IconProps {

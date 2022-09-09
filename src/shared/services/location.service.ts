@@ -17,7 +17,6 @@ export function getDistanceInKm(
       cos(location2.lat * p) *
       (1 - cos((location2.lng - location1.lng) * p))) /
       2;
-  const res = Math.round(2 * r * Math.asin(Math.sqrt(a)));
 
-  return res;
+  return Math.round(2 * r * Math.asin(Math.sqrt(a)));
 }

@@ -1,7 +1,7 @@
 // @ts-ignore
-import { httpService } from "../../../services/http-client/http.service";
+import { httpService } from "../../../shared/services/http-client/http.service";
 // @ts-ignore
-import { getCurrentPosition } from "../../../services/util.service";
+import { getCurrentPosition } from "../../../shared/services/util.service";
 import { AuthModel, User } from "../models/auth.model";
 import { LOGIN, LOGOUT, SIGNUP } from "../store/types";
 

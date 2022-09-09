@@ -1,5 +1,8 @@
-import { AxiosError } from 'axios';
-import { ErrorResponse, ErrorResponseMessage } from '../../shared/models/error-response'
+import { AxiosError } from "axios";
+import {
+  ErrorResponse,
+  ErrorResponseMessage,
+} from "../../models/error-response";
 
 export default class ServerError<T = ErrorResponse> extends Error {
   public constructor(e: AxiosError<ErrorResponse>, public type?: string) {

@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Attachments } from "../../../../../../../components/Attachments/Attachments";
 import { ReplyToReply } from "../ReplyToReply/ReplyToReply";
 import { PostEditor } from "../../../../../../UserFeed/components/PostEditor/PostEditor";
-import { tryRequire } from "../../../../../../../services/require.service";
+import { tryRequire } from "../../../../../../../shared/helpers/require";
 import "./ReplyPreview.scss";
 import { setPostReaction } from "../../../../../../UserFeed/store/action";
-import { getImgSrcFromBase64 } from "../../../../../../../services/media/media.service";
+import { getImgSrcFromBase64 } from "../../../../../../../shared/services/media/media.service";
 import { MainState } from "../../../../../../../store/models/store.models";
 
 export const ReplyPreview = ({

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getLoggedinUser } from "../pages/Login/service/auth.service";
+import { getLoggedinUser } from "../../pages/Login/service/auth.service";
 
 export const minMax = (num, min, max) => Math.max(Math.min(num, max), min);
 
@@ -15,12 +15,15 @@ export async function getCurrentPosition() {
   const user = getLoggedinUser();
   const res = await axios.get("https://json.geoiplookup.io");
   const { latitude: lat, longitude: lng, country_name: country } = res?.data;
-  if (user)
+
+  if (user) {
     return {
       lat: lat || user?.lat,
       lng: lng || user?.lng,
       country: country || user?.country,
     };
+  }
+
   try {
     const geolocation = await new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(
@@ -32,6 +35,7 @@ export async function getCurrentPosition() {
         }
       );
     });
+
     return {
       lat: geolocation.coords.latitude,
       lng: geolocation.coords.longitude,
@@ -39,8 +43,7 @@ export async function getCurrentPosition() {
     };
   } catch (err) {
     try {
-      const client = { lat, lng, country };
-      return client;
+      return { lat, lng, country };
     } catch (err) {}
   }
 }

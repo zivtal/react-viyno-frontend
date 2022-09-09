@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { setWinesFilter } from "../../../store/action";
-import { tryRequire } from "../../../../../services/require.service";
+import { tryRequire } from "../../../../../shared/helpers/require";
 import { MainState } from "../../../../../store/models/store.models";
 import { Wine } from "../../../models/wine.model";
 import { BaseProps } from "../../../../../shared/models/base-props";

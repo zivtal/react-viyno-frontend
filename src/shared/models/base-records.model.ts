@@ -1,6 +1,6 @@
 import { Pagination } from "./pagination";
 
-export interface BaseRecords<T> {
+export interface BaseRecordsModel<T> {
   data: Array<T>;
   page: Pagination;
   total: number;

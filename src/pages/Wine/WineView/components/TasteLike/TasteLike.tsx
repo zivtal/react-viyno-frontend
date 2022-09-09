@@ -8,7 +8,7 @@ import { TastePreview } from "../TastePreview/TastePreview";
 import { useState } from "react";
 import { Wine, WineQuery, WineStructure } from "../../../models/wine.model";
 import { MainState } from "../../../../../store/models/store.models";
-import { debounce } from "../../../../../services/debounce.service";
+import { debounce } from "../../../../../shared/services/debounce.service";
 import { UPDATE_REVIEW_STRUCTURE } from "../../../../UserFeed/store/types";
 import { BaseProps } from "../../../../../shared/models/base-props";
 

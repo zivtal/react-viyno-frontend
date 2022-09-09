@@ -5,9 +5,9 @@ import useWindowResize from "../../../../../../../shared/hooks/useWindowResize";
 import {
   getShortSentence,
   minMax,
-} from "../../../../../../../services/util.service";
-import { tryRequire } from "../../../../../../../services/require.service";
-import { toKebabCase } from "../../../../../../../services/dev.service";
+} from "../../../../../../../shared/services/util.service";
+import { tryRequire } from "../../../../../../../shared/helpers/require";
+import { toKebabCase } from "../../../../../../../shared/services/dev.service";
 
 function getDescription(mentions) {
   const desc = mentions.map((taste) => taste.keyword).join(", ");

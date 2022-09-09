@@ -7,7 +7,7 @@ import { QuickLogin } from "../../../../../../Login/components/QuickLogin/QuickL
 import { OnPostReply } from "../OnPostReply/OnPostReply";
 import { PostUserInfo } from "../../../../../../UserFeed/components/PostUserInfo/PostUserInfo";
 import { PostUserControl } from "../../../../../../UserFeed/components/PostUserControl/PostUserControl";
-import { tryRequire } from "../../../../../../../services/require.service";
+import { tryRequire } from "../../../../../../../shared/helpers/require";
 import { setPostReaction } from "../../../../../../UserFeed/store/action";
 import { MainState } from "../../../../../../../store/models/store.models";
 import { FullPost, Reply } from "../../../../../../UserFeed/models/post.model";
@@ -18,7 +18,6 @@ import {
   SET_REPLY,
   UPDATE_REPLIES,
 } from "../../../../../../UserFeed/store/types";
-import { baseRecord } from "../../../../../../../services/base-records.service";
 import { authService } from "../../../../../../Login/service/auth.service";
 
 interface Props extends BaseProps {

@@ -1,8 +1,8 @@
 import { mediaQuery } from "../../../AppHeader/AppHeader";
 import React from "react";
 import { CustomInputResults } from "../../CustomInput";
-import { tryRequire } from "../../../../services/require.service";
-import { getImgSrcFromBase64 } from "../../../../services/media/media.service";
+import { tryRequire } from "../../../../shared/helpers/require";
+import { getImgSrcFromBase64 } from "../../../../shared/services/media/media.service";
 
 interface SearchResultsProps {
   value: string;

@@ -11,14 +11,14 @@ import { QuickLogin } from "../../../../../../Login/components/QuickLogin/QuickL
 import { tryRequire } from "../../../../../../../shared/helpers/require";
 import { OverlayModal } from "../../../../../../../components/OverlayModal/OverlayModal";
 import { Wine } from "../../../../../models/wine.model";
-import { BaseRecordsModel } from "../../../../../../../shared/models/base-records.model";
+import { BaseRecords } from "../../../../../../../shared/models/base-records";
 import { FullPost, Review } from "../../../../../../UserFeed/models/post.model";
 import { MainState } from "../../../../../../../store/models/store.models";
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { SET_WINE } from "../../../../../store/types";
 import { BaseProps } from "../../../../../../../shared/models/base-props";
-import { SET_POST, SET_REVIEW } from "../../../../../../UserFeed/store/types";
+import { SET_REVIEW } from "../../../../../../UserFeed/store/types";
 import { cloudUpload } from "../../../../../../../shared/services/cloud-upload.service";
 import LocationService from "../../../../../../../shared/services/location.service";
 
@@ -27,7 +27,7 @@ interface Props extends BaseProps {
   rateValue: number | null;
   onSet: (rate: number | null) => void;
   onClose: Function;
-  reviews?: BaseRecordsModel<FullPost>;
+  reviews?: BaseRecords<FullPost>;
 }
 
 export const AddReview = (props: Props): JSX.Element | null => {

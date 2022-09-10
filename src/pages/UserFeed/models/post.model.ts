@@ -1,4 +1,4 @@
-import { BaseRecordsModel } from "../../../shared/models/base-records.model";
+import { BaseRecords } from "../../../shared/models/base-records";
 import { Attachment } from "../../../components/Attachments/Attachments";
 
 export interface Post {
@@ -18,7 +18,7 @@ export interface FullPost extends Post {
   likes: number;
   ilike: number | null;
   replies: number;
-  reply?: BaseRecordsModel<FullPost>;
+  reply?: BaseRecords<FullPost>;
 
   seo?: string | null;
   winery?: string | null;

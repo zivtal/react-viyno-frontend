@@ -1,3 +1,3 @@
 export interface BaseResponse {
-    readonly returnCode?: number;
+  readonly returnCode?: number;
 }

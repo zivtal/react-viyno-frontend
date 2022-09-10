@@ -8,7 +8,7 @@ import { tryRequire } from "../../../../../shared/helpers/require";
 import { MainState } from "../../../../../store/models/store.models";
 import { useLocation } from "react-router-dom";
 import { FullPost } from "../../../../UserFeed/models/post.model";
-import { BaseRecordsModel } from "../../../../../shared/models/base-records.model";
+import { BaseRecords } from "../../../../../shared/models/base-records";
 import { Wine } from "../../../models/wine.model";
 import {
   getHelpfulReviews,
@@ -20,7 +20,7 @@ import ImageService from "../../../../../shared/services/image.service";
 
 interface Reviews {
   [key: string]: {
-    state?: BaseRecordsModel<FullPost>;
+    state?: BaseRecords<FullPost>;
     set: Function;
     load?: Function;
   };
@@ -63,7 +63,7 @@ export const setReplyState = () => {};
 interface WinePreviewsProps {
   demo?: any;
   loading?: boolean;
-  reviews?: BaseRecordsModel<FullPost>;
+  reviews?: BaseRecords<FullPost>;
   activeId: Id;
   setActiveId: (id: Id) => void;
   onLoadMore?: Function;

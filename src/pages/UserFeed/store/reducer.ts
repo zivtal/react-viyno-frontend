@@ -10,7 +10,7 @@ import {
   UPDATE_REPLIES,
 } from "./types";
 import { FullPost } from "../models/post.model";
-import { BaseRecordsModel } from "../../../shared/models/base-records.model";
+import { BaseRecords } from "../../../shared/models/base-records";
 import RuntimeBaseRecordsService from "../../../shared/services/runtime-base-records.service";
 
 interface ReducerAction {
@@ -19,7 +19,7 @@ interface ReducerAction {
 }
 
 export interface PostState {
-  [POSTS]: BaseRecordsModel<FullPost>;
+  [POSTS]: BaseRecords<FullPost>;
   loading: boolean;
 }
 
@@ -80,10 +80,10 @@ export default (state = INITIAL_STATE, action: ReducerAction) => {
       const { postId, replies } = action;
 
       const _update = (
-        posts: BaseRecordsModel<FullPost>,
-        replies: BaseRecordsModel<FullPost>,
+        posts: BaseRecords<FullPost>,
+        replies: BaseRecords<FullPost>,
         postId: number
-      ): BaseRecordsModel<FullPost> => {
+      ): BaseRecords<FullPost> => {
         return {
           ...posts,
           data: posts.data.map((data: FullPost) => {

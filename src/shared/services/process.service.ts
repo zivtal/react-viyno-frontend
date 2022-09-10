@@ -1,17 +1,5 @@
 export default class ProcessService {
-  private static CACHE: {
-    [key: string | number]: ReturnType<typeof setTimeout>;
-  } = {};
-
-  public static delete(id: number | string) {
-    delete this.CACHE[id];
-  }
-
-  public static debounce(
-    fn: () => void,
-    id: number | string = 0,
-    delay = 500
-  ): void {
+  public static debounce(fn: () => void, id: number | string = 0, delay = 500): void {
     clearTimeout(this.CACHE[id]);
     this.delete(id);
 
@@ -28,5 +16,11 @@ export default class ProcessService {
     await new Promise((resolve) => setTimeout(resolve, ms || 0));
 
     return fn();
+  }
+
+  private static CACHE: { [key: string | number]: ReturnType<typeof setTimeout> } = {};
+
+  private static delete(id: number | string) {
+    delete this.CACHE[id];
   }
 }

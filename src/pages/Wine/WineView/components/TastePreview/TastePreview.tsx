@@ -6,7 +6,7 @@ import { OverlayModal } from "../../../../../components/OverlayModal/OverlayModa
 import { GET_WINE_REVIEWS } from "../../../store/types";
 import { Wine, WineQuery, WineTaste } from "../../../models/wine.model";
 import { FullPost } from "../../../../UserFeed/models/post.model";
-import { BaseRecordsModel } from "../../../../../shared/models/base-records.model";
+import { BaseRecords } from "../../../../../shared/models/base-records";
 import ProcessService from "../../../../../shared/services/process.service";
 import StringService from "../../../../../shared/services/string.service";
 
@@ -20,8 +20,8 @@ export function TastePreview(props: Props) {
   const { wine, query } = props;
   const [taste, setTaste] = useState<WineTaste | undefined>();
   const [keyword, setKeyword] = useState<string>("");
-  const [reviews, setReviews] = useState<BaseRecordsModel<FullPost>>(
-    {} as BaseRecordsModel<FullPost>
+  const [reviews, setReviews] = useState<BaseRecords<FullPost>>(
+    {} as BaseRecords<FullPost>
   );
   const [searchQuery, setSearchQuery] = useState<string | undefined>(undefined);
   var moment = require("moment");
@@ -29,7 +29,7 @@ export function TastePreview(props: Props) {
   useEffect(() => {
     if (!query || !wine.tastes) {
       setTaste(undefined);
-      setReviews({} as BaseRecordsModel<FullPost>);
+      setReviews({} as BaseRecords<FullPost>);
       return;
     }
 

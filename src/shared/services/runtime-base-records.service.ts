@@ -1,15 +1,15 @@
-import { BaseRecordsModel } from "../models/base-records.model";
+import { BaseRecords } from "../models/base-records";
 
 export default class RuntimeBaseRecordsService {
   public static append<T>(
-    insert?: BaseRecordsModel<T>,
-    state?: BaseRecordsModel<T>,
+    insert?: BaseRecords<T>,
+    state?: BaseRecords<T>,
     uniqueKey: string = "id"
-  ): BaseRecordsModel<T> {
+  ): BaseRecords<T> {
     type ObjectKey = keyof T;
 
     if (!state || !insert?.page?.index) {
-      return (insert || state) as BaseRecordsModel<T>;
+      return (insert || state) as BaseRecords<T>;
     }
 
     return {
@@ -30,14 +30,14 @@ export default class RuntimeBaseRecordsService {
   }
 
   public static insert<T>(
-    insert?: BaseRecordsModel<T>,
-    state?: BaseRecordsModel<T>,
+    insert?: BaseRecords<T>,
+    state?: BaseRecords<T>,
     uniqueKey: string = "id"
-  ): BaseRecordsModel<T> {
+  ): BaseRecords<T> {
     type ObjectKey = keyof T;
 
     if (!state || !insert?.page?.index) {
-      return (insert || state) as BaseRecordsModel<T>;
+      return (insert || state) as BaseRecords<T>;
     }
 
     return {
@@ -58,14 +58,14 @@ export default class RuntimeBaseRecordsService {
   }
 
   public static overwrite<T>(
-    insert: BaseRecordsModel<T>,
-    state: BaseRecordsModel<T>,
+    insert: BaseRecords<T>,
+    state: BaseRecords<T>,
     uniqueKey: string = "id"
-  ): BaseRecordsModel<T> {
+  ): BaseRecords<T> {
     type ObjectKey = keyof T;
 
     if (!state || !insert?.page?.index) {
-      return (insert || state) as BaseRecordsModel<T>;
+      return (insert || state) as BaseRecords<T>;
     }
 
     return {
@@ -89,7 +89,7 @@ export default class RuntimeBaseRecordsService {
   }
 
   public static update<T>(
-    state: BaseRecordsModel<T>,
+    state: BaseRecords<T>,
     unique: {
       key: string;
       value: any;
@@ -99,7 +99,7 @@ export default class RuntimeBaseRecordsService {
     counters?: {
       [key: string]: string;
     }
-  ): BaseRecordsModel<T> {
+  ): BaseRecords<T> {
     return {
       ...state,
       data: state.data.map((content: any): T => {
@@ -119,7 +119,7 @@ export default class RuntimeBaseRecordsService {
           ? {
               ...content,
               [unique.recursiveKey]: this.update(
-                content[unique.recursiveKey] as BaseRecordsModel<T>,
+                content[unique.recursiveKey] as BaseRecords<T>,
                 unique,
                 insert,
                 counters
@@ -132,9 +132,9 @@ export default class RuntimeBaseRecordsService {
 
   public static bulkInsert<T>(
     insert: Array<T>,
-    state: BaseRecordsModel<T>,
+    state: BaseRecords<T>,
     append = false
-  ): BaseRecordsModel<T> {
+  ): BaseRecords<T> {
     const count = state?.data.length - insert.length + 1;
 
     return {
@@ -147,9 +147,9 @@ export default class RuntimeBaseRecordsService {
 
   public static bulkUpdate<T>(
     update: Array<T>,
-    state: BaseRecordsModel<T>,
+    state: BaseRecords<T>,
     uniqueKey: string = "id"
-  ): BaseRecordsModel<T> {
+  ): BaseRecords<T> {
     return {
       ...state,
       data: state.data.map((item: T) => {

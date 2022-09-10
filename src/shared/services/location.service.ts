@@ -1,17 +1,13 @@
-import { Coordinates, LocationInfo } from "../models/location";
-import axios from "axios";
+import { Coordinates, LocationInfo } from '../models/location';
+import axios from 'axios';
 
 export default class LocationService {
   public static async current(): Promise<LocationInfo | void> {
     try {
       const geolocation = (await new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(
-          ({ coords }) => {
-            resolve(coords);
-          },
-          (err) => {
-            reject(err);
-          }
+          ({ coords }) => resolve(coords),
+          (err) => reject(err);
         );
       })) as Coordinates;
 
@@ -19,13 +15,13 @@ export default class LocationService {
         latitude: geolocation?.latitude,
         longitude: geolocation?.longitude,
       };
-    } catch (err) {
+    } catch (e1) {
       try {
-        const res = await axios.get("https://json.geoiplookup.io");
+        const res = await axios.get('https://json.geoiplookup.io');
         const { latitude, longitude, country_name: country } = res?.data;
 
         return { latitude, longitude, country };
-      } catch (err) {}
+      } catch (e2) {}
     }
   }
 
@@ -36,10 +32,7 @@ export default class LocationService {
     const a =
       0.5 -
       cos((to.latitude - from.latitude) * p) / 2 +
-      (cos(from.latitude * p) *
-        cos(to.latitude * p) *
-        (1 - cos((to.longitude - from.longitude) * p))) /
-        2;
+      (cos(from.latitude * p) * cos(to.latitude * p) * (1 - cos((to.longitude - from.longitude) * p))) / 2;
 
     return Math.round(2 * r * Math.asin(Math.sqrt(a)));
   }

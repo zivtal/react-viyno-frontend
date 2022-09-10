@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { WineryHeader } from "./components/WineryHeader/WineryHeader";
 import { Wines } from "./components/Wines/Wines";
 // @ts-ignore
-import { getCurrentPosition } from "../../../shared/services/util.service";
 import { getWinery } from "../store/action";
 import { Winery } from "../models/winery.model";
 import { MainState } from "../../../store/models/store.models";
@@ -11,6 +10,7 @@ import { RouteComponentProps } from "react-router-dom";
 import { BaseProps } from "../../../shared/models/base-props";
 import { WINERIES_CACHE } from "../store/types";
 import "./WineryView.scss";
+import LocationService from "../../../shared/services/location.service";
 
 interface MatchParams {
   id: string;
@@ -29,7 +29,7 @@ export const WineryView = (
     const id = props.match.params.id;
     (async () => {
       try {
-        const location = await getCurrentPosition();
+        const location = await LocationService.current();
         dispatch(getWinery(id, { ...location }));
       } catch (err) {
         console.error(err);

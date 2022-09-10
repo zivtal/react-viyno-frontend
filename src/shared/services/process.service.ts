@@ -1,4 +1,4 @@
-export default class DebounceService {
+export default class ProcessService {
   private static CACHE: {
     [key: string | number]: ReturnType<typeof setTimeout>;
   } = {};
@@ -7,7 +7,7 @@ export default class DebounceService {
     delete this.CACHE[id];
   }
 
-  public static set(
+  public static debounce(
     fn: () => void,
     id: number | string = 0,
     delay = 500
@@ -22,5 +22,11 @@ export default class DebounceService {
         fn?.(...args);
       }, delay);
     })();
+  }
+
+  public static async delay(fn: () => void, ms?: number): Promise<any> {
+    await new Promise((resolve) => setTimeout(resolve, ms || 0));
+
+    return fn();
   }
 }

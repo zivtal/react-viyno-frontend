@@ -11,8 +11,8 @@ export interface Winery {
   logoData?: string;
   logoType?: string;
   image?: string;
-  lat?: number;
-  lng?: number;
+  latitude?: number;
+  longitude?: number;
   rate?: number;
   ratings?: number;
   wines?: number;
@@ -21,6 +21,6 @@ export interface Winery {
 }
 
 export interface WineryQuery {
-  lat?: number;
-  lng?: number;
+  latitude?: number;
+  longitude?: number;
 }

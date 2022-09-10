@@ -5,11 +5,8 @@ import { useHistory, useLocation } from "react-router-dom";
 // @ts-ignore
 import useChangeEffect from "../../../../shared/hooks/useChangeEffect";
 import { tryRequire } from "../../../../shared/helpers/require";
-import {
-  extractConditionKey,
-  toKebabCase,
-} from "../../../../shared/services/dev.service";
 import { MainState } from "../../../../store/models/store.models";
+import StringService from "../../../../shared/services/string.service";
 
 interface Props {
   title: string;
@@ -33,7 +30,7 @@ export const MultiSelectFilter = ({ title, query, data, max = 8 }: Props) => {
       else queries.delete(name);
       history.replace({ search: queries.toString() });
     };
-    setQuery(extractConditionKey(query)?.key, select.join("|"));
+    setQuery(StringService.extractConditionKey(query)?.key, select.join("|"));
     if (!select.length) setDataToShow(data.slice(0, max));
   }, [select]);
 
@@ -129,13 +126,23 @@ export const MultiSelectFilter = ({ title, query, data, max = 8 }: Props) => {
         </div>
         {dataToShow.map((item, idx) => {
           const { title, value, country } = item;
-          const key = value || toKebabCase(title);
+          const key = value || StringService.toKebabCase(title, true);
           const png =
             tryRequire(
-              `imgs/icons/${extractConditionKey(query)?.key}/${key}.png`
-            ) || tryRequire(`imgs/icons/country/${toKebabCase(country)}.png`);
+              `imgs/icons/${
+                StringService.extractConditionKey(query)?.key
+              }/${key}.png`
+            ) ||
+            tryRequire(
+              `imgs/icons/country/${StringService.toKebabCase(
+                country,
+                true
+              )}.png`
+            );
           const svg = tryRequire(
-            `imgs/icons/${extractConditionKey(query)?.key}/${key}.svg`
+            `imgs/icons/${
+              StringService.extractConditionKey(query)?.key
+            }/${key}.svg`
           );
 
           return (

@@ -1,9 +1,9 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useRef } from "react";
 import { wineService } from "../../../service/wine.service";
-import { toKebabCase } from "../../../../../shared/services/dev.service";
 import { GET_WINE_KEYWORDS } from "../../../store/types";
-import DebounceService from "../../../../../shared/services/debounce.service";
+import ProcessService from "../../../../../shared/services/process.service";
+import StringService from "../../../../../shared/services/string.service";
 
 export const EditMultiSelect = ({
   data,
@@ -44,7 +44,7 @@ export const EditMultiSelect = ({
   }, [data[input]]);
 
   useEffect(() => {
-    DebounceService.set(
+    ProcessService.debounce(
       () => {
         const save = output
           ?.map((name) => db?.find((db) => db.name === name)?.seo || name)
@@ -118,7 +118,7 @@ export const EditMultiSelect = ({
         spellCheck="false"
         placeholder={placeholder}
         onBlur={() =>
-          DebounceService.set(
+          ProcessService.debounce(
             () => {
               elInput.current.value = "";
               setDataToShow(output);
@@ -134,7 +134,7 @@ export const EditMultiSelect = ({
       <section className="wine-select-buttons">
         {dataToShow?.map((item, idx) => {
           const { name, seo } = item;
-          const key = seo || toKebabCase(name || item);
+          const key = seo || StringService.toKebabCase(name || item, true);
           return (
             <button
               key={`BUTTON_${key}${idx}`}

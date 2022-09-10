@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import { StarRate } from "../../../../../components/StarRate/StarRate";
 import { ScaleRate } from "../TasteLike/components/ScaleRate/ScaleRate";
 import { tryRequire } from "../../../../../shared/helpers/require";
-import { toKebabCase } from "../../../../../shared/services/dev.service";
 import { Wine } from "../../../models/wine.model";
 import "./WineCardPreview.scss";
 import ImageService from "../../../../../shared/services/image.service";
+import StringService from "../../../../../shared/services/string.service";
 
 interface WinePreviewProps extends React.HTMLAttributes<HTMLDivElement> {
   wine: Wine;
@@ -94,7 +94,10 @@ export const WineCardPreview = ({
         <div className="wine-country">
           <img
             src={tryRequire(
-              `imgs/icons/country/${toKebabCase(wine.country)}.png`,
+              `imgs/icons/country/${StringService.toKebabCase(
+                wine.country,
+                true
+              )}.png`,
               `other country`
             )}
             alt="Country flag"

@@ -1,9 +1,9 @@
 // @ts-ignore
 import { httpService } from "../../../shared/services/http.service";
 // @ts-ignore
-import { getCurrentPosition } from "../../../shared/services/util.service";
 import { AuthModel, User } from "../models/auth.model";
 import { LOGIN, LOGOUT, SIGNUP } from "../store/types";
+import LocationService from "../../../shared/services/location.service";
 
 const STORAGE_KEY_LOGGEDIN_USER = "user";
 
@@ -15,7 +15,7 @@ export const authService = {
       const loggedInUser: User = await httpService.post(
         API + "/login",
         user,
-        await getCurrentPosition()
+        await LocationService.current()
       );
 
       if (loggedInUser) {
@@ -41,7 +41,7 @@ export const authService = {
       const signedUser = await httpService.post(
         "auth/signup",
         user,
-        await getCurrentPosition()
+        await LocationService.current()
       );
 
       return _saveLocalUser(signedUser);

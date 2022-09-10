@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { postService } from "../../../../../../UserFeed/service/post.api-service";
-import { camelCaseToSentence } from "../../../../../../../shared/services/dev.service";
 import { GET_REVIEW_STRUCTURE } from "../../../../../../UserFeed/store/types";
 import { Wine, WineStructure } from "../../../../../models/wine.model";
 import { useSelector } from "react-redux";
@@ -9,6 +8,7 @@ import { BaseProps } from "../../../../../../../shared/models/base-props";
 import React from "react";
 import { WineStructureSection } from "./models/wine-structure-sections.model";
 import { WINE_STRUCTURE_SECTIONS } from "./constants";
+import StringService from "../../../../../../../shared/services/string.service";
 
 interface Props extends BaseProps {
   wine: Wine;
@@ -166,7 +166,7 @@ export function ScaleRate(props: Props) {
                   onTouchMove={(ev) => setPosition(ev, scale.max, true)}
                   onTouchEnd={stopDrag}
                 >
-                  <td>{camelCaseToSentence(scale.min)}</td>
+                  <td>{StringService.fromCamelCase(scale.min)}</td>
 
                   <td className="scale-container">
                     <div className="scale">
@@ -186,7 +186,7 @@ export function ScaleRate(props: Props) {
                     </div>
                   </td>
 
-                  <td>{camelCaseToSentence(scale.max)}</td>
+                  <td>{StringService.fromCamelCase(scale.max)}</td>
                 </tr>
               ) : null;
             })}

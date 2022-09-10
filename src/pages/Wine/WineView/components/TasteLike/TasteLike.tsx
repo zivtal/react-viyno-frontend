@@ -10,7 +10,7 @@ import { Wine, WineQuery, WineStructure } from "../../../models/wine.model";
 import { MainState } from "../../../../../store/models/store.models";
 import { UPDATE_REVIEW_STRUCTURE } from "../../../../UserFeed/store/types";
 import { BaseProps } from "../../../../../shared/models/base-props";
-import DebounceService from "../../../../../shared/services/debounce.service";
+import ProcessService from "../../../../../shared/services/process.service";
 
 interface Props extends BaseProps {
   wine?: Wine;
@@ -29,7 +29,7 @@ export function TasteLike(props: Props): JSX.Element {
       return;
     }
 
-    DebounceService.set(
+    ProcessService.debounce(
       async () => {
         await postService[UPDATE_REVIEW_STRUCTURE](data._id, scales);
       },

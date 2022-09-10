@@ -1,8 +1,8 @@
 import React from "react";
 import { tryRequire } from "../../../../../shared/helpers/require";
-import { toKebabCase } from "../../../../../shared/services/dev.service";
 import { BaseProps } from "../../../../../shared/models/base-props";
 import { Winery } from "../../../models/winery.model";
+import StringService from "../../../../../shared/services/string.service";
 
 interface Props extends BaseProps {
   winery?: Winery;
@@ -32,7 +32,8 @@ const WineryRating = (props: Props): JSX.Element | null => {
 const WineryMap = (props: Props): JSX.Element => {
   const rtl = document.dir === "rtl";
   const headerStyle =
-    (!props.winery?.lat || !props.winery?.lng) && !props.winery?.image
+    (!props.winery?.latitude || !props.winery?.longitude) &&
+    !props.winery?.image
       ? { margin: `24px 0`, height: `auto` }
       : {};
 
@@ -41,9 +42,9 @@ const WineryMap = (props: Props): JSX.Element => {
       className={`winery-map ${rtl ? "header-wave-rtl" : "header-wave"}`}
       style={headerStyle}
     >
-      {props.winery?.lat && props.winery?.lng ? (
+      {props.winery?.latitude && props.winery?.longitude ? (
         <iframe
-          src={`https://maps.google.com/maps?q=${props.winery?.lat},${props.winery?.lng}&t=&z=10&ie=UTF8&iwloc=&output=embed`}
+          src={`https://maps.google.com/maps?q=${props.winery?.latitude},${props.winery?.longitude}&t=&z=10&ie=UTF8&iwloc=&output=embed`}
           width="100%"
           height="100%"
           // frameBorder="0"
@@ -75,7 +76,10 @@ export function WineryHeader(props: Props): JSX.Element | null {
           <div className="country">
             <img
               src={tryRequire(
-                `imgs/icons/country/${toKebabCase(data?.country)}.png`
+                `imgs/icons/country/${StringService.toKebabCase(
+                  data?.country,
+                  true
+                )}.png`
               )}
             />
             <p>

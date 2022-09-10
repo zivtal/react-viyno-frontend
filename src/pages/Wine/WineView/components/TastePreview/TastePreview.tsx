@@ -3,12 +3,12 @@ import { postService } from "../../../../UserFeed/service/post.api-service";
 import { StarRate } from "../../../../../components/StarRate/StarRate";
 import { tryRequire } from "../../../../../shared/helpers/require";
 import { OverlayModal } from "../../../../../components/OverlayModal/OverlayModal";
-import { toKebabCase } from "../../../../../shared/services/dev.service";
 import { GET_WINE_REVIEWS } from "../../../store/types";
 import { Wine, WineQuery, WineTaste } from "../../../models/wine.model";
 import { FullPost } from "../../../../UserFeed/models/post.model";
 import { BaseRecordsModel } from "../../../../../shared/models/base-records.model";
-import DebounceService from "../../../../../shared/services/debounce.service";
+import ProcessService from "../../../../../shared/services/process.service";
+import StringService from "../../../../../shared/services/string.service";
 
 interface Props {
   wine: Wine;
@@ -60,7 +60,9 @@ export function TastePreview(props: Props) {
     })();
   }, [searchQuery]);
 
-  const url = tryRequire(`imgs/icons/taste/${toKebabCase(taste?.name)}.svg`);
+  const url = tryRequire(
+    `imgs/icons/taste/${StringService.toKebabCase(taste?.name, true)}.svg`
+  );
 
   function display() {
     if (!query || !reviews || !taste) {
@@ -160,7 +162,7 @@ export function TastePreview(props: Props) {
     });
 
   const scrollDown = async (ev: any) => {
-    DebounceService.set(
+    ProcessService.debounce(
       async () => {
         if (!reviews.page?.index || !reviews.page?.total) {
           return;

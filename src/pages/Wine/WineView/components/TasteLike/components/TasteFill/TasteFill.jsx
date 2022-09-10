@@ -7,7 +7,7 @@ import {
   minMax,
 } from "../../../../../../../shared/services/util.service";
 import { tryRequire } from "../../../../../../../shared/helpers/require";
-import { toKebabCase } from "../../../../../../../shared/services/dev.service";
+import StringService from "../../../../../../../shared/services/string.service";
 
 function getDescription(mentions) {
   const desc = mentions.map((taste) => taste.keyword).join(", ");
@@ -38,7 +38,9 @@ export function TasteFill(props) {
 
   const display = () => {
     return tastes.map((taste, idx) => {
-      const url = tryRequire(`imgs/icons/taste/${toKebabCase(taste.name)}.svg`);
+      const url = tryRequire(
+        `imgs/icons/taste/${StringService.toKebabCase(taste.name, true)}.svg`
+      );
       return (
         <div
           className="taste-fill-preview hover-box"

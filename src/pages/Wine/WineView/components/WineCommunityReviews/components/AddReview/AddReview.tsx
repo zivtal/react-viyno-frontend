@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postService } from "../../../../../../UserFeed/service/post.api-service";
 // @ts-ignore
-import { getCurrentPosition } from "../../../../../../../shared/services/util.service";
 import {
   Attachment,
   Attachments,
@@ -21,6 +20,7 @@ import { SET_WINE } from "../../../../../store/types";
 import { BaseProps } from "../../../../../../../shared/models/base-props";
 import { SET_POST, SET_REVIEW } from "../../../../../../UserFeed/store/types";
 import { cloudUpload } from "../../../../../../../shared/services/cloud-upload.service";
+import LocationService from "../../../../../../../shared/services/location.service";
 
 interface Props extends BaseProps {
   wine: Wine;
@@ -107,10 +107,10 @@ export const AddReview = (props: Props): JSX.Element | null => {
     }
 
     try {
-      const location = (await getCurrentPosition()) || {};
+      const location = (await LocationService.current()) || {};
 
       const post: Review = {
-        wineId: props.wine._id,
+        wineId: props.wine._id as number,
         attach,
         vintage,
         rate,

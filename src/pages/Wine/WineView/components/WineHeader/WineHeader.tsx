@@ -4,9 +4,9 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import { StarRateDisplay } from "../../../../../components/StarRateDisplay/StarRateDisplay";
 import { Wine, WineKeywords } from "../../../models/wine.model";
 import { MainState } from "../../../../../store/models/store.models";
-import { toKebabCase } from "../../../../../shared/services/dev.service";
 import { BaseProps } from "../../../../../shared/models/base-props";
 import ImageService from "../../../../../shared/services/image.service";
+import StringService from "../../../../../shared/services/string.service";
 
 interface Props extends BaseProps {
   wine?: Wine;
@@ -98,8 +98,10 @@ export function WineHeader(props: Props): JSX.Element {
             to={
               data?.winery
                 ? {
-                    pathname: `/winery/${toKebabCase(data?.winery)}`,
-                    state: { seo: toKebabCase(data?.winery) },
+                    pathname: `/winery/${StringService.toKebabCase(
+                      data?.winery
+                    )}`,
+                    state: { seo: StringService.toKebabCase(data?.winery) },
                   }
                 : {}
             }

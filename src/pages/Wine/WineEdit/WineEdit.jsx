@@ -10,13 +10,13 @@ import {
 } from "react-router-dom/cjs/react-router-dom.min";
 import { useSelector } from "react-redux";
 import { tryRequire } from "../../../shared/helpers/require";
-import { toKebabCase } from "../../../shared/services/dev.service";
 import "./WineEdit.scss";
 import { MainState } from "../../../store/models/store.models";
 import { ADD_WINE, GET_WINE_KEYWORDS, WINE_SECTIONS } from "../store/types";
 import { WineSections } from "../models/wine.model";
 import { imageUpload } from "../../../shared/services/image-upload.service";
 import ImageService from "../../../shared/services/image.service";
+import StringService from "../../../shared/services/string.service";
 
 export const WineEdit = (props) => {
   const location = useLocation();
@@ -81,9 +81,7 @@ export const WineEdit = (props) => {
       { country: c1, region: r1 },
       { country: c2, region: r2 }
     ) => {
-      if (c1 && c2 && c1 !== c2) return false;
-      if (r1 && r2 && r1 !== r2) return false;
-      return true;
+      return !((c1 && c2 && c1 !== c2) || (r1 && r2 && r1 !== r2));
     };
     setDatabase({
       ...database,
@@ -107,7 +105,9 @@ export const WineEdit = (props) => {
 
   const onSubmit = async () => {
     const res = await wineService[ADD_WINE](edit);
-    history.push(`/wine/${toKebabCase(`${res?.winery} ${res?.name}`)}`);
+    history.push(
+      `/wine/${StringService.toKebabCase(`${res?.winery} ${res?.name}`)}`
+    );
   };
 
   const BOTTLE_IMAGE = tryRequire("imgs/bottle.png");

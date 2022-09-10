@@ -20,6 +20,7 @@ import { useLocation } from "react-router-dom";
 import React from "react";
 import { FullPost, Reply } from "./models/post.model";
 import { Id } from "../../shared/models/id";
+import CryptService from "../../shared/services/crypt.service";
 
 interface UserProps {
   loading?: boolean;

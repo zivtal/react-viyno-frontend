@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { extractConditionKey } from "../../../../shared/services/dev.service";
 import { useHistory, useLocation } from "react-router-dom";
 import { BaseFilter } from "../../../../shared/models/base-filter";
 import { WineKeywords } from "../../../../pages/Wine/models/wine.model";
 import { SelectItem } from "../../../../shared/models/select-item";
 import { useSelector } from "react-redux";
 import { MainState } from "../../../../store/models/store.models";
+import StringService from "../../../../shared/services/string.service";
 
 interface Props {
   filter: BaseFilter;
@@ -51,7 +51,7 @@ export const FilterSelection = (props: Props) => {
             ...keyword,
             key,
             condition: conditionKey,
-            query: extractConditionKey(conditionKey)?.key,
+            query: StringService.extractConditionKey(conditionKey)?.key,
           });
         });
       });

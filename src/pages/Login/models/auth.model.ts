@@ -11,8 +11,8 @@ export interface User {
   fullname: string;
   imageData: string;
   imageType: string;
-  lat: number | null;
-  lng: number | null;
+  latitude: number | null;
+  longitude: number | null;
   country: number | null;
   lastLogin: string;
 }

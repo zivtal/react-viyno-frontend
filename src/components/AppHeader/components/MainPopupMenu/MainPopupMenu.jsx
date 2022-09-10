@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { mediaQuery } from "../../AppHeader";
 import { tryRequire } from "../../../../shared/helpers/require";
-import { toKebabCase } from "../../../../shared/services/dev.service";
 import { MainState } from "../../../../store/models/store.models";
 import { WINE_KEYWORDS } from "../../../../pages/Wine/store/types";
+import StringService from "../../../../shared/services/string.service";
 
 export function MainPopupMenu(props) {
   const rtl = document.dir === "rtl";
@@ -24,11 +24,19 @@ export function MainPopupMenu(props) {
         return {
           title,
           img:
-            tryRequire(`${folder}/${value || toKebabCase(title)}.svg`) ||
-            tryRequire(`${folder}/${toKebabCase(country)}.svg`) ||
-            tryRequire(`${folder}/${toKebabCase(country)}.png`),
-          value: value || toKebabCase(title),
-          path: `/wine?${section}=${value || toKebabCase(title)}`,
+            tryRequire(
+              `${folder}/${value || StringService.toKebabCase(title, true)}.svg`
+            ) ||
+            tryRequire(
+              `${folder}/${StringService.toKebabCase(country, true)}.svg`
+            ) ||
+            tryRequire(
+              `${folder}/${StringService.toKebabCase(country, true)}.png`
+            ),
+          value: value || StringService.toKebabCase(title, true),
+          path: `/wine?${section}=${
+            value || StringService.toKebabCase(title, true)
+          }`,
           ...add,
         };
       }),

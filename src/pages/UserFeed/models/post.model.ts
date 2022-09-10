@@ -35,6 +35,6 @@ export interface Review extends Post {
   wineId: number;
   vintage?: number;
   rate: number;
-  lat?: number;
-  lng?: number;
+  latitude?: number;
+  longitude?: number;
 }

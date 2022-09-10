@@ -1,10 +1,10 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { tryRequire } from "../../../../../shared/helpers/require";
-import { toKebabCase } from "../../../../../shared/services/dev.service";
 import { Wine } from "../../../../Wine/models/wine.model";
 import { BaseProps } from "../../../../../shared/models/base-props";
 import ImageService from "../../../../../shared/services/image.service";
+import StringService from "../../../../../shared/services/string.service";
 
 interface Props extends BaseProps {
   wine?: Wine;
@@ -23,7 +23,10 @@ export function WineryPreview(props: Props): JSX.Element | null {
         <div className="country">
           <img
             src={tryRequire(
-              `imgs/icons/country/${toKebabCase(data.country)}.png`,
+              `imgs/icons/country/${StringService.toKebabCase(
+                data.country,
+                true
+              )}.png`,
               `imgs/icons/country/other.png`
             )}
             alt={data.country}
@@ -37,7 +40,11 @@ export function WineryPreview(props: Props): JSX.Element | null {
         <div className="winery-information">
           <button
             className="more"
-            onClick={() => history.push(`/winery/${toKebabCase(data.winery)}`)}
+            onClick={() =>
+              history.push(
+                `/winery/${StringService.toKebabCase(data.winery, true)}`
+              )
+            }
             disabled={props.loading}
           >
             Read more

@@ -8,9 +8,9 @@ import { TastePreview } from "../TastePreview/TastePreview";
 import { useState } from "react";
 import { Wine, WineQuery, WineStructure } from "../../../models/wine.model";
 import { MainState } from "../../../../../store/models/store.models";
-import { debounce } from "../../../../../shared/services/debounce.service";
 import { UPDATE_REVIEW_STRUCTURE } from "../../../../UserFeed/store/types";
 import { BaseProps } from "../../../../../shared/models/base-props";
+import DebounceService from "../../../../../shared/services/debounce.service";
 
 interface Props extends BaseProps {
   wine?: Wine;
@@ -29,7 +29,7 @@ export function TasteLike(props: Props): JSX.Element {
       return;
     }
 
-    debounce(
+    DebounceService.set(
       async () => {
         await postService[UPDATE_REVIEW_STRUCTURE](data._id, scales);
       },

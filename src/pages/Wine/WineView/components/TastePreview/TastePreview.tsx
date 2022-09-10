@@ -3,12 +3,12 @@ import { postService } from "../../../../UserFeed/service/post.api-service";
 import { StarRate } from "../../../../../components/StarRate/StarRate";
 import { tryRequire } from "../../../../../shared/helpers/require";
 import { OverlayModal } from "../../../../../components/OverlayModal/OverlayModal";
-import { debounce } from "../../../../../shared/services/debounce.service";
 import { toKebabCase } from "../../../../../shared/services/dev.service";
 import { GET_WINE_REVIEWS } from "../../../store/types";
 import { Wine, WineQuery, WineTaste } from "../../../models/wine.model";
 import { FullPost } from "../../../../UserFeed/models/post.model";
 import { BaseRecordsModel } from "../../../../../shared/models/base-records.model";
+import DebounceService from "../../../../../shared/services/debounce.service";
 
 interface Props {
   wine: Wine;
@@ -160,7 +160,7 @@ export function TastePreview(props: Props) {
     });
 
   const scrollDown = async (ev: any) => {
-    debounce(
+    DebounceService.set(
       async () => {
         if (!reviews.page?.index || !reviews.page?.total) {
           return;

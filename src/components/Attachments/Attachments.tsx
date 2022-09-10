@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useRef } from "react";
 import { tryRequire } from "../../shared/helpers/require";
+import { Id } from "../../shared/models/id";
 
 export interface Attachment {
-  url?: string;
+  url: string;
   fileName?: string;
   fileData?: string;
   fileType?: string;
@@ -12,8 +13,8 @@ export interface Attachment {
 interface AttachmentsProps extends React.HTMLAttributes<HTMLDivElement> {
   attachments: Array<Attachment>;
   max?: number;
-  onSet?: Function;
-  onPreview?: Function;
+  onSet?: (attachments: Array<Attachment>) => void;
+  onPreview?: (url: string) => void;
 }
 
 export const Attachments = ({
@@ -24,7 +25,7 @@ export const Attachments = ({
   ...attr
 }: AttachmentsProps) => {
   const el = useRef(null);
-  const [activeId, setActiveId] = useState<number | null>(null);
+  const [activeId, setActiveId] = useState<Id>(null);
 
   if (!attachments?.length) {
     return null;

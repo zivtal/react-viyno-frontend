@@ -5,7 +5,7 @@ import { BG_COLOR } from "../../shared/constants/variables";
 interface Props {
   if?: boolean;
   size?: number;
-  onClick: Function;
+  onClick: () => void;
   color?: string;
   background?: string;
 }

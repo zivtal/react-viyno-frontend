@@ -9,7 +9,7 @@ interface Props {
   total?: number;
   size?: number;
   editable?: boolean;
-  onSet?: Function;
+  onSet?: (rate: number | null) => void;
 }
 
 export function StarRate({

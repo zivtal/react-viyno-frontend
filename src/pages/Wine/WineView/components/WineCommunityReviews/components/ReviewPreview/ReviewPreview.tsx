@@ -19,20 +19,21 @@ import {
   UPDATE_REPLIES,
 } from "../../../../../../UserFeed/store/types";
 import { authService } from "../../../../../../Login/service/auth.service";
+import { Id } from "../../../../../../../shared/models/id";
 
 interface Props extends BaseProps {
   review: FullPost;
-  activeId: number | null;
-  setActiveId: Function;
+  activeId: Id;
+  setActiveId: (id: Id) => void;
 }
 
 export const ReviewPreview = (props: Props): JSX.Element => {
   const dispatch = useDispatch();
 
   const user = useSelector((state: MainState) => state.authModule.user);
-  const [authCb, setAuthCb] = useState<Function>(() => {});
+  const [authCb, setAuthCb] = useState<Function | null>(null);
   const [savedReply, setSavedReply] = useState<Reply>({} as Reply);
-  const [src, setSrc] = useState(null);
+  const [src, setSrc] = useState<string | null>(null);
 
   const setLike = async (data: FullPost, type = "review") => {
     if (!user) {
@@ -69,9 +70,9 @@ export const ReviewPreview = (props: Props): JSX.Element => {
           className="review-card hover-box"
           onClick={() =>
             props.setActiveId(
-              props.activeId === props.review._id || !user
-                ? null
-                : props.review._id
+              props.review._id && props.activeId !== props.review._id && user
+                ? props.review._id
+                : null
             )
           }
         >
@@ -138,7 +139,7 @@ export const ReviewPreview = (props: Props): JSX.Element => {
       </div>
 
       <QuickLogin
-        isActive={authCb && !user}
+        isActive={!!authCb && !user}
         onClose={() => setAuthCb(() => {})}
         onLogin={authCb}
       />

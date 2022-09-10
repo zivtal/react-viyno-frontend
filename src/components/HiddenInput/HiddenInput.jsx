@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { wineService } from "../../pages/Wine/service/wine.service";
 import { setWineSection } from "../../pages/Wine/store/action";
-import { debounce } from "../../shared/services/debounce.service";
+import DebounceService from "../../shared/services/debounce.service";
 import { GET_WINE_KEYWORDS } from "../../pages/Wine/store/types";
 
 export const HiddenInput = ({
@@ -28,7 +28,7 @@ export const HiddenInput = ({
   useEffect(() => setDb(database), [database]);
 
   useEffect(() => {
-    debounce(
+    DebounceService.set(
       () => {
         const fromDb = db?.find((item) => item.name === output);
         set(fromDb?.seo || output, input);
@@ -137,7 +137,7 @@ export const HiddenInput = ({
         onChange={onSearch}
         onKeyDown={handleKey}
         onBlur={() =>
-          debounce(() => resultClick(), `CLEAR_VALUE_${input}`, 250)
+          DebounceService.set(() => resultClick(), `CLEAR_VALUE_${input}`, 250)
         }
         placeholder={`Enter ${placeholder}`}
         spellCheck={false}

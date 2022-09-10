@@ -65,7 +65,7 @@ export function getPosts(queries?: BaseQueries) {
   };
 }
 
-export function getReplies(postId?: number) {
+export function getReplies(postId?: string | number) {
   if (!postId) {
     return;
   }

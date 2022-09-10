@@ -19,12 +19,13 @@ import { authService } from "../Login/service/auth.service";
 import { useLocation } from "react-router-dom";
 import React from "react";
 import { FullPost, Reply } from "./models/post.model";
+import { Id } from "../../shared/models/id";
 
 interface UserProps {
   loading?: boolean;
   reviews?: Array<FullPost>;
-  activeId: number | null;
-  setActiveId: Function;
+  activeId: Id;
+  setActiveId: (id: Id) => void;
 }
 
 export const UserFeed = () => {
@@ -41,7 +42,7 @@ export const UserFeed = () => {
     (state: MainState) => state.postModule
   );
 
-  const [postActiveId, setPostActiveId] = useState(null);
+  const [postActiveId, setPostActiveId] = useState<Id>(null);
 
   useLayoutEffect(() => {
     if (wines?.length) {

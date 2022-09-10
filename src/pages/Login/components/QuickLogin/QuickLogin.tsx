@@ -10,14 +10,14 @@ import { AuthModel } from "../../models/auth.model";
 
 interface Props {
   isActive: boolean;
-  onClose: Function;
-  onLogin?: Function;
+  onClose: (success?: boolean) => void;
+  onLogin?: Function | null;
 }
 
 export const QuickLogin = (props: Props): JSX.Element => {
-  const [isSignUpMode, setIsSignUpMode] = useState(false);
+  const [isSignUpMode, setIsSignUpMode] = useState<boolean>(false);
   const [loginUser, setLoginUser] = useState<AuthModel>({});
-  const [isAfterTry, setIsAfterTry] = useState(false);
+  const [isAfterTry, setIsAfterTry] = useState<boolean>(false);
   const dispatch = useDispatch();
   const user = useSelector((state: MainState) => state.authModule.user);
 

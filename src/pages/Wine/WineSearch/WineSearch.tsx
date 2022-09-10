@@ -6,12 +6,12 @@ import { setWinesFilter, getWines } from "../store/action";
 import { WineFilters } from "./components/WineFilters/WineFilters";
 import { FilterSelection } from "../../../components/AdvancedSearchFilter/components/FilterSelection/FilterSelection";
 import { FilterQuickSort } from "../../../components/AdvancedSearchFilter/components/FilterQuickSort/FilterQuickSort";
-import { debounce } from "../../../shared/services/debounce.service";
 import { extractConditionKey } from "../../../shared/services/dev.service";
 import { Loader } from "../../../components/Loader/Loader";
 import "./WineSearch.scss";
 import { MainState } from "../../../store/models/store.models";
 import { WINE_KEYWORDS, WINES, WINES_FILTER, WINES_SORT } from "../store/types";
+import DebounceService from "../../../shared/services/debounce.service";
 
 interface Props {
   location: any;
@@ -62,7 +62,7 @@ export const WineSearch = (props: Props) => {
   }, [props.location.search]);
 
   useEffect(() => {
-    debounce(
+    DebounceService.set(
       async () => {
         try {
           setTimeout(() => dispatch(getWines()));

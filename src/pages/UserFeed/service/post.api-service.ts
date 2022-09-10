@@ -28,7 +28,7 @@ export const postService = {
     return httpService.post(API + "/" + GET_POSTS, queries);
   },
 
-  [GET_REPLIES]: (postId: number, queries?: BaseQueries) => {
+  [GET_REPLIES]: (postId: string | number, queries?: BaseQueries) => {
     return httpService.post(API + "/" + GET_REPLIES + "/" + postId, queries);
   },
 
@@ -58,7 +58,11 @@ export const postService = {
     return httpService.post(API + "/" + SET_POST, post);
   },
 
-  [UPDATE_POST]: (postId: number, content: any, queries?: BaseQueries) => {
+  [UPDATE_POST]: (
+    postId: string | number,
+    content: any,
+    queries?: BaseQueries
+  ) => {
     return httpService.post(
       API + "/" + UPDATE_POST + "/" + postId,
       content,
@@ -66,7 +70,7 @@ export const postService = {
     );
   },
 
-  [SET_REACTION]: (postId: number, content: any, queries?: any) => {
+  [SET_REACTION]: (postId: string | number, content: any, queries?: any) => {
     return httpService.post(
       API + "/" + SET_REACTION + "/" + postId,
       content,

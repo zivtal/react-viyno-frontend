@@ -12,11 +12,12 @@ import { postService } from "../../service/post.api-service";
 import { SET_REPLIES, SET_REPLY, UPDATE_REPLIES } from "../../store/types";
 import React from "react";
 import { authService } from "../../../Login/service/auth.service";
+import { Id } from "../../../../shared/models/id";
 
 interface Props {
   post: FullPost;
-  activeId: number | null;
-  setActiveId: Function;
+  activeId: Id;
+  setActiveId: (id: Id) => void;
 }
 
 interface SavedReply {
@@ -27,7 +28,7 @@ interface SavedReply {
 export const PostPreview = (props: Props) => {
   const dispatch = useDispatch();
   const user = useSelector((state: MainState) => state.authModule.user);
-  const [authCb, setAuthCb] = useState<Function | undefined>();
+  const [authCb, setAuthCb] = useState<() => void | undefined>();
   const [savedReply, setSavedReply] = useState<Post | undefined>(undefined);
   const [src, setSrc] = useState<string | null>(null);
 
@@ -69,11 +70,15 @@ export const PostPreview = (props: Props) => {
           onClick={() =>
             user
               ? props.setActiveId(
-                  props.activeId === props.post._id ? null : props.post._id
+                  props.post._id && props.activeId !== props.post._id
+                    ? props.post._id
+                    : null
                 )
               : setAuthCb(() =>
                   props.setActiveId(
-                    props.activeId === props.post._id ? null : props.post._id
+                    props.post._id && props.activeId !== props.post._id
+                      ? props.post._id
+                      : null
                   )
                 )
           }

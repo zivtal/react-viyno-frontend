@@ -25,7 +25,7 @@ import { SET_POST, SET_REVIEW } from "../../../../../../UserFeed/store/types";
 interface Props extends BaseProps {
   wine: Wine;
   rateValue: number | null;
-  onSet: Function;
+  onSet: (rate: number | null) => void;
   onClose: Function;
   reviews?: BaseRecordsModel<FullPost>;
 }

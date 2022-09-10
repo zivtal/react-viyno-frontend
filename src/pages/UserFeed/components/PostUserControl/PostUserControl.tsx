@@ -4,12 +4,13 @@ import { setPostReaction } from "../../store/action";
 import { MainState } from "../../../../store/models/store.models";
 import { FullPost } from "../../models/post.model";
 import { CustomButton } from "../../../../components/CustomButton/CustomButton";
+import { Id } from "../../../../shared/models/id";
 
 interface Props {
   post: FullPost;
-  activeId: number | null;
-  setActiveId: Function;
-  setAuthCb?: Function;
+  activeId: Id;
+  setActiveId: (id: Id) => void;
+  setAuthCb?: (callback: () => void) => void;
 }
 
 export const PostUserControl = (props: Props) => {
@@ -43,7 +44,9 @@ export const PostUserControl = (props: Props) => {
         minWidth={50}
         onClick={() =>
           props.setActiveId(
-            props.activeId === props.post._id ? null : props.post._id
+            props.post._id && props.activeId !== props.post._id
+              ? props.post._id
+              : null
           )
         }
       />

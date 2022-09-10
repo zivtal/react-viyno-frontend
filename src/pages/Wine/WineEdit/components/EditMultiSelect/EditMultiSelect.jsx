@@ -1,9 +1,9 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useRef } from "react";
 import { wineService } from "../../../service/wine.service";
-import { debounce } from "../../../../../shared/services/debounce.service";
 import { toKebabCase } from "../../../../../shared/services/dev.service";
 import { GET_WINE_KEYWORDS } from "../../../store/types";
+import DebounceService from "../../../../../shared/services/debounce.service";
 
 export const EditMultiSelect = ({
   data,
@@ -44,7 +44,7 @@ export const EditMultiSelect = ({
   }, [data[input]]);
 
   useEffect(() => {
-    debounce(
+    DebounceService.set(
       () => {
         const save = output
           ?.map((name) => db?.find((db) => db.name === name)?.seo || name)
@@ -83,6 +83,7 @@ export const EditMultiSelect = ({
 
   const handleKey = (ev) => {
     const { key, target } = ev;
+
     switch (key) {
       case "Enter":
         ev.preventDefault();
@@ -103,6 +104,8 @@ export const EditMultiSelect = ({
         ev.preventDefault();
         setSelect(select < dataToShow.length - 1 ? select + 1 : 0);
         break;
+      default:
+        break;
     }
   };
 
@@ -115,7 +118,7 @@ export const EditMultiSelect = ({
         spellCheck="false"
         placeholder={placeholder}
         onBlur={() =>
-          debounce(
+          DebounceService.set(
             () => {
               elInput.current.value = "";
               setDataToShow(output);

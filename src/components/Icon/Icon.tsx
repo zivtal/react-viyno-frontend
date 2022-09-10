@@ -8,7 +8,7 @@ interface IconProps {
   notClickable?: boolean;
   style?: any;
   className?: any;
-  onClick?: Function;
+  onClick?: () => void;
 }
 
 export const Icon = (props: IconProps) => {

@@ -12,7 +12,7 @@ import { MainState } from "../../../../store/models/store.models";
 interface QuickMenuProps {
   el: any;
   isActive: boolean;
-  onClose: Function;
+  onClose: () => void;
 }
 
 export const UserPopupMenu = () => {

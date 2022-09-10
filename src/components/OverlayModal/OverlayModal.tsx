@@ -3,7 +3,7 @@ import "./OverlayModal.scss";
 
 interface OverlayModalProps extends React.HTMLAttributes<HTMLDivElement> {
   if: boolean;
-  onClose?: Function;
+  onClose?: () => void;
 }
 
 export const OverlayModal = (props: OverlayModalProps): JSX.Element | null => {

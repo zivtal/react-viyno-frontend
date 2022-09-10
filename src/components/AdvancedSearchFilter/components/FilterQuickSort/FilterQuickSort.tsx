@@ -3,18 +3,17 @@ import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setWinesSort } from "../../../../pages/Wine/store/action";
 import { MainState } from "../../../../store/models/store.models";
-import { BaseSort } from "../../../../shared/models/base-sort";
 
 interface SortMenuProps {
   el: HTMLButtonElement;
   isActive: boolean;
-  onClose: Function;
+  onClose: () => void;
 }
 
 export const FilterQuickSort = () => {
   const dispatch = useDispatch();
   const elButton = useRef<HTMLButtonElement>(null);
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState<boolean>(false);
   const sort = useSelector((state: MainState) => state.wineModule.sort);
 
   const SortMenu = (props: SortMenuProps) => {

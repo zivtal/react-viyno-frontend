@@ -7,7 +7,7 @@ interface IconProps {
   label?: string | number;
   iconName?: string;
   iconSize?: number;
-  onClick?: Function;
+  onClick?: () => void;
   loading?: boolean;
   minWidth?: number;
   children?: Array<JSX.Element | string> | JSX.Element | string;

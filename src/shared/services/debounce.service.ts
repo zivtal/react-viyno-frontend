@@ -1,18 +1,26 @@
-const CACHE: { [key: string | number]: ReturnType<typeof setTimeout> } = {};
+export default class DebounceService {
+  private static CACHE: {
+    [key: string | number]: ReturnType<typeof setTimeout>;
+  } = {};
 
-export const debounce = (
-  fn: () => void,
-  id: number | string = 0,
-  delay = 500
-): void => {
-  clearTimeout(CACHE[id]);
-  delete CACHE[id];
+  public static delete(id: number | string) {
+    delete this.CACHE[id];
+  }
 
-  return ((...args) => {
-    CACHE[id] = setTimeout(() => {
-      delete CACHE[id];
+  public static set(
+    fn: () => void,
+    id: number | string = 0,
+    delay = 500
+  ): void {
+    clearTimeout(this.CACHE[id]);
+    this.delete(id);
 
-      fn?.(...args);
-    }, delay);
-  })();
-};
+    return ((...args) => {
+      this.CACHE[id] = setTimeout(() => {
+        this.delete(id);
+
+        fn?.(...args);
+      }, delay);
+    })();
+  }
+}

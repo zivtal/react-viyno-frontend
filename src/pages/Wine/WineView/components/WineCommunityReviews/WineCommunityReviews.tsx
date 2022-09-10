@@ -16,7 +16,7 @@ import {
   getMyWineReviews,
   getRecentReviews,
 } from "../../../store/action";
-import { PaginationControl } from "../../../../../components/PaginationControl/PaginationControl";
+import { Id } from "../../../../../shared/models/id";
 
 interface Reviews {
   [key: string]: {
@@ -29,7 +29,7 @@ interface Reviews {
 interface UserRateProps {
   user: any;
   rate: number | null;
-  set: Function;
+  set: (rate: number | null) => void;
 }
 
 const UserRate = ({ user, rate, set }: UserRateProps) => {
@@ -64,8 +64,8 @@ interface WinePreviewsProps {
   demo?: any;
   loading?: boolean;
   reviews?: BaseRecordsModel<FullPost>;
-  activeId: number | null;
-  setActiveId: Function;
+  activeId: Id;
+  setActiveId: (id: Id) => void;
   onLoadMore?: Function;
 }
 
@@ -151,9 +151,9 @@ export const WineCommunityReviews = (props: { wine?: Wine }) => {
 
   const user = useSelector((state: MainState) => state.authModule.user);
 
-  const [activeId, setActiveId] = useState(null);
+  const [activeId, setActiveId] = useState<Id>(null);
   const [selectedCategory, setSelectedCategory] = useState("Helpful");
-  const [rate, setRate] = useState(null);
+  const [rate, setRate] = useState<number | null>(null);
 
   const getQuery = (name: string) => {
     const queryParams = new URLSearchParams(location.search);

@@ -7,7 +7,7 @@ export default class LocationService {
       const geolocation = (await new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(
           ({ coords }) => resolve(coords),
-          (err) => reject(err);
+          (err) => reject(err)
         );
       })) as Coordinates;
 
@@ -21,7 +21,9 @@ export default class LocationService {
         const { latitude, longitude, country_name: country } = res?.data;
 
         return { latitude, longitude, country };
-      } catch (e2) {}
+      } catch (e2) {
+        return;
+      }
     }
   }
 

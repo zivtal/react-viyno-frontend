@@ -24,7 +24,7 @@ export default class ImageService {
     const canvasCopy2 = document.createElement('canvas');
     const copyContext2 = canvasCopy2.getContext('2d');
 
-    const calcRatio = megaPixel ? this.calcByMegaPixel({ width, height }, megaPixel) || 1 : 1;
+    const calcRatio = this.calcByMegaPixel({ width, height }, megaPixel) || 1;
 
     canvasCopy1.width = width;
     canvasCopy1.height = height;
@@ -83,7 +83,11 @@ export default class ImageService {
     return Math.min(height, width) / crop;
   }
 
-  private static calcByMegaPixel({ width, height }: ImageDimensions, megaPixel: number, upscale = false): number {
+  private static calcByMegaPixel({ width, height }: ImageDimensions, megaPixel?: number, upscale = false): number | void {
+    if (!megaPixel) {
+      return;
+    }
+
     const ratioHeight = height / width;
     const calcHeight = Math.sqrt(megaPixel * 1000000 * ratioHeight);
 

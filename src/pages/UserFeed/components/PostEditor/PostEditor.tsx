@@ -1,16 +1,13 @@
-import { useSelector } from "react-redux";
-import {
-  Attachment,
-  Attachments,
-} from "../../../../components/Attachments/Attachments";
-import { cleanUpEmptyFields } from "../../../../shared/services/object.service";
-import { MainState } from "../../../../store/models/store.models";
-import { CustomButton } from "../../../../components/CustomButton/CustomButton";
-import { Post } from "../../models/post.model";
-import { useRef, useState } from "react";
-import React from "react";
-import { cloudUpload } from "../../../../shared/services/cloud-upload.service";
-import ImageService from "../../../../shared/services/image.service";
+import { useSelector } from 'react-redux';
+import { Attachment, Attachments } from '../../../../components/Attachments/Attachments';
+import { MainState } from '../../../../store/models/store.models';
+import { CustomButton } from '../../../../components/CustomButton/CustomButton';
+import { Post } from '../../models/post.model';
+import { useRef, useState } from 'react';
+import React from 'react';
+import { cloudUpload } from '../../../../shared/services/cloud-upload.service';
+import ImageService from '../../../../shared/services/image.service';
+import ObjectService from '../../../../shared/services/object.service';
 
 interface Props {
   value?: Post;
@@ -26,7 +23,7 @@ export const PostEditor = (props: Props) => {
   const [height, setHeight] = useState(1.25);
   const [isUploading, setUploading] = useState(false);
   const [post, setPost] = useState<Post>({
-    ...(props.value || { description: "", attach: [] }),
+    ...(props.value || { description: '', attach: [] }),
   } as Post);
 
   if (!user) {
@@ -41,7 +38,7 @@ export const PostEditor = (props: Props) => {
       ...(props.value || {}),
     };
 
-    return cleanUpEmptyFields(req);
+    return ObjectService.clean(req);
   };
 
   const setContent = (value: string) => {
@@ -49,10 +46,8 @@ export const PostEditor = (props: Props) => {
     const lineSize = 1.25;
     const width = el.current?.getBoundingClientRect()?.width; // 679 = 90
     const height =
-      value?.split("\n").reduce((sum: number, val: string) => {
-        const lines = val.length
-          ? Math.ceil(val.length / ((width || 1) / 7.55))
-          : 1;
+      value?.split('\n').reduce((sum: number, val: string) => {
+        const lines = val.length ? Math.ceil(val.length / ((width || 1) / 7.55)) : 1;
         return sum + lines * lineSize;
       }, 0) || 0;
     setHeight(Math.max(height, 1.25));
@@ -62,17 +57,17 @@ export const PostEditor = (props: Props) => {
     switch (ev.keyCode) {
       case 13:
         if (ev.ctrlKey) {
-          setContent(post.description ? post.description + "\n" : "\n");
+          setContent(post.description ? post.description + '\n' : '\n');
         } else {
           ev.preventDefault();
           props.onSubmit(beforeSubmit(), true);
-          setPost({ description: "", attach: [] });
+          setPost({ description: '', attach: [] });
         }
         break;
 
       case 27:
         props.onSubmit(beforeSubmit(), false);
-        setPost({ description: "", attach: [] });
+        setPost({ description: '', attach: [] });
         break;
 
       default:
@@ -98,13 +93,9 @@ export const PostEditor = (props: Props) => {
 
   return (
     <>
-      <div className={`user-post-editor ${props.inClass || ""}`}>
+      <div className={`user-post-editor ${props.inClass || ''}`}>
         <div>
-          <img
-            className="profile-picture"
-            src={ImageService.fromBase64(user.imageData, user.imageType)}
-            alt="Profile picture"
-          />
+          <img className="profile-picture" src={ImageService.fromBase64(user.imageData, user.imageType)} alt="Profile picture" />
 
           <div>
             <textarea
@@ -120,31 +111,18 @@ export const PostEditor = (props: Props) => {
             />
 
             <label>
-              <p className="chars-left">
-                {(props.max || 512) - (post.description?.length || 0)}
-              </p>
+              <p className="chars-left">{(props.max || 512) - (post.description?.length || 0)}</p>
             </label>
 
             {post?.attach?.length ? (
-              <Attachments
-                attachments={post?.attach || []}
-                onSet={(attach: Array<Attachment>) =>
-                  setPost({ ...post, attach })
-                }
-              />
+              <Attachments attachments={post?.attach || []} onSet={(attach: Array<Attachment>) => setPost({ ...post, attach })} />
             ) : null}
           </div>
         </div>
 
         <div className="button-control">
           <CustomButton iconName="add-image" loading={isUploading}>
-            <input
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={(ev) => upload(ev, "image")}
-              hidden
-            />
+            <input type="file" accept="image/*" multiple onChange={(ev) => upload(ev, 'image')} hidden />
           </CustomButton>
 
           <CustomButton
@@ -154,7 +132,7 @@ export const PostEditor = (props: Props) => {
             loading={isUploading}
             onClick={() => {
               props.onSubmit(beforeSubmit(), true);
-              setPost({ description: "", attach: [] });
+              setPost({ description: '', attach: [] });
             }}
           />
         </div>

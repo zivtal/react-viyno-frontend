@@ -69,16 +69,13 @@ export default class StringService {
     );
   }
 
-  public static extractConditionKey(cKey: string): {
-    key: string;
-    condition: string;
-  } {
-    const idx = /([A-Z]|_)/g.exec(cKey)?.index;
+  public static extractConditionKey(value: string): { key: string; condition: string } {
+    const idx = /([A-Z]|_)/g.exec(value)?.index;
 
-    let key = cKey.slice(idx);
+    let key = value.slice(idx);
     key = key.charAt(0).toLowerCase() + key.slice(1);
 
-    return { key, condition: cKey.slice(0, idx) };
+    return { key, condition: value.slice(0, idx) };
   }
 
   private static replaceInvalidCharsets(value?: string): string | void {

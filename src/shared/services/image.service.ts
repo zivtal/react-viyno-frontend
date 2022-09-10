@@ -3,14 +3,6 @@ import { BulkImageResize, ImageResize } from "../models/image-resize";
 import FileService from "./file.service";
 
 export default class ImageService {
-  public static fromBase64(data?: string, type: string = "png"): string {
-    if (!data) {
-      return "";
-    }
-
-    return `data:image/${type};base64,${data}`;
-  }
-
   private static calcCrop(
     { width, height }: ImageDimensions,
     crop: number
@@ -29,7 +21,15 @@ export default class ImageService {
     return upscale ? calcHeight / height : Math.min(calcHeight / height, 1);
   }
 
-  private static async loadImageFile(file: File): Promise<HTMLImageElement> {
+  public static fromBase64(data?: string, type: string = "png"): string {
+    if (!data) {
+      return "";
+    }
+
+    return `data:image/${type};base64,${data}`;
+  }
+
+  private static async fromFile(file: File): Promise<HTMLImageElement> {
     const data = await FileService.toBase64(file);
 
     return new Promise((resolve, reject) => {
@@ -44,7 +44,7 @@ export default class ImageService {
     file: File,
     { megaPixel, quality, type, crop }: ImageResize
   ): Promise<File> {
-    const img = await this.loadImageFile(file);
+    const img = await this.fromFile(file);
     const { width, height } = img;
 
     const canvas = document.createElement("canvas");

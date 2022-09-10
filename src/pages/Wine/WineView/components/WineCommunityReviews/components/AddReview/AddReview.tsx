@@ -10,7 +10,6 @@ import {
 import { StarRate } from "../../../../../../../components/StarRate/StarRate";
 import { QuickLogin } from "../../../../../../Login/components/QuickLogin/QuickLogin";
 import { tryRequire } from "../../../../../../../shared/helpers/require";
-import { cloudUpload } from "../../../../../../../shared/services/media/media.service";
 import { OverlayModal } from "../../../../../../../components/OverlayModal/OverlayModal";
 import { Wine } from "../../../../../models/wine.model";
 import { BaseRecordsModel } from "../../../../../../../shared/models/base-records.model";
@@ -21,6 +20,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { SET_WINE } from "../../../../../store/types";
 import { BaseProps } from "../../../../../../../shared/models/base-props";
 import { SET_POST, SET_REVIEW } from "../../../../../../UserFeed/store/types";
+import { cloudUpload } from "../../../../../../../shared/services/cloud-upload.service";
 
 interface Props extends BaseProps {
   wine: Wine;

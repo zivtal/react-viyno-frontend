@@ -5,8 +5,8 @@ import { StarRateDisplay } from "../../../../../components/StarRateDisplay/StarR
 import { Wine, WineKeywords } from "../../../models/wine.model";
 import { MainState } from "../../../../../store/models/store.models";
 import { toKebabCase } from "../../../../../shared/services/dev.service";
-import { getImgSrcFromBase64 } from "../../../../../shared/services/media/media.service";
 import { BaseProps } from "../../../../../shared/models/base-props";
+import ImageService from "../../../../../shared/services/image.service";
 
 interface Props extends BaseProps {
   wine?: Wine;
@@ -85,7 +85,7 @@ export function WineHeader(props: Props): JSX.Element {
         <div className="picture">
           {data?.imageData ? (
             <img
-              src={getImgSrcFromBase64(data?.imageData, data?.imageType)}
+              src={ImageService.fromBase64(data?.imageData, data?.imageType)}
               alt={data?.name}
             />
           ) : (

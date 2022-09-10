@@ -1,5 +1,5 @@
 // @ts-ignore
-import { httpService } from "../../../shared/services/http-client/http.service";
+import { httpService } from "../../../shared/services/http.service";
 // @ts-ignore
 import { getCurrentPosition } from "../../../shared/services/util.service";
 import { AuthModel, User } from "../models/auth.model";

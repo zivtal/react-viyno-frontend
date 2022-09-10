@@ -2,9 +2,9 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { tryRequire } from "../../../../../shared/helpers/require";
 import { toKebabCase } from "../../../../../shared/services/dev.service";
-import { getImgSrcFromBase64 } from "../../../../../shared/services/media/media.service";
 import { Wine } from "../../../../Wine/models/wine.model";
 import { BaseProps } from "../../../../../shared/models/base-props";
+import ImageService from "../../../../../shared/services/image.service";
 
 interface Props extends BaseProps {
   wine?: Wine;
@@ -68,7 +68,7 @@ export function WineryPreview(props: Props): JSX.Element | null {
         {data.wineryLogo ? (
           <img
             className="logo"
-            src={getImgSrcFromBase64(data.wineryLogo)}
+            src={ImageService.fromBase64(data.wineryLogo)}
             alt={data.winery}
           />
         ) : null}

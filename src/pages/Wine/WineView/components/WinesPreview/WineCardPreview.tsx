@@ -4,9 +4,9 @@ import { StarRate } from "../../../../../components/StarRate/StarRate";
 import { ScaleRate } from "../TasteLike/components/ScaleRate/ScaleRate";
 import { tryRequire } from "../../../../../shared/helpers/require";
 import { toKebabCase } from "../../../../../shared/services/dev.service";
-import { getImgSrcFromBase64 } from "../../../../../shared/services/media/media.service";
 import { Wine } from "../../../models/wine.model";
 import "./WineCardPreview.scss";
+import ImageService from "../../../../../shared/services/image.service";
 
 interface WinePreviewProps extends React.HTMLAttributes<HTMLDivElement> {
   wine: Wine;
@@ -30,7 +30,7 @@ const WineImage = ({ wine }: { wine: Wine }): JSX.Element => {
     <img
       className="bottle-img"
       src={
-        getImgSrcFromBase64(wine.imageData, wine?.imageType) ||
+        ImageService.fromBase64(wine.imageData, wine?.imageType) ||
         tryRequire("imgs/bottle.png")
       }
       alt="Wine Bottle"

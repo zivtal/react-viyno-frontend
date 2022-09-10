@@ -1,5 +1,5 @@
 // @ts-ignore
-import { httpService } from "../../../shared/services/http-client/http.service";
+import { httpService } from "../../../shared/services/http.service";
 import {
   SET_POST,
   SET_REVIEW,

@@ -7,8 +7,8 @@ import { PostEditor } from "../../../../../../UserFeed/components/PostEditor/Pos
 import { tryRequire } from "../../../../../../../shared/helpers/require";
 import "./ReplyPreview.scss";
 import { setPostReaction } from "../../../../../../UserFeed/store/action";
-import { getImgSrcFromBase64 } from "../../../../../../../shared/services/media/media.service";
 import { MainState } from "../../../../../../../store/models/store.models";
+import ImageService from "../../../../../../../shared/services/image.service";
 
 export const ReplyPreview = ({
   reply,
@@ -35,7 +35,7 @@ export const ReplyPreview = ({
     <>
       <div className={`reply-preview ${reply.replyId ? "reply-to-reply" : ""}`}>
         <img
-          src={getImgSrcFromBase64(reply.userPhoto)}
+          src={ImageService.fromBase64(reply.userPhoto)}
           onError={(ev) =>
             (ev.target.src = tryRequire("imgs/icons/user-profile.svg"))
           }

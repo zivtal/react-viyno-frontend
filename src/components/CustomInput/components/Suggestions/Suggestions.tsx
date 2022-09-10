@@ -2,7 +2,7 @@ import { mediaQuery } from "../../../AppHeader/AppHeader";
 import React from "react";
 import { CustomInputResults } from "../../CustomInput";
 import { tryRequire } from "../../../../shared/helpers/require";
-import { getImgSrcFromBase64 } from "../../../../shared/services/media/media.service";
+import ImageService from "../../../../shared/services/image.service";
 
 interface SearchResultsProps {
   value: string;
@@ -57,8 +57,10 @@ export const Suggestions = (props: SearchResultsProps): any => {
               {result.imageData || props.defaultImage ? (
                 <img
                   src={
-                    getImgSrcFromBase64(result.imageData, result.imageType) ||
-                    tryRequire(`imgs/${props.defaultImage}`)
+                    ImageService.fromBase64(
+                      result.imageData,
+                      result.imageType
+                    ) || tryRequire(`imgs/${props.defaultImage}`)
                   }
                 />
               ) : null}

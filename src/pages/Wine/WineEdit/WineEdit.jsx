@@ -11,14 +11,12 @@ import {
 import { useSelector } from "react-redux";
 import { tryRequire } from "../../../shared/helpers/require";
 import { toKebabCase } from "../../../shared/services/dev.service";
-import {
-  getImgSrcFromBase64,
-  imageUpload,
-} from "../../../shared/services/media/media.service";
 import "./WineEdit.scss";
 import { MainState } from "../../../store/models/store.models";
 import { ADD_WINE, GET_WINE_KEYWORDS, WINE_SECTIONS } from "../store/types";
 import { WineSections } from "../models/wine.model";
+import { imageUpload } from "../../../shared/services/image-upload.service";
+import ImageService from "../../../shared/services/image.service";
 
 export const WineEdit = (props) => {
   const location = useLocation();
@@ -104,7 +102,7 @@ export const WineEdit = (props) => {
       imageType: image.extension,
     });
 
-    img.current.src = getImgSrcFromBase64(image.data[1], image.extension);
+    img.current.src = ImageService.fromBase64(image.data[1], image.extension);
   };
 
   const onSubmit = async () => {
@@ -125,8 +123,10 @@ export const WineEdit = (props) => {
               <img
                 ref={img}
                 src={
-                  getImgSrcFromBase64(edit.base64ImageLarge, edit.imageType) ||
-                  BOTTLE_IMAGE
+                  ImageService.fromBase64(
+                    edit.base64ImageLarge,
+                    edit.imageType
+                  ) || BOTTLE_IMAGE
                 }
               />
               {!edit.base64ImageLarge ? <span>UPLOAD IMAGE</span> : null}

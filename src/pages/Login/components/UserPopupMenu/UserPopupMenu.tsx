@@ -5,9 +5,9 @@ import { authService } from "../../service/auth.service";
 import { setUser } from "../../store/actions";
 import { QuickLogin } from "../QuickLogin/QuickLogin";
 import { tryRequire } from "../../../../shared/helpers/require";
-import { getImgSrcFromBase64 } from "../../../../shared/services/media/media.service";
 import { LOGOUT } from "../../store/types";
 import { MainState } from "../../../../store/models/store.models";
+import ImageService from "../../../../shared/services/image.service";
 
 interface QuickMenuProps {
   el: any;
@@ -73,7 +73,7 @@ export const UserPopupMenu = () => {
         ref={elProfile}
         className="login"
         src={
-          getImgSrcFromBase64(user?.imageData, user?.imageType) ||
+          ImageService.fromBase64(user?.imageData, user?.imageType) ||
           tryRequire("imgs/icons/user-profile.svg")
         }
         onClick={() => setIsActive(!isActive)}

@@ -1,8 +1,8 @@
 import moment from "moment";
 import React from "react";
 import { tryRequire } from "../../../../shared/helpers/require";
-import { getImgSrcFromBase64 } from "../../../../shared/services/media/media.service";
 import { FullPost } from "../../models/post.model";
+import ImageService from "../../../../shared/services/image.service";
 
 interface Props {
   review: FullPost;
@@ -17,7 +17,7 @@ export const PostUserInfo = (props: Props) => {
       <img
         src={
           userPhoto
-            ? getImgSrcFromBase64(userPhoto)
+            ? ImageService.fromBase64(userPhoto)
             : tryRequire("imgs/icons/user-profile.svg")
         }
         alt="Reviewer profile"

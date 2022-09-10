@@ -5,7 +5,6 @@ import { ReviewStat } from "./components/ReviewStat/ReviewStat";
 import { StarRate } from "../../../../../components/StarRate/StarRate";
 import { ReviewPreview } from "./components/ReviewPreview/ReviewPreview";
 import { tryRequire } from "../../../../../shared/helpers/require";
-import { getImgSrcFromBase64 } from "../../../../../shared/services/media/media.service";
 import { MainState } from "../../../../../store/models/store.models";
 import { useLocation } from "react-router-dom";
 import { FullPost } from "../../../../UserFeed/models/post.model";
@@ -17,6 +16,7 @@ import {
   getRecentReviews,
 } from "../../../store/action";
 import { Id } from "../../../../../shared/models/id";
+import ImageService from "../../../../../shared/services/image.service";
 
 interface Reviews {
   [key: string]: {
@@ -42,7 +42,7 @@ const UserRate = ({ user, rate, set }: UserRateProps) => {
         <img
           className="user-profile"
           src={
-            getImgSrcFromBase64(user?.imageData, user?.imageType) ||
+            ImageService.fromBase64(user?.imageData, user?.imageType) ||
             tryRequire("imgs/icons/user-profile.svg")
           }
           alt="user-profile"

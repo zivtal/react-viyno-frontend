@@ -4,15 +4,13 @@ import {
   Attachments,
 } from "../../../../components/Attachments/Attachments";
 import { cleanUpEmptyFields } from "../../../../shared/services/object.service";
-import {
-  cloudUpload,
-  getImgSrcFromBase64,
-} from "../../../../shared/services/media/media.service";
 import { MainState } from "../../../../store/models/store.models";
 import { CustomButton } from "../../../../components/CustomButton/CustomButton";
 import { Post } from "../../models/post.model";
 import { useRef, useState } from "react";
 import React from "react";
+import { cloudUpload } from "../../../../shared/services/cloud-upload.service";
+import ImageService from "../../../../shared/services/image.service";
 
 interface Props {
   value?: Post;
@@ -104,7 +102,7 @@ export const PostEditor = (props: Props) => {
         <div>
           <img
             className="profile-picture"
-            src={getImgSrcFromBase64(user.imageData, user.imageType)}
+            src={ImageService.fromBase64(user.imageData, user.imageType)}
             alt="Profile picture"
           />
 

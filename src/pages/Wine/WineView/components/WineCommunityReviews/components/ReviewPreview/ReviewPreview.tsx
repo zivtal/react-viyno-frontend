@@ -1,25 +1,22 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { Attachments } from "../../../../../../../components/Attachments/Attachments";
-import { MediaPreviewModal } from "../../../../../../../components/MediaPreviewModal/MediaPreviewModal";
-import { QuickLogin } from "../../../../../../Login/components/QuickLogin/QuickLogin";
-import { OnPostReply } from "../OnPostReply/OnPostReply";
-import { PostUserInfo } from "../../../../../../UserFeed/components/PostUserInfo/PostUserInfo";
-import { PostUserControl } from "../../../../../../UserFeed/components/PostUserControl/PostUserControl";
-import { tryRequire } from "../../../../../../../shared/helpers/require";
-import { setPostReaction } from "../../../../../../UserFeed/store/action";
-import { MainState } from "../../../../../../../store/models/store.models";
-import { FullPost, Reply } from "../../../../../../UserFeed/models/post.model";
-import React from "react";
-import { BaseProps } from "../../../../../../../shared/models/base-props";
-import { postService } from "../../../../../../UserFeed/service/post.api-service";
-import {
-  SET_REPLY,
-  UPDATE_REPLIES,
-} from "../../../../../../UserFeed/store/types";
-import { authService } from "../../../../../../Login/service/auth.service";
-import { Id } from "../../../../../../../shared/models/id";
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Attachments } from '../../../../../../../components/Attachments/Attachments';
+import { MediaPreviewModal } from '../../../../../../../components/MediaPreviewModal/MediaPreviewModal';
+import { QuickLogin } from '../../../../../../Login/components/QuickLogin/QuickLogin';
+import { OnPostReply } from '../OnPostReply/OnPostReply';
+import { PostUserInfo } from '../../../../../../UserFeed/components/PostUserInfo/PostUserInfo';
+import { PostUserControl } from '../../../../../../UserFeed/components/PostUserControl/PostUserControl';
+import { tryRequire } from '../../../../../../../shared/helpers/require';
+import { setPostReaction } from '../../../../../../UserFeed/store/action';
+import { MainState } from '../../../../../../../store/models/store.models';
+import { FullPost, Reply } from '../../../../../../UserFeed/models/post.model';
+import React from 'react';
+import { BaseProps } from '../../../../../../../shared/interfaces/base-props';
+import { postService } from '../../../../../../UserFeed/service/post.api-service';
+import { SET_REPLY, UPDATE_REPLIES } from '../../../../../../UserFeed/store/types';
+import { authService } from '../../../../../../Login/service/auth.service';
+import { Id } from '../../../../../../../shared/interfaces/id';
 
 interface Props extends BaseProps {
   review: FullPost;
@@ -35,7 +32,7 @@ export const ReviewPreview = (props: Props): JSX.Element => {
   const [savedReply, setSavedReply] = useState<Reply>({} as Reply);
   const [src, setSrc] = useState<string | null>(null);
 
-  const setLike = async (data: FullPost, type = "review") => {
+  const setLike = async (data: FullPost, type = 'review') => {
     if (!user) {
       return;
     }
@@ -68,13 +65,7 @@ export const ReviewPreview = (props: Props): JSX.Element => {
       <div className="wine-review">
         <div
           className="review-card hover-box"
-          onClick={() =>
-            props.setActiveId(
-              props.review._id && props.activeId !== props.review._id && user
-                ? props.review._id
-                : null
-            )
-          }
+          onClick={() => props.setActiveId(props.review._id && props.activeId !== props.review._id && user ? props.review._id : null)}
         >
           {props.review.wine ? (
             <Link className="wine-review-title" to={url}>
@@ -89,18 +80,12 @@ export const ReviewPreview = (props: Props): JSX.Element => {
 
             <div className="user-rating flex align-center">
               <div className="review-rate-summery">
-                <img
-                  src={tryRequire("imgs/icons/single-star.svg")}
-                  alt="star"
-                />
+                <img src={tryRequire('imgs/icons/single-star.svg')} alt="star" />
                 <span className="review-rate-title">{props.review.rate}</span>
               </div>
 
               {!props.review.wine && props.review.vintage ? (
-                <Link
-                  to={{ search: `?year=${props.review.vintage}` }}
-                  className="review-vintage"
-                >
+                <Link to={{ search: `?year=${props.review.vintage}` }} className="review-vintage">
                   {props.review.vintage}
                 </Link>
               ) : null}
@@ -110,39 +95,19 @@ export const ReviewPreview = (props: Props): JSX.Element => {
           <section className="review-content">
             <span className="review-desc">{props.review.description}</span>
             {props.review.attach ? (
-              <Attachments
-                max={2}
-                attachments={props.review.attach || []}
-                className={"user-feed-preview"}
-                onPreview={setSrc}
-              />
+              <Attachments max={2} attachments={props.review.attach || []} className={'user-feed-preview'} onPreview={setSrc} />
             ) : null}
           </section>
         </div>
 
-        <PostUserControl
-          post={props.review}
-          activeId={props.activeId}
-          setActiveId={props.setActiveId}
-          setAuthCb={setAuthCb}
-        />
+        <PostUserControl post={props.review} activeId={props.activeId} setActiveId={props.setActiveId} setAuthCb={setAuthCb} />
 
         {props.activeId === props.review._id ? (
-          <OnPostReply
-            post={props.review}
-            value={savedReply}
-            setReply={setReply}
-            setAuthCb={setAuthCb}
-            setSrc={setSrc}
-          />
+          <OnPostReply post={props.review} value={savedReply} setReply={setReply} setAuthCb={setAuthCb} setSrc={setSrc} />
         ) : null}
       </div>
 
-      <QuickLogin
-        isActive={!!authCb && !user}
-        onClose={() => setAuthCb(() => {})}
-        onLogin={authCb}
-      />
+      <QuickLogin isActive={!!authCb && !user} onClose={() => setAuthCb(() => {})} onLogin={authCb} />
     </>
   );
 };

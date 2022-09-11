@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { wineService } from "../../../service/wine.service";
-import { WineSlider } from "../WineSlider/WineSlider";
-import { Loader } from "../../../../../components/Loader/Loader";
-import { BaseProps } from "../../../../../shared/models/base-props";
-import { Wine } from "../../../models/wine.model";
-import { GET_WINES } from "../../../store/types";
+import React, { useEffect, useState } from 'react';
+import { wineService } from '../../../service/wine.service';
+import { WineSlider } from '../WineSlider/WineSlider';
+import { Loader } from '../../../../../components/Loader/Loader';
+import { BaseProps } from '../../../../../shared/interfaces/base-props';
+import { Wine } from '../../../models/wine.model';
+import { GET_WINES } from '../../../store/types';
 
 interface Props extends BaseProps {
   title?: string;
@@ -46,15 +46,11 @@ export function MoreWines(props: Props): JSX.Element {
     <div className="more-wines">
       <Loader if={isLoading} type="overlay-skeleton">
         <div>
-          <h2>{props.title ? props.title : "More wines"}</h2>
+          <h2>{props.title ? props.title : 'More wines'}</h2>
           {props.wine?.winery ? <p>From {props.wine?.winery}</p> : null}
         </div>
       </Loader>
-      <WineSlider
-        wines={wines}
-        loading={isLoading}
-        repeat={props.wine?.wineryProducts || 8}
-      />
+      <WineSlider wines={wines} loading={isLoading} repeat={props.wine?.wineryProducts || 8} />
     </div>
   );
 }

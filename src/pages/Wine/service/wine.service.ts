@@ -2,7 +2,7 @@
 import { httpService } from '../../../shared/services/http.service';
 import { ADD_WINE, GET_WINE, GET_WINE_KEYWORDS, GET_WINES, SEARCH_WINES } from '../store/types';
 import { WineKeywordsReq, Wine, WineQuery } from '../models/wine.model';
-import { BaseRecords } from '../../../shared/models/base-records';
+import { BaseRecords } from '../../../shared/interfaces/base-records';
 import ObjectService from '../../../shared/services/object.service';
 
 export const wineService = {

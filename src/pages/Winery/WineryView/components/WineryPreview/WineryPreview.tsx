@@ -1,10 +1,10 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
-import { tryRequire } from "../../../../../shared/helpers/require";
-import { Wine } from "../../../../Wine/models/wine.model";
-import { BaseProps } from "../../../../../shared/models/base-props";
-import ImageService from "../../../../../shared/services/image.service";
-import StringService from "../../../../../shared/services/string.service";
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { tryRequire } from '../../../../../shared/helpers/require';
+import { Wine } from '../../../../Wine/models/wine.model';
+import { BaseProps } from '../../../../../shared/interfaces/base-props';
+import ImageService from '../../../../../shared/services/image.service';
+import StringService from '../../../../../shared/services/string.service';
 
 interface Props extends BaseProps {
   wine?: Wine;
@@ -22,13 +22,7 @@ export function WineryPreview(props: Props): JSX.Element | null {
 
         <div className="country">
           <img
-            src={tryRequire(
-              `imgs/icons/country/${StringService.toKebabCase(
-                data.country,
-                true
-              )}.png`,
-              `imgs/icons/country/other.png`
-            )}
+            src={tryRequire(`imgs/icons/country/${StringService.toKebabCase(data.country, true)}.png`, `imgs/icons/country/other.png`)}
             alt={data.country}
           />
 
@@ -38,15 +32,7 @@ export function WineryPreview(props: Props): JSX.Element | null {
         <p className="short-description">{data.wineryOverview}</p>
 
         <div className="winery-information">
-          <button
-            className="more"
-            onClick={() =>
-              history.push(
-                `/winery/${StringService.toKebabCase(data.winery, true)}`
-              )
-            }
-            disabled={props.loading}
-          >
+          <button className="more" onClick={() => history.push(`/winery/${StringService.toKebabCase(data.winery, true)}`)} disabled={props.loading}>
             Read more
           </button>
 
@@ -72,13 +58,7 @@ export function WineryPreview(props: Props): JSX.Element | null {
       </section>
       <section className="image">
         <img src={data.background} />
-        {data.wineryLogo ? (
-          <img
-            className="logo"
-            src={ImageService.fromBase64(data.wineryLogo)}
-            alt={data.winery}
-          />
-        ) : null}
+        {data.wineryLogo ? <img className="logo" src={ImageService.fromBase64(data.wineryLogo)} alt={data.winery} /> : null}
       </section>
     </section>
   ) : null;

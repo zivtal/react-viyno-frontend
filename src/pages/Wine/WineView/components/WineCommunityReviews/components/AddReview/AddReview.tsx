@@ -1,26 +1,23 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { postService } from "../../../../../../UserFeed/service/post.api-service";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { postService } from '../../../../../../UserFeed/service/post.api-service';
 // @ts-ignore
-import {
-  Attachment,
-  Attachments,
-} from "../../../../../../../components/Attachments/Attachments";
-import { StarRate } from "../../../../../../../components/StarRate/StarRate";
-import { QuickLogin } from "../../../../../../Login/components/QuickLogin/QuickLogin";
-import { tryRequire } from "../../../../../../../shared/helpers/require";
-import { OverlayModal } from "../../../../../../../components/OverlayModal/OverlayModal";
-import { Wine } from "../../../../../models/wine.model";
-import { BaseRecords } from "../../../../../../../shared/models/base-records";
-import { FullPost, Review } from "../../../../../../UserFeed/models/post.model";
-import { MainState } from "../../../../../../../store/models/store.models";
-import React from "react";
-import { useHistory, useLocation } from "react-router-dom";
-import { SET_WINE } from "../../../../../store/types";
-import { BaseProps } from "../../../../../../../shared/models/base-props";
-import { SET_REVIEW } from "../../../../../../UserFeed/store/types";
-import { cloudUpload } from "../../../../../../../shared/services/cloud-upload.service";
-import LocationService from "../../../../../../../shared/services/location.service";
+import { Attachment, Attachments } from '../../../../../../../components/Attachments/Attachments';
+import { StarRate } from '../../../../../../../components/StarRate/StarRate';
+import { QuickLogin } from '../../../../../../Login/components/QuickLogin/QuickLogin';
+import { tryRequire } from '../../../../../../../shared/helpers/require';
+import { OverlayModal } from '../../../../../../../components/OverlayModal/OverlayModal';
+import { Wine } from '../../../../../models/wine.model';
+import { BaseRecords } from '../../../../../../../shared/interfaces/base-records';
+import { FullPost, Review } from '../../../../../../UserFeed/models/post.model';
+import { MainState } from '../../../../../../../store/models/store.models';
+import React from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import { SET_WINE } from '../../../../../store/types';
+import { BaseProps } from '../../../../../../../shared/interfaces/base-props';
+import { SET_REVIEW } from '../../../../../../UserFeed/store/types';
+import { cloudUpload } from '../../../../../../../shared/services/cloud-upload.service';
+import LocationService from '../../../../../../../shared/services/location.service';
 
 interface Props extends BaseProps {
   wine: Wine;
@@ -42,15 +39,13 @@ export const AddReview = (props: Props): JSX.Element | null => {
   };
 
   const getQuery = (name: string) => {
-    return queries.get(name)?.split("-") || [];
+    return queries.get(name)?.split('-') || [];
   };
 
   const [id, setId] = useState<number | undefined>();
   const [rate, setRate] = useState<number>(props.rateValue || 0);
-  const [vintage, setVintage] = useState<number>(
-    +getQuery("year")?.toString() || new Date().getFullYear()
-  );
-  const [description, setDescription] = useState<string>("");
+  const [vintage, setVintage] = useState<number>(+getQuery('year')?.toString() || new Date().getFullYear());
+  const [description, setDescription] = useState<string>('');
   const [attach, setAttach] = useState<Array<Attachment>>([]);
   const [isLoginActive, setIsLoginActive] = useState<boolean>(false);
   const user = useSelector((state: MainState) => state.authModule.user);
@@ -67,13 +62,11 @@ export const AddReview = (props: Props): JSX.Element | null => {
       return;
     }
 
-    const review = (props.reviews?.data || []).find(
-      (review: FullPost) => review.vintage === vintage
-    );
+    const review = (props.reviews?.data || []).find((review: FullPost) => review.vintage === vintage);
 
     if (!vintage || !review) {
       setAttach([]);
-      setDescription("");
+      setDescription('');
       setId(undefined);
 
       return;
@@ -94,9 +87,7 @@ export const AddReview = (props: Props): JSX.Element | null => {
   }
 
   const upload = async (ev: any, type: string): Promise<void> => {
-    const res = ((await cloudUpload(ev.target?.files || [], type)) || []).map(
-      (url: string) => ({ url })
-    );
+    const res = ((await cloudUpload(ev.target?.files || [], type)) || []).map((url: string) => ({ url }));
 
     setAttach([...attach, ...res]);
   };
@@ -120,10 +111,7 @@ export const AddReview = (props: Props): JSX.Element | null => {
 
       const recent = await postService[SET_REVIEW](post);
 
-      const prevRate =
-        (props.reviews?.data || []).find(
-          (review: FullPost) => review.vintage === vintage
-        )?.rate || 0;
+      const prevRate = (props.reviews?.data || []).find((review: FullPost) => review.vintage === vintage)?.rate || 0;
 
       const wineRate = props.wine.rate || 0;
       const wineRatings = props.wine.ratings || 0;
@@ -132,14 +120,12 @@ export const AddReview = (props: Props): JSX.Element | null => {
         type: SET_WINE,
         wine: {
           ...props.wine,
-          rate: id
-            ? (wineRate * wineRatings - prevRate + wineRate) / wineRatings
-            : (wineRate * wineRatings + wineRate) / (wineRatings + 1),
+          rate: id ? (wineRate * wineRatings - prevRate + wineRate) / wineRatings : (wineRate * wineRatings + wineRate) / (wineRatings + 1),
           ratings: id ? wineRatings : wineRatings + 1,
         },
       });
 
-      setQuery("year", vintage.toString());
+      setQuery('year', vintage.toString());
       props.onClose(recent);
     } catch (err) {
       console.error(err);
@@ -163,11 +149,7 @@ export const AddReview = (props: Props): JSX.Element | null => {
 
   return user ? (
     <OverlayModal if={!!user}>
-      <section
-        slot="content"
-        className="wine-add-review"
-        onClick={(ev) => ev.stopPropagation()}
-      >
+      <section slot="content" className="wine-add-review" onClick={(ev) => ev.stopPropagation()}>
         <div className="close-btn" onClick={() => props.onClose(null)}>
           X
         </div>
@@ -176,12 +158,7 @@ export const AddReview = (props: Props): JSX.Element | null => {
           <label>
             <span>Rate:</span>
 
-            <StarRate
-              rate={rate}
-              editable={true}
-              size={24}
-              onSet={props.onSet}
-            />
+            <StarRate rate={rate} editable={true} size={24} onSet={props.onSet} />
           </label>
 
           <label>
@@ -201,24 +178,14 @@ export const AddReview = (props: Props): JSX.Element | null => {
           <label>
             <span>Description:</span>
 
-            <textarea
-              value={description}
-              onChange={(val) => setDescription(val.target.value)}
-              maxLength={512}
-            ></textarea>
+            <textarea value={description} onChange={(val) => setDescription(val.target.value)} maxLength={512}></textarea>
 
             <p className="chars-left">{512 - description?.length}</p>
 
             <label>
-              <input
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={(ev) => upload(ev, "image")}
-                hidden
-              />
+              <input type="file" accept="image/*" multiple onChange={(ev) => upload(ev, 'image')} hidden />
 
-              <img src={tryRequire("imgs/icons/add-image.svg")} />
+              <img src={tryRequire('imgs/icons/add-image.svg')} />
             </label>
 
             {/* <p className="warning">* Description cannot be blank</p> */}
@@ -233,9 +200,6 @@ export const AddReview = (props: Props): JSX.Element | null => {
       </section>
     </OverlayModal>
   ) : (
-    <QuickLogin
-      isActive={isLoginActive && !user}
-      onClose={() => setIsLoginActive(false)}
-    />
+    <QuickLogin isActive={isLoginActive && !user} onClose={() => setIsLoginActive(false)} />
   );
 };

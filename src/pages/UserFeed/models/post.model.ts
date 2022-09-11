@@ -1,5 +1,5 @@
-import { BaseRecords } from "../../../shared/models/base-records";
-import { Attachment } from "../../../components/Attachments/Attachments";
+import { BaseRecords } from '../../../shared/interfaces/base-records';
+import { Attachment } from '../../../components/Attachments/Attachments';
 
 export interface Post {
   createdAt?: string | number;

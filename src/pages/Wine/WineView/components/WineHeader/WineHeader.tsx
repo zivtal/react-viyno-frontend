@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { Link, useHistory, useLocation } from "react-router-dom";
-import { StarRateDisplay } from "../../../../../components/StarRateDisplay/StarRateDisplay";
-import { Wine, WineKeywords } from "../../../models/wine.model";
-import { MainState } from "../../../../../store/models/store.models";
-import { BaseProps } from "../../../../../shared/models/base-props";
-import ImageService from "../../../../../shared/services/image.service";
-import StringService from "../../../../../shared/services/string.service";
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Link, useHistory, useLocation } from 'react-router-dom';
+import { StarRateDisplay } from '../../../../../components/StarRateDisplay/StarRateDisplay';
+import { Wine, WineKeywords } from '../../../models/wine.model';
+import { MainState } from '../../../../../store/models/store.models';
+import { BaseProps } from '../../../../../shared/interfaces/base-props';
+import ImageService from '../../../../../shared/services/image.service';
+import StringService from '../../../../../shared/services/string.service';
 
 interface Props extends BaseProps {
   wine?: Wine;
@@ -15,18 +15,16 @@ interface Props extends BaseProps {
 export function WineHeader(props: Props): JSX.Element {
   const history = useHistory();
   const location = useLocation();
-  const keywords = useSelector<MainState, WineKeywords | null>(
-    (state: MainState) => state.wineModule.keywords
-  );
+  const keywords = useSelector<MainState, WineKeywords | null>((state: MainState) => state.wineModule.keywords);
   const [vintage, setVintage] = useState<string | undefined>();
 
   const getQuery = (name: string) => {
     const queryParams = new URLSearchParams(location.search);
-    return queryParams.get(name)?.split("-") || [];
+    return queryParams.get(name)?.split('-') || [];
   };
 
   useEffect(() => {
-    setVintage(getQuery("year")?.toString());
+    setVintage(getQuery('year')?.toString());
   }, [location.search]);
 
   const WineBottle = (): JSX.Element => (
@@ -48,9 +46,7 @@ export function WineHeader(props: Props): JSX.Element {
         path: `/wine?region=${data?.region?.toLowerCase()}`,
       },
       ...(data?.grapes || []).map((value: string) => {
-        const name = keywords?.data?.grapes?.find(
-          (grape) => grape.value === value
-        )?.title;
+        const name = keywords?.data?.grapes?.find((grape) => grape.value === value)?.title;
 
         return {
           title: name,
@@ -64,11 +60,7 @@ export function WineHeader(props: Props): JSX.Element {
           .filter(({ title }) => title)
           .map((keyword, idx) => {
             return (
-              <span
-                onClick={() => history.push(keyword.path)}
-                className="tag"
-                key={idx}
-              >
+              <span onClick={() => history.push(keyword.path)} className="tag" key={idx}>
                 {keyword.title}
               </span>
             );
@@ -83,14 +75,7 @@ export function WineHeader(props: Props): JSX.Element {
     <section className="wine-header full">
       <div className="information fit-media">
         <div className="picture">
-          {data?.imageData ? (
-            <img
-              src={ImageService.fromBase64(data?.imageData, data?.imageType)}
-              alt={data?.name}
-            />
-          ) : (
-            <WineBottle />
-          )}
+          {data?.imageData ? <img src={ImageService.fromBase64(data?.imageData, data?.imageType)} alt={data?.name} /> : <WineBottle />}
         </div>
 
         <div className="wine-content">
@@ -98,9 +83,7 @@ export function WineHeader(props: Props): JSX.Element {
             to={
               data?.winery
                 ? {
-                    pathname: `/winery/${StringService.toKebabCase(
-                      data?.winery
-                    )}`,
+                    pathname: `/winery/${StringService.toKebabCase(data?.winery)}`,
                     state: { seo: StringService.toKebabCase(data?.winery) },
                   }
                 : {}

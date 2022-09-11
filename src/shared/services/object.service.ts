@@ -1,5 +1,5 @@
 import { HashedObject } from '../models/hashed-objects';
-import { ObjectType } from '../models/object-type';
+import { ObjectType } from '../interfaces/object-type';
 
 export default class ObjectService {
   public static clean = (obj?: HashedObject): HashedObject | void => {

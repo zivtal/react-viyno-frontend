@@ -1,18 +1,18 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { MediaPreviewModal } from "../../../../components/MediaPreviewModal/MediaPreviewModal";
-import { QuickLogin } from "../../../Login/components/QuickLogin/QuickLogin";
-import { Attachments } from "../../../../components/Attachments/Attachments";
-import { PostUserControl } from "../PostUserControl/PostUserControl";
-import { OnPostReply } from "../../../Wine/WineView/components/WineCommunityReviews/components/OnPostReply/OnPostReply";
-import { PostUserInfo } from "../PostUserInfo/PostUserInfo";
-import { MainState } from "../../../../store/models/store.models";
-import { FullPost, Post, Reply } from "../../models/post.model";
-import { postService } from "../../service/post.api-service";
-import { SET_REPLIES, SET_REPLY, UPDATE_REPLIES } from "../../store/types";
-import React from "react";
-import { authService } from "../../../Login/service/auth.service";
-import { Id } from "../../../../shared/models/id";
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { MediaPreviewModal } from '../../../../components/MediaPreviewModal/MediaPreviewModal';
+import { QuickLogin } from '../../../Login/components/QuickLogin/QuickLogin';
+import { Attachments } from '../../../../components/Attachments/Attachments';
+import { PostUserControl } from '../PostUserControl/PostUserControl';
+import { OnPostReply } from '../../../Wine/WineView/components/WineCommunityReviews/components/OnPostReply/OnPostReply';
+import { PostUserInfo } from '../PostUserInfo/PostUserInfo';
+import { MainState } from '../../../../store/models/store.models';
+import { FullPost, Post, Reply } from '../../models/post.model';
+import { postService } from '../../service/post.api-service';
+import { SET_REPLIES, SET_REPLY, UPDATE_REPLIES } from '../../store/types';
+import React from 'react';
+import { authService } from '../../../Login/service/auth.service';
+import { Id } from '../../../../shared/interfaces/id';
 
 interface Props {
   post: FullPost;
@@ -69,18 +69,8 @@ export const PostPreview = (props: Props) => {
           className="review-card hover-box"
           onClick={() =>
             user
-              ? props.setActiveId(
-                  props.post._id && props.activeId !== props.post._id
-                    ? props.post._id
-                    : null
-                )
-              : setAuthCb(() =>
-                  props.setActiveId(
-                    props.post._id && props.activeId !== props.post._id
-                      ? props.post._id
-                      : null
-                  )
-                )
+              ? props.setActiveId(props.post._id && props.activeId !== props.post._id ? props.post._id : null)
+              : setAuthCb(() => props.setActiveId(props.post._id && props.activeId !== props.post._id ? props.post._id : null))
           }
         >
           <div className="review-user" style={{ padding: 0 }}>
@@ -88,38 +78,18 @@ export const PostPreview = (props: Props) => {
           </div>
           <p className="review-desc">{props.post.description}</p>
           {props.post.attach ? (
-            <Attachments
-              max={2}
-              attachments={props.post?.attach || []}
-              className={"user-feed-preview"}
-              onPreview={setSrc}
-            />
+            <Attachments max={2} attachments={props.post?.attach || []} className={'user-feed-preview'} onPreview={setSrc} />
           ) : null}
         </div>
 
-        <PostUserControl
-          post={props.post}
-          activeId={props.activeId}
-          setActiveId={props.setActiveId}
-          setAuthCb={setAuthCb}
-        />
+        <PostUserControl post={props.post} activeId={props.activeId} setActiveId={props.setActiveId} setAuthCb={setAuthCb} />
 
         {props.activeId === props.post._id ? (
-          <OnPostReply
-            post={props.post}
-            value={savedReply}
-            setReply={setReply}
-            setAuthCb={setAuthCb}
-            setSrc={setSrc}
-          />
+          <OnPostReply post={props.post} value={savedReply} setReply={setReply} setAuthCb={setAuthCb} setSrc={setSrc} />
         ) : null}
       </div>
 
-      <QuickLogin
-        isActive={!!authCb && !user}
-        onClose={() => setAuthCb(undefined)}
-        onLogin={authCb}
-      />
+      <QuickLogin isActive={!!authCb && !user} onClose={() => setAuthCb(undefined)} onLogin={authCb} />
     </>
   );
 };

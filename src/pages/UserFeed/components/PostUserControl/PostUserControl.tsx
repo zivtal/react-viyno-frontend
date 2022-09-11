@@ -1,10 +1,10 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setPostReaction } from "../../store/action";
-import { MainState } from "../../../../store/models/store.models";
-import { FullPost } from "../../models/post.model";
-import { CustomButton } from "../../../../components/CustomButton/CustomButton";
-import { Id } from "../../../../shared/models/id";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPostReaction } from '../../store/action';
+import { MainState } from '../../../../store/models/store.models';
+import { FullPost } from '../../models/post.model';
+import { CustomButton } from '../../../../components/CustomButton/CustomButton';
+import { Id } from '../../../../shared/interfaces/id';
 
 interface Props {
   post: FullPost;
@@ -29,12 +29,10 @@ export const PostUserControl = (props: Props) => {
     <div className="review-comments">
       <CustomButton
         label={props.post.likes}
-        iconName={props.post.ilike ? "ilike" : "like"}
+        iconName={props.post.ilike ? 'ilike' : 'like'}
         minWidth={50}
         onClick={() => {
-          user
-            ? setLike(props.post)
-            : props.setAuthCb?.(() => setLike(props.post));
+          user ? setLike(props.post) : props.setAuthCb?.(() => setLike(props.post));
         }}
       />
 
@@ -42,13 +40,7 @@ export const PostUserControl = (props: Props) => {
         label={props.post.replies}
         iconName="comment"
         minWidth={50}
-        onClick={() =>
-          props.setActiveId(
-            props.post._id && props.activeId !== props.post._id
-              ? props.post._id
-              : null
-          )
-        }
+        onClick={() => props.setActiveId(props.post._id && props.activeId !== props.post._id ? props.post._id : null)}
       />
     </div>
   );

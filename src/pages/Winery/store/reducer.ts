@@ -11,11 +11,11 @@ import {
   WINERIES_CACHE,
   WINERIES_FILTER,
   WINERIES_SORT,
-} from "./types";
-import { Winery } from "../models/winery.model";
-import { BaseSort } from "../../../shared/models/base-sort";
-import { WINES, WINES_FILTER } from "../../Wine/store/types";
-import { Pagination } from "../../../shared/models/pagination";
+} from './types';
+import { Winery } from '../models/winery.model';
+import { BaseSort } from '../../../shared/interfaces/base-sort';
+import { WINES, WINES_FILTER } from '../../Wine/store/types';
+import { Pagination } from '../../../shared/interfaces/pagination';
 
 export interface WineryState {
   [WINERIES]: Array<Winery>;
@@ -49,9 +49,7 @@ export default (state: WineryState = INITIAL_STATE, action: any) => {
       return {
         ...state,
         [WINERIES_CACHE]: state[WINERIES_CACHE].find((winery: Winery) =>
-          winery.seo === action.winery.seo
-            ? { ...winery, ...action.winery }
-            : winery
+          winery.seo === action.winery.seo ? { ...winery, ...action.winery } : winery
         ),
       };
     }
@@ -63,10 +61,7 @@ export default (state: WineryState = INITIAL_STATE, action: any) => {
 
       return {
         ...state,
-        [WINERIES_CACHE]: [action.winery, ...state[WINERIES_CACHE]].slice(
-          0,
-          20
-        ),
+        [WINERIES_CACHE]: [action.winery, ...state[WINERIES_CACHE]].slice(0, 20),
       };
     }
 
@@ -80,14 +75,11 @@ export default (state: WineryState = INITIAL_STATE, action: any) => {
     }
 
     case SET_WINERIES_FILTER: {
-      const isChanged =
-        JSON.stringify(action[WINES_FILTER]) !==
-        JSON.stringify(state[WINES_FILTER]);
+      const isChanged = JSON.stringify(action[WINES_FILTER]) !== JSON.stringify(state[WINES_FILTER]);
 
       return {
         ...state,
-        [WINERIES_FILTER]:
-          action[WINES_FILTER] || INITIAL_STATE[WINERIES_FILTER],
+        [WINERIES_FILTER]: action[WINES_FILTER] || INITIAL_STATE[WINERIES_FILTER],
         [WINERIES]: isChanged ? INITIAL_STATE[WINERIES] : state[WINERIES],
         page: isChanged ? INITIAL_STATE.page : state.page,
         total: isChanged ? INITIAL_STATE.total : state.total,
@@ -95,9 +87,7 @@ export default (state: WineryState = INITIAL_STATE, action: any) => {
     }
 
     case SET_WINERIES_SORT: {
-      const isChanged =
-        JSON.stringify(action[WINERIES_SORT]) !==
-        JSON.stringify(state[WINERIES_SORT]);
+      const isChanged = JSON.stringify(action[WINERIES_SORT]) !== JSON.stringify(state[WINERIES_SORT]);
 
       return {
         ...state,

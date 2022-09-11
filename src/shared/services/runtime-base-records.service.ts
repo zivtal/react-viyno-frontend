@@ -1,5 +1,6 @@
-import { BaseRecords } from '../models/base-records';
+import { BaseRecords } from '../interfaces/base-records';
 import { HashedObject } from '../models/hashed-objects';
+import { Id } from '../interfaces/id';
 
 type Unique = {
   key: string;
@@ -8,7 +9,7 @@ type Unique = {
 };
 
 export default class RuntimeBaseRecordsService {
-  public static append<T>(insert?: BaseRecords<T>, state?: BaseRecords<T>, uniqueKey: string = 'id'): BaseRecords<T> {
+  public static append<T>(insert?: BaseRecords<T>, state?: BaseRecords<T>, uniqueKey: Id = 'id'): BaseRecords<T> {
     return !state || !insert?.page?.index
       ? ((insert || state) as BaseRecords<T>)
       : {
@@ -25,7 +26,7 @@ export default class RuntimeBaseRecordsService {
         };
   }
 
-  public static insert<T>(insert?: BaseRecords<T>, state?: BaseRecords<T>, uniqueKey: string = 'id'): BaseRecords<T> {
+  public static insert<T>(insert?: BaseRecords<T>, state?: BaseRecords<T>, uniqueKey: Id = 'id'): BaseRecords<T> {
     return !state || !insert?.page?.index
       ? ((insert || state) as BaseRecords<T>)
       : {
@@ -42,7 +43,7 @@ export default class RuntimeBaseRecordsService {
         };
   }
 
-  public static overwrite<T>(insert: BaseRecords<T>, state: BaseRecords<T>, uniqueKey: string = 'id'): BaseRecords<T> {
+  public static overwrite<T>(insert: BaseRecords<T>, state: BaseRecords<T>, uniqueKey: Id = 'id'): BaseRecords<T> {
     return !state || !insert?.page?.index
       ? insert || state
       : {
@@ -92,7 +93,7 @@ export default class RuntimeBaseRecordsService {
     };
   }
 
-  public static bulkUpdate<T>(update: Array<T>, state: BaseRecords<T>, uniqueKey: string = 'id'): BaseRecords<T> {
+  public static bulkUpdate<T>(update: Array<T>, state: BaseRecords<T>, uniqueKey: Id = 'id'): BaseRecords<T> {
     return {
       ...state,
       data: state.data.map((item: T) => update.find((updateItem: T) => updateItem[uniqueKey as keyof T] === item[uniqueKey as keyof T]) || item),

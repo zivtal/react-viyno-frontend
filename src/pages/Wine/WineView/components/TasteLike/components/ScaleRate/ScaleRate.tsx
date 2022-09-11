@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
-import { postService } from "../../../../../../UserFeed/service/post.api-service";
-import { GET_REVIEW_STRUCTURE } from "../../../../../../UserFeed/store/types";
-import { Wine, WineStructure } from "../../../../../models/wine.model";
-import { useSelector } from "react-redux";
-import { MainState } from "../../../../../../../store/models/store.models";
-import { BaseProps } from "../../../../../../../shared/models/base-props";
-import React from "react";
-import { WineStructureSection } from "./models/wine-structure-sections.model";
-import { WINE_STRUCTURE_SECTIONS } from "./constants";
-import StringService from "../../../../../../../shared/services/string.service";
+import { useEffect, useState } from 'react';
+import { postService } from '../../../../../../UserFeed/service/post.api-service';
+import { GET_REVIEW_STRUCTURE } from '../../../../../../UserFeed/store/types';
+import { Wine, WineStructure } from '../../../../../models/wine.model';
+import { useSelector } from 'react-redux';
+import { MainState } from '../../../../../../../store/models/store.models';
+import { BaseProps } from '../../../../../../../shared/interfaces/base-props';
+import React from 'react';
+import { WineStructureSection } from './models/wine-structure-sections.model';
+import { WINE_STRUCTURE_SECTIONS } from './constants';
+import StringService from '../../../../../../../shared/services/string.service';
 
 interface Props extends BaseProps {
   wine: Wine;
@@ -20,7 +20,7 @@ export function ScaleRate(props: Props) {
   type ObjectKey = keyof WineStructure;
   const sections = WINE_STRUCTURE_SECTIONS;
 
-  const rtl = document.dir === "rtl";
+  const rtl = document.dir === 'rtl';
   const [isDragging, setIsDragging] = useState(false);
   const [targetElement, setTargetElement] = useState<any>(null);
   const [isSelfRate, setIsSelfRate] = useState(false);
@@ -146,9 +146,7 @@ export function ScaleRate(props: Props) {
     });
   };
 
-  return sections.filter(
-    (scale: WineStructureSection) => wineScale[scale.max as ObjectKey]
-  ).length || props.onSet ? (
+  return sections.filter((scale: WineStructureSection) => wineScale[scale.max as ObjectKey]).length || props.onSet ? (
     <>
       <div className="structure-details">
         <table onMouseLeave={stopDrag}>
@@ -157,9 +155,9 @@ export function ScaleRate(props: Props) {
               const position = rtl
                 ? Math.max(((wineScale[scale.max] || 0) / 100) * slideRange, 0)
                 : Math.max(((wineScale[scale.max] || 0) / 100) * slideRange, 0);
-              return typeof wineScale[scale.max] === "number" || props.onSet ? (
+              return typeof wineScale[scale.max] === 'number' || props.onSet ? (
                 <tr
-                  key={"SCALE_RATE_" + index}
+                  key={'SCALE_RATE_' + index}
                   onMouseMove={(ev) => setPosition(ev, scale.max)}
                   onMouseUp={stopDrag}
                   onMouseLeave={stopDrag}
@@ -171,14 +169,10 @@ export function ScaleRate(props: Props) {
                   <td className="scale-container">
                     <div className="scale">
                       <div
-                        className={`thumb ${isSelfRate ? "self" : ""} ${
-                          typeof wineScale[scale.max] !== "number"
-                            ? "unrated"
-                            : ""
-                        }`}
+                        className={`thumb ${isSelfRate ? 'self' : ''} ${typeof wineScale[scale.max] !== 'number' ? 'unrated' : ''}`}
                         style={{
-                          [rtl ? "right" : "left"]: position + "%",
-                          width: barWidth + "%",
+                          [rtl ? 'right' : 'left']: position + '%',
+                          width: barWidth + '%',
                         }}
                         onMouseDown={startDrag}
                         onTouchStart={startDrag}

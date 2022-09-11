@@ -1,18 +1,11 @@
-import { Pagination } from "../../../shared/models/pagination";
-import { BaseQueries } from "../../../shared/models/base-queries";
-import { BaseSort } from "../../../shared/models/base-sort";
-import {
-  WINE_KEYWORDS,
-  WINE_SECTIONS,
-  WINES,
-  WINES_CACHE,
-  WINES_FILTER,
-  WINES_SORT,
-} from "../store/types";
-import { BaseFilter } from "../../../shared/models/base-filter";
-import { BaseRecords } from "../../../shared/models/base-records";
-import { FullPost } from "../../UserFeed/models/post.model";
-import { SelectItem } from "../../../shared/models/select-item";
+import { Pagination } from '../../../shared/interfaces/pagination';
+import { BaseQueries } from '../../../shared/interfaces/base-queries';
+import { BaseSort } from '../../../shared/interfaces/base-sort';
+import { WINE_KEYWORDS, WINE_SECTIONS, WINES, WINES_CACHE, WINES_FILTER, WINES_SORT } from '../store/types';
+import { BaseFilter } from '../../../shared/interfaces/base-filter';
+import { BaseRecords } from '../../../shared/interfaces/base-records';
+import { FullPost } from '../../UserFeed/models/post.model';
+import { SelectItem } from '../../../shared/interfaces/select-item';
 
 export interface WineState {
   [WINES]: Array<Wine>;

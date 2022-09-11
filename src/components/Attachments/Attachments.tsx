@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { useRef } from "react";
-import { tryRequire } from "../../shared/helpers/require";
-import { Id } from "../../shared/models/id";
+import React, { useState } from 'react';
+import { useRef } from 'react';
+import { tryRequire } from '../../shared/helpers/require';
+import { Id } from '../../shared/interfaces/id';
 
 export interface Attachment {
   url: string;
@@ -17,13 +17,7 @@ interface AttachmentsProps extends React.HTMLAttributes<HTMLDivElement> {
   onPreview?: (url: string) => void;
 }
 
-export const Attachments = ({
-  attachments,
-  max = 3,
-  onSet,
-  onPreview,
-  ...attr
-}: AttachmentsProps) => {
+export const Attachments = ({ attachments, max = 3, onSet, onPreview, ...attr }: AttachmentsProps) => {
   const el = useRef(null);
   const [activeId, setActiveId] = useState<Id>(null);
 
@@ -32,22 +26,13 @@ export const Attachments = ({
   }
 
   return (
-    <div
-      ref={el}
-      {...attr}
-      className={`attachments ${!onSet || "attachments__editable"}`}
-    >
+    <div ref={el} {...attr} className={`attachments ${!onSet || 'attachments__editable'}`}>
       {attachments.map((attachment, idx) => {
         const perLine = Math.min(Math.floor(window.innerWidth / 150), max);
 
-        const mainRowCount =
-          attachments.length % Math.min(perLine, attachments.length) ||
-          Math.min(perLine, attachments.length);
+        const mainRowCount = attachments.length % Math.min(perLine, attachments.length) || Math.min(perLine, attachments.length);
 
-        const style =
-          idx < mainRowCount
-            ? { maxWidth: `calc(${100 / mainRowCount}% - 8px)` }
-            : { maxWidth: `calc(${100 / perLine}% - 8px)` };
+        const style = idx < mainRowCount ? { maxWidth: `calc(${100 / mainRowCount}% - 8px)` } : { maxWidth: `calc(${100 / perLine}% - 8px)` };
 
         if (onSet) {
           style.maxWidth = `min(${style.maxWidth} , 150px)`;
@@ -66,19 +51,10 @@ export const Attachments = ({
 
             {onSet ? (
               <div className="attach-menu">
-                <img
-                  src={tryRequire("imgs/icons/options.svg")}
-                  onClick={() => setActiveId(activeId === idx ? null : idx)}
-                />
+                <img src={tryRequire('imgs/icons/options.svg')} onClick={() => setActiveId(activeId === idx ? null : idx)} />
                 {activeId === idx ? (
                   <div>
-                    <button
-                      onClick={() =>
-                        onSet([...attachments.filter((_, i) => i !== idx)])
-                      }
-                    >
-                      Remove
-                    </button>
+                    <button onClick={() => onSet([...attachments.filter((_, i) => i !== idx)])}>Remove</button>
                   </div>
                 ) : null}
               </div>

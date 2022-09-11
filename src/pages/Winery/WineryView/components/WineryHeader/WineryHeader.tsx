@@ -1,8 +1,8 @@
-import React from "react";
-import { tryRequire } from "../../../../../shared/helpers/require";
-import { BaseProps } from "../../../../../shared/models/base-props";
-import { Winery } from "../../../models/winery.model";
-import StringService from "../../../../../shared/services/string.service";
+import React from 'react';
+import { tryRequire } from '../../../../../shared/helpers/require';
+import { BaseProps } from '../../../../../shared/interfaces/base-props';
+import { Winery } from '../../../models/winery.model';
+import StringService from '../../../../../shared/services/string.service';
 
 interface Props extends BaseProps {
   winery?: Winery;
@@ -18,30 +18,19 @@ const WineryRating = (props: Props): JSX.Element | null => {
     <div className="average-rate">
       <p>Average Rating</p>
       <p className="rate">
-        {props.winery?.rate ? (
-          <span>{props.winery.rate.toFixed(1)} </span>
-        ) : null}
-        {props.winery?.ratings ? (
-          <span>{props.winery.ratings} Ratings</span>
-        ) : null}
+        {props.winery?.rate ? <span>{props.winery.rate.toFixed(1)} </span> : null}
+        {props.winery?.ratings ? <span>{props.winery.ratings} Ratings</span> : null}
       </p>
     </div>
   ) : null;
 };
 
 const WineryMap = (props: Props): JSX.Element => {
-  const rtl = document.dir === "rtl";
-  const headerStyle =
-    (!props.winery?.latitude || !props.winery?.longitude) &&
-    !props.winery?.image
-      ? { margin: `24px 0`, height: `auto` }
-      : {};
+  const rtl = document.dir === 'rtl';
+  const headerStyle = (!props.winery?.latitude || !props.winery?.longitude) && !props.winery?.image ? { margin: `24px 0`, height: `auto` } : {};
 
   return (
-    <div
-      className={`winery-map ${rtl ? "header-wave-rtl" : "header-wave"}`}
-      style={headerStyle}
-    >
+    <div className={`winery-map ${rtl ? 'header-wave-rtl' : 'header-wave'}`} style={headerStyle}>
       {props.winery?.latitude && props.winery?.longitude ? (
         <iframe
           src={`https://maps.google.com/maps?q=${props.winery?.latitude},${props.winery?.longitude}&t=&z=10&ie=UTF8&iwloc=&output=embed`}
@@ -74,16 +63,9 @@ export function WineryHeader(props: Props): JSX.Element | null {
         <h1 className="name">{data?.name}</h1>
         {data?.country ? (
           <div className="country">
-            <img
-              src={tryRequire(
-                `imgs/icons/country/${StringService.toKebabCase(
-                  data?.country,
-                  true
-                )}.png`
-              )}
-            />
+            <img src={tryRequire(`imgs/icons/country/${StringService.toKebabCase(data?.country, true)}.png`)} />
             <p>
-              {data?.region ? data?.region + ", " : ""}
+              {data?.region ? data?.region + ', ' : ''}
               {data?.country}
             </p>
           </div>

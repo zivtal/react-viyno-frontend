@@ -1,11 +1,11 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { setWinesFilter } from "../../../store/action";
-import { tryRequire } from "../../../../../shared/helpers/require";
-import { MainState } from "../../../../../store/models/store.models";
-import { Wine } from "../../../models/wine.model";
-import { BaseProps } from "../../../../../shared/models/base-props";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { setWinesFilter } from '../../../store/action';
+import { tryRequire } from '../../../../../shared/helpers/require';
+import { MainState } from '../../../../../store/models/store.models';
+import { Wine } from '../../../models/wine.model';
+import { BaseProps } from '../../../../../shared/interfaces/base-props';
 
 interface Props extends BaseProps {
   wine?: Wine;
@@ -19,9 +19,7 @@ const FoodPairing = (props: Props): JSX.Element => {
   return (
     <>
       {(props.wine?.pairings || []).map((value: string, index: number) => {
-        const name = keywords?.data.foodPairings?.find(
-          (val) => val.value === value
-        )?.title;
+        const name = keywords?.data.foodPairings?.find((val) => val.value === value)?.title;
         const goTo = () => {
           dispatch(setWinesFilter({ inPairings: value }));
           history.push(`/wine?pairings=${value}`);

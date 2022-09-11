@@ -1,20 +1,11 @@
-import { postService } from "../service/post.api-service";
-import {
-  SET_POSTS,
-  SET_POST_STATE_LOADING,
-  GET_POSTS,
-  GET_REPLIES,
-  SET_REPLIES,
-  SET_REACTION,
-  SET_MY_REVIEWS,
-  UPDATE_POSTS,
-} from "./types";
-import { BaseQueries } from "../../../shared/models/base-queries";
-import { FullPost } from "../models/post.model";
-import { container } from "tsyringe";
-import PostApiService from "../service/post.service2";
-import { Pagination } from "../../../shared/models/pagination";
-import { MY_WINE_REVIEWS } from "../../Wine/store/types";
+import { postService } from '../service/post.api-service';
+import { SET_POSTS, SET_POST_STATE_LOADING, GET_POSTS, GET_REPLIES, SET_REPLIES, SET_REACTION, SET_MY_REVIEWS, UPDATE_POSTS } from './types';
+import { BaseQueries } from '../../../shared/interfaces/base-queries';
+import { FullPost } from '../models/post.model';
+import { container } from 'tsyringe';
+import PostApiService from '../service/post.service2';
+import { Pagination } from '../../../shared/interfaces/pagination';
+import { MY_WINE_REVIEWS } from '../../Wine/store/types';
 
 // const postApiService = container.resolve(PostApiService);
 
@@ -72,9 +63,7 @@ export function getReplies(postId?: string | number) {
 
   return async (dispatch: Function, state: Function) => {
     try {
-      const review = state().postModule.posts.data.find(
-        (post: FullPost) => post._id === postId
-      );
+      const review = state().postModule.posts.data.find((post: FullPost) => post._id === postId);
 
       const page = review?.reply?.page;
 
@@ -82,9 +71,7 @@ export function getReplies(postId?: string | number) {
         return;
       }
 
-      const queries = page
-        ? { page: { ...page, index: page.index + 1 || 0, size: 3 } }
-        : { page: { index: 0, size: 3 } };
+      const queries = page ? { page: { ...page, index: page.index + 1 || 0, size: 3 } } : { page: { index: 0, size: 3 } };
       const replies = await postService[GET_REPLIES](postId, queries);
 
       dispatch({ type: SET_REPLIES, postId, replies });
@@ -94,11 +81,7 @@ export function getReplies(postId?: string | number) {
   };
 }
 
-export function setPostReaction(
-  id?: number,
-  state?: number | boolean,
-  wineId?: number
-) {
+export function setPostReaction(id?: number, state?: number | boolean, wineId?: number) {
   if (!id) {
     return;
   }

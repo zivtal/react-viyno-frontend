@@ -8,10 +8,10 @@ import {
   SET_REPLIES,
   UPDATE_POSTS,
   UPDATE_REPLIES,
-} from "./types";
-import { FullPost } from "../models/post.model";
-import { BaseRecords } from "../../../shared/models/base-records";
-import RuntimeBaseRecordsService from "../../../shared/services/runtime-base-records.service";
+} from './types';
+import { FullPost } from '../models/post.model';
+import { BaseRecords } from '../../../shared/interfaces/base-records';
+import RuntimeBaseRecordsService from '../../../shared/services/runtime-base-records.service';
 
 interface ReducerAction {
   type: string;
@@ -52,10 +52,7 @@ export default (state = INITIAL_STATE, action: ReducerAction) => {
         ...state,
         [POSTS]: {
           ...state[POSTS],
-          data: [...newPosts, ...state[POSTS].data].slice(
-            0,
-            state[POSTS].data.length
-          ),
+          data: [...newPosts, ...state[POSTS].data].slice(0, state[POSTS].data.length),
         },
       };
     }
@@ -68,10 +65,7 @@ export default (state = INITIAL_STATE, action: ReducerAction) => {
       return post
         ? {
             ...state,
-            [POSTS]: RuntimeBaseRecordsService.bulkInsert<FullPost>(
-              [post],
-              state[POSTS]
-            ),
+            [POSTS]: RuntimeBaseRecordsService.bulkInsert<FullPost>([post], state[POSTS]),
           }
         : state;
     }
@@ -79,11 +73,7 @@ export default (state = INITIAL_STATE, action: ReducerAction) => {
     case SET_REPLIES: {
       const { postId, replies } = action;
 
-      const _update = (
-        posts: BaseRecords<FullPost>,
-        replies: BaseRecords<FullPost>,
-        postId: number
-      ): BaseRecords<FullPost> => {
+      const _update = (posts: BaseRecords<FullPost>, replies: BaseRecords<FullPost>, postId: number): BaseRecords<FullPost> => {
         return {
           ...posts,
           data: posts.data.map((data: FullPost) => {
@@ -136,19 +126,19 @@ export default (state = INITIAL_STATE, action: ReducerAction) => {
         [POSTS]: RuntimeBaseRecordsService.update<FullPost>(
           state[POSTS],
           {
-            key: "_id",
+            key: '_id',
             value: _id,
-            recursiveKey: "reply",
+            recursiveKey: 'reply',
           },
           { ilike: ilike ? 1 : 0 },
-          { likes: "ilike" }
+          { likes: 'ilike' }
         ),
       };
     }
 
     case UPDATE_REPLIES: {
       const { reply } = action;
-      console.log("update", reply);
+      console.log('update', reply);
 
       return {
         ...state,

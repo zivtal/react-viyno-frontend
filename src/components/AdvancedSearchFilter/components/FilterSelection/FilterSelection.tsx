@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
-import { useHistory, useLocation } from "react-router-dom";
-import { BaseFilter } from "../../../../shared/models/base-filter";
-import { WineKeywords } from "../../../../pages/Wine/models/wine.model";
-import { SelectItem } from "../../../../shared/models/select-item";
-import { useSelector } from "react-redux";
-import { MainState } from "../../../../store/models/store.models";
-import StringService from "../../../../shared/services/string.service";
+import React, { useState } from 'react';
+import { useEffect } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import { BaseFilter } from '../../../../shared/interfaces/base-filter';
+import { WineKeywords } from '../../../../pages/Wine/models/wine.model';
+import { SelectItem } from '../../../../shared/interfaces/select-item';
+import { useSelector } from 'react-redux';
+import { MainState } from '../../../../store/models/store.models';
+import StringService from '../../../../shared/services/string.service';
 
 interface Props {
   filter: BaseFilter;
@@ -22,9 +22,7 @@ interface Selection {
 }
 
 export const FilterSelection = (props: Props) => {
-  const { loading, total } = useSelector(
-    (state: MainState) => state.wineModule
-  );
+  const { loading, total } = useSelector((state: MainState) => state.wineModule);
   const [select, setSelect] = useState<Array<Selection>>([]);
   const history = useHistory();
   const location = useLocation();
@@ -38,14 +36,11 @@ export const FilterSelection = (props: Props) => {
         const key = Object.entries(props.keywords.query)
           .filter((val) => val[1] === conditionKey)
           .map((val) => val[0])[0];
-        const content = props.filter[conditionKey].split("|");
+        const content = props.filter[conditionKey].split('|');
         const objKey = key as ObjectKey;
         content.forEach((filter: string) => {
-          const keyword = (
-            props.keywords.data[objKey] as Array<SelectItem>
-          ).find(
-            (val: any) =>
-              val.value === filter || val.title?.toLowerCase() === filter
+          const keyword = (props.keywords.data[objKey] as Array<SelectItem>).find(
+            (val: any) => val.value === filter || val.title?.toLowerCase() === filter
           );
           selection.push({
             ...keyword,
@@ -63,9 +58,9 @@ export const FilterSelection = (props: Props) => {
     setQuery(
       query,
       props.filter[condition]
-        .split("|")
+        .split('|')
         .filter((val: string) => val !== (value || title?.toLowerCase()))
-        .join("|")
+        .join('|')
     );
   };
 
@@ -77,15 +72,9 @@ export const FilterSelection = (props: Props) => {
 
   return (
     <div className="filtered-by">
-      {!loading && select.length ? (
-        <h1>{total} wines found by filtered search:</h1>
-      ) : null}
+      {!loading && select.length ? <h1>{total} wines found by filtered search:</h1> : null}
       {select.map((selected, idx) => (
-        <button
-          onClick={() => removeFilter(selected)}
-          className="remove-button bgi"
-          key={idx}
-        >
+        <button onClick={() => removeFilter(selected)} className="remove-button bgi" key={idx}>
           {selected.title || selected.value}
         </button>
       ))}

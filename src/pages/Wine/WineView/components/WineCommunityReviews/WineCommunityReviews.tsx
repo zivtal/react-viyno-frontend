@@ -1,22 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AddReview } from "./components/AddReview/AddReview";
-import { ReviewStat } from "./components/ReviewStat/ReviewStat";
-import { StarRate } from "../../../../../components/StarRate/StarRate";
-import { ReviewPreview } from "./components/ReviewPreview/ReviewPreview";
-import { tryRequire } from "../../../../../shared/helpers/require";
-import { MainState } from "../../../../../store/models/store.models";
-import { useLocation } from "react-router-dom";
-import { FullPost } from "../../../../UserFeed/models/post.model";
-import { BaseRecords } from "../../../../../shared/models/base-records";
-import { Wine } from "../../../models/wine.model";
-import {
-  getHelpfulReviews,
-  getMyWineReviews,
-  getRecentReviews,
-} from "../../../store/action";
-import { Id } from "../../../../../shared/models/id";
-import ImageService from "../../../../../shared/services/image.service";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AddReview } from './components/AddReview/AddReview';
+import { ReviewStat } from './components/ReviewStat/ReviewStat';
+import { StarRate } from '../../../../../components/StarRate/StarRate';
+import { ReviewPreview } from './components/ReviewPreview/ReviewPreview';
+import { tryRequire } from '../../../../../shared/helpers/require';
+import { MainState } from '../../../../../store/models/store.models';
+import { useLocation } from 'react-router-dom';
+import { FullPost } from '../../../../UserFeed/models/post.model';
+import { BaseRecords } from '../../../../../shared/interfaces/base-records';
+import { Wine } from '../../../models/wine.model';
+import { getHelpfulReviews, getMyWineReviews, getRecentReviews } from '../../../store/action';
+import { Id } from '../../../../../shared/interfaces/id';
+import ImageService from '../../../../../shared/services/image.service';
 
 interface Reviews {
   [key: string]: {
@@ -35,16 +31,11 @@ interface UserRateProps {
 const UserRate = ({ user, rate, set }: UserRateProps) => {
   return (
     <>
-      <p className="rating-feedback">
-        Add your own rating and help other users pick the right wine!
-      </p>
+      <p className="rating-feedback">Add your own rating and help other users pick the right wine!</p>
       <div className="user-rating-selection flex align-center ">
         <img
           className="user-profile"
-          src={
-            ImageService.fromBase64(user?.imageData, user?.imageType) ||
-            tryRequire("imgs/icons/user-profile.svg")
-          }
+          src={ImageService.fromBase64(user?.imageData, user?.imageType) || tryRequire('imgs/icons/user-profile.svg')}
           alt="user-profile"
         />
         <StarRate size={30} rate={rate} editable={true} onSet={set} />
@@ -89,21 +80,13 @@ const WinePreviews = (props: WinePreviewsProps): JSX.Element | null => {
   return data?.length ? (
     <>
       {data.map((review, index) => (
-        <ReviewPreview
-          review={review}
-          activeId={props.activeId}
-          setActiveId={props.setActiveId}
-          key={index}
-        />
+        <ReviewPreview review={review} activeId={props.activeId} setActiveId={props.setActiveId} key={index} />
       ))}
 
       {isMore() ? (
         <div className="load-more" onClick={() => props.onLoadMore?.()}>
           <div className="community-button hover-box">
-            <img
-              src={tryRequire(`imgs/icons/load-more.svg`)}
-              alt="load more reviews"
-            />
+            <img src={tryRequire(`imgs/icons/load-more.svg`)} alt="load more reviews" />
             <span>Load more reviews</span>
           </div>
         </div>
@@ -116,14 +99,8 @@ const WinePreviews = (props: WinePreviewsProps): JSX.Element | null => {
   );
 };
 
-const ReviewMenu = ({
-  review,
-  onSet,
-}: {
-  review?: string;
-  onSet: Function;
-}) => {
-  const reviews = ["Helpful", "Recent", "You"];
+const ReviewMenu = ({ review, onSet }: { review?: string; onSet: Function }) => {
+  const reviews = ['Helpful', 'Recent', 'You'];
 
   return (
     <div className="review-menu flex">
@@ -131,10 +108,7 @@ const ReviewMenu = ({
         <span
           onClick={() => onSet(reviews[index])}
           style={{
-            color:
-              review === reviews[index]
-                ? "var(--base-color1)"
-                : "var(--base-text)",
+            color: review === reviews[index] ? 'var(--base-color1)' : 'var(--base-text)',
           }}
           key={`COMMENT_${index}`}
         >
@@ -152,18 +126,18 @@ export const WineCommunityReviews = (props: { wine?: Wine }) => {
   const user = useSelector((state: MainState) => state.authModule.user);
 
   const [activeId, setActiveId] = useState<Id>(null);
-  const [selectedCategory, setSelectedCategory] = useState("Helpful");
+  const [selectedCategory, setSelectedCategory] = useState('Helpful');
   const [rate, setRate] = useState<number | null>(null);
 
   const getQuery = (name: string) => {
     const queryParams = new URLSearchParams(location.search);
 
-    return queryParams.get(name)?.split("-") || [];
+    return queryParams.get(name)?.split('-') || [];
   };
 
   useEffect(() => {
     setRate(null);
-    const vintage = +getQuery("year")?.toString();
+    const vintage = +getQuery('year')?.toString();
 
     if (!props.wine?._id) {
       return;
@@ -185,7 +159,7 @@ export const WineCommunityReviews = (props: { wine?: Wine }) => {
   }, [props.wine?._id, user]);
 
   useEffect(() => {
-    const vintage = +getQuery("year")?.toString();
+    const vintage = +getQuery('year')?.toString();
 
     dispatch(getRecentReviews(props.wine?._id, vintage));
     dispatch(getHelpfulReviews(props.wine?._id, vintage));
@@ -230,13 +204,7 @@ export const WineCommunityReviews = (props: { wine?: Wine }) => {
         </div>
       </div>
 
-      <AddReview
-        rateValue={rate}
-        wine={props.wine}
-        reviews={props.wine?.myReviews}
-        onSet={setRate}
-        onClose={() => setRate(null)}
-      />
+      <AddReview rateValue={rate} wine={props.wine} reviews={props.wine?.myReviews} onSet={setRate} onClose={() => setRate(null)} />
     </>
   ) : null;
 };

@@ -1,4 +1,4 @@
-import { wineService } from "../service/wine.service";
+import { wineService } from '../service/wine.service';
 import {
   SET_WINES_FILTER,
   SET_WINE_KEYWORDS,
@@ -25,14 +25,14 @@ import {
   GET_MY_WINE_REVIEWS,
   GET_WINE_HELPFUL_REVIEWS,
   WINE_HELPFUL_REVIEWS,
-} from "./types";
+} from './types';
 
-import { Pagination } from "../../../shared/models/pagination";
-import { BaseFilter } from "../../../shared/models/base-filter";
-import { BaseSort } from "../../../shared/models/base-sort";
-import { Wine, WineKeywordsReq } from "../models/wine.model";
-import { postService } from "../../UserFeed/service/post.api-service";
-import { SET_MY_REVIEWS } from "../../UserFeed/store/types";
+import { Pagination } from '../../../shared/interfaces/pagination';
+import { BaseFilter } from '../../../shared/interfaces/base-filter';
+import { BaseSort } from '../../../shared/interfaces/base-sort';
+import { Wine, WineKeywordsReq } from '../models/wine.model';
+import { postService } from '../../UserFeed/service/post.api-service';
+import { SET_MY_REVIEWS } from '../../UserFeed/store/types';
 
 export const setWinesPagination = (pagination?: Pagination) => {
   return (dispatch: Function) => {
@@ -42,18 +42,14 @@ export const setWinesPagination = (pagination?: Pagination) => {
 
 export const setWinesFilter = (filter: BaseFilter) => {
   return (dispatch: Function) => {
-    filter = Object.fromEntries(
-      Object.entries(filter).filter(([key, val]) => val)
-    );
+    filter = Object.fromEntries(Object.entries(filter).filter(([key, val]) => val));
     dispatch({ type: SET_WINES_FILTER, [WINES_FILTER]: filter });
   };
 };
 
 export const setWinesSort = (sort: BaseSort) => {
   return (dispatch: Function) => {
-    sort = Object.fromEntries(
-      Object.entries(sort).filter(([key, val]) => val !== null)
-    );
+    sort = Object.fromEntries(Object.entries(sort).filter(([key, val]) => val !== null));
     dispatch({ type: SET_WINES_SORT, [WINES_SORT]: sort });
   };
 };
@@ -93,9 +89,7 @@ export const getWines = () => {
 
 export const getWine = (id: string, vintage?: number) => {
   return async (dispatch: Function, state: Function) => {
-    const wine = state().wineModule[WINES_CACHE].find(
-      (wine: Wine) => wine.seo === id
-    );
+    const wine = state().wineModule[WINES_CACHE].find((wine: Wine) => wine.seo === id);
 
     if (wine) {
       return;
@@ -141,12 +135,9 @@ export function getRecentReviews(id?: string | number, vintage?: number) {
       return;
     }
 
-    const wine = state().wineModule[WINES_CACHE].find(
-      (wine: Wine) => wine._id === id
-    );
+    const wine = state().wineModule[WINES_CACHE].find((wine: Wine) => wine._id === id);
 
-    const index =
-      wine.vintage === vintage ? wine?.recentReviews?.page?.index + 1 || 0 : 0;
+    const index = wine.vintage === vintage ? wine?.recentReviews?.page?.index + 1 || 0 : 0;
 
     try {
       const res = await postService[GET_WINE_RECENT_REVIEWS](id, {
@@ -179,12 +170,9 @@ export function getHelpfulReviews(id?: string | number, vintage?: number) {
       return;
     }
 
-    const wine = state().wineModule[WINES_CACHE].find(
-      (wine: Wine) => wine._id === id
-    );
+    const wine = state().wineModule[WINES_CACHE].find((wine: Wine) => wine._id === id);
 
-    const index =
-      wine.vintage === vintage ? wine?.helpfulReviews?.page?.index + 1 || 0 : 0;
+    const index = wine.vintage === vintage ? wine?.helpfulReviews?.page?.index + 1 || 0 : 0;
 
     try {
       const res = await postService[GET_WINE_HELPFUL_REVIEWS](id, {

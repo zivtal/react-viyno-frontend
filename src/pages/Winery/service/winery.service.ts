@@ -1,10 +1,10 @@
 // @ts-ignore
-import { httpService } from "../../../shared/services/http.service";
-import { BaseQueries } from "../../../shared/models/base-queries";
-import { WineryQuery } from "../models/winery.model";
-import { GET_WINERIES, GET_WINERY } from "../store/types";
+import { httpService } from '../../../shared/services/http.service';
+import { BaseQueries } from '../../../shared/interfaces/base-queries';
+import { WineryQuery } from '../models/winery.model';
+import { GET_WINERIES, GET_WINERY } from '../store/types';
 
-const BASE_API = "winery/";
+const BASE_API = 'winery/';
 
 export const wineryService = {
   [GET_WINERIES]: (queries?: BaseQueries) => {
@@ -12,6 +12,6 @@ export const wineryService = {
   },
 
   [GET_WINERY]: (id: number | string, queries?: WineryQuery) => {
-    return httpService.post(BASE_API + GET_WINERY + "/" + id, queries);
+    return httpService.post(BASE_API + GET_WINERY + '/' + id, queries);
   },
 };

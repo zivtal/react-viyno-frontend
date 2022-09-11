@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { WineSlider } from "../../../../Wine/WineView/components/WineSlider/WineSlider";
-import { wineService } from "../../../../Wine/service/wine.service";
-import { BaseProps } from "../../../../../shared/models/base-props";
-import { Winery } from "../../../models/winery.model";
-import { Wine } from "../../../../Wine/models/wine.model";
-import { GET_WINES } from "../../../../Wine/store/types";
-import { useDispatch } from "react-redux";
-import { getMostPopularWines, getTopRatedWines } from "../../../store/action";
+import React, { useEffect, useState } from 'react';
+import { WineSlider } from '../../../../Wine/WineView/components/WineSlider/WineSlider';
+import { wineService } from '../../../../Wine/service/wine.service';
+import { BaseProps } from '../../../../../shared/interfaces/base-props';
+import { Winery } from '../../../models/winery.model';
+import { Wine } from '../../../../Wine/models/wine.model';
+import { GET_WINES } from '../../../../Wine/store/types';
+import { useDispatch } from 'react-redux';
+import { getMostPopularWines, getTopRatedWines } from '../../../store/action';
 
 interface Props extends BaseProps {
   winery: Winery | undefined;
@@ -61,21 +61,13 @@ export function Wines(props: Props): JSX.Element {
       <>
         <h2>Most popular</h2>
         <p>From {props.winery?.name}</p>
-        <WineSlider
-          wines={wines.popular}
-          loading={!!wines?.loading?.popular}
-          repeat={props.winery?.wines || 8}
-        />
+        <WineSlider wines={wines.popular} loading={!!wines?.loading?.popular} repeat={props.winery?.wines || 8} />
       </>
 
       <>
         <h2>Best rated</h2>
         <p>From {props.winery?.name}</p>
-        <WineSlider
-          wines={wines.top}
-          loading={!!wines?.loading?.top}
-          repeat={props.winery?.wines || 8}
-        />
+        <WineSlider wines={wines.top} loading={!!wines?.loading?.top} repeat={props.winery?.wines || 8} />
       </>
     </div>
   );

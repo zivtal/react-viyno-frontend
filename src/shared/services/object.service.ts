@@ -2,6 +2,10 @@ import { HashedObject } from '../models/hashed-objects';
 import { ObjectType } from '../interfaces/object-type';
 
 export default class ObjectService {
+  public static type = (value: any): ObjectType => {
+    return /(?<=\s)(.*?)(?=])/.exec(Object.prototype.toString.call(value))![0].toUpperCase() as ObjectType;
+  };
+
   public static clean = (obj?: HashedObject): HashedObject | void => {
     if (!obj) {
       return;
@@ -12,7 +16,7 @@ export default class ObjectService {
 
   private static cleanFields = (obj: HashedObject): HashedObject =>
     Object.entries(obj).reduce((newObject: HashedObject, [key, value]) => {
-      if (String(value) !== '[object Object]' || Object.values?.length) {
+      if (this.type(value) === ObjectType.OBJECT || Object.values?.length) {
         newObject = { ...newObject, [key]: value };
       }
 
@@ -27,8 +31,4 @@ export default class ObjectService {
           : ((value = this.cleanEntries(value)), Object.keys(value).length > 0 ? [[key, value]] : [])
       )
     );
-
-  public static type = (value: any): ObjectType => {
-    return /(?<=\s)(.*?)(?=])/.exec(Object.prototype.toString.call(value))![0].toUpperCase() as ObjectType;
-  };
 }

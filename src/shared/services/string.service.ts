@@ -34,14 +34,11 @@ export default class StringService {
   };
 
   public static toKebabCase(value?: string, validCharsets: boolean = false): string | null {
-    const text = validCharsets ? this.replaceInvalidCharsets(value) : value;
+    if (!value) {
+      return null;
+    }
 
-    return (
-      text
-        ?.match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
-        ?.map((w) => w.toLowerCase())
-        .join('-') || null
-    );
+    return (validCharsets ? this.replaceInvalidCharsets(value) : value)?.replace(/([a-z])([A-Z])|\s/g, '$1-$2').toLowerCase() || null;
   }
 
   public static fromKebabCase(value?: string): string | null {
@@ -54,10 +51,14 @@ export default class StringService {
   }
 
   public static toCamelCase(value?: string, validCharsets: boolean = false): string | null {
-    const text = validCharsets ? this.replaceInvalidCharsets(value) : value;
+    if (!value) {
+      return null;
+    }
 
     return (
-      text?.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => (index === 0 ? word.toLowerCase() : word.toUpperCase()))?.replace(/\s+/g, '') || null
+      (validCharsets ? this.replaceInvalidCharsets(value) : value)
+        ?.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => (index === 0 ? word.toLowerCase() : word.toUpperCase()))
+        ?.replace(/\s+/g, '') || null
     );
   }
 
@@ -78,12 +79,12 @@ export default class StringService {
     return { key, condition: value.slice(0, idx) };
   }
 
-  private static replaceInvalidCharsets(value?: string): string | void {
+  private static replaceInvalidCharsets(value: string): string | void {
     return value
-      ?.replaceAll('&', 'and') // change and symbol
       .replace(/(.*?)\s([\d]{4}\s)/gi, '') // remove year
-      .replace(/\s\((.*?)\)/gi, '') // remove spaces
-      .replace(/-/g, '') // remove separators
+      .replace(/\s\((.*?)\)|\./gi, '') // remove spaces
+      .replace(/-/g, ' ') // remove separators
+      .replace(/&/g, 'and') // change and symbol
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '');
   }

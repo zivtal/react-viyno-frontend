@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import "./OverlayModal.scss";
+import React from 'react';
+import './OverlayModal.scss';
 
 interface OverlayModalProps extends React.HTMLAttributes<HTMLDivElement> {
   if: boolean;
@@ -12,18 +12,14 @@ export const OverlayModal = (props: OverlayModalProps): JSX.Element | null => {
       return null;
     }
 
-    const children = Array.isArray(props.children)
-      ? props.children
-      : [props.children];
+    const children = Array.isArray(props.children) ? props.children : [props.children];
 
     return children.map((ch: any): JSX.Element | null => {
       if (!ch.props?.slot) {
         return ch;
       }
 
-      const className =
-        (ch.props?.slot ? `overlay-modal__${ch.props.slot}` : "") +
-        (ch.props?.className ? ` ${ch.props?.className}` : "");
+      const className = (ch.props?.slot ? `overlay-modal__${ch.props.slot}` : '') + (ch.props?.className ? ` ${ch.props?.className}` : '');
 
       return {
         ...ch,

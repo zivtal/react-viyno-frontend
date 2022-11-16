@@ -38,7 +38,7 @@ export default class StringService {
       return null;
     }
 
-    return (validCharsets ? this.replaceInvalidCharsets(value) : value)?.replace(/([a-z])([A-Z])|\s/g, '$1-$2').toLowerCase() || null;
+    return ((validCharsets ? this.replaceInvalidCharsets(value) : value) || '').replace(/([a-z])([A-Z])|\s/g, '$1-$2').toLowerCase() || null;
   }
 
   public static fromKebabCase(value?: string): string | null {
@@ -51,15 +51,11 @@ export default class StringService {
   }
 
   public static toCamelCase(value?: string, validCharsets: boolean = false): string | null {
-    if (!value) {
-      return null;
-    }
-
-    return (
-      (validCharsets ? this.replaceInvalidCharsets(value) : value)
-        ?.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => (index === 0 ? word.toLowerCase() : word.toUpperCase()))
-        ?.replace(/\s+/g, '') || null
-    );
+    return value
+      ? ((validCharsets ? this.replaceInvalidCharsets(value) : value) || '')
+          .replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => (index === 0 ? word.toLowerCase() : word.toUpperCase()))
+          .replace(/\s+/g, '') || null
+      : null;
   }
 
   public static fromCamelCase(value?: string, upperOnlyFirst = true): string | null {

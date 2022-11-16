@@ -1,6 +1,6 @@
-import React from "react";
-import { tryRequire } from "../../shared/helpers/require";
-import "./Icon.scss";
+import React from 'react';
+import { tryRequire } from '../../shared/helpers/require';
+import './Icon.scss';
 
 interface IconProps {
   name: string;
@@ -9,10 +9,11 @@ interface IconProps {
   style?: any;
   className?: any;
   onClick?: () => void;
+  alt: string;
 }
 
 export const Icon = (props: IconProps) => {
-  const size = (props?.size || 24) + "px";
+  const size = (props?.size || 24) + 'px';
 
   return (
     <div className="icon">
@@ -20,9 +21,10 @@ export const Icon = (props: IconProps) => {
         onClick={() => props.onClick?.()}
         style={props.style}
         className={props.className}
-        src={tryRequire("imgs/icons/" + props.name + ".svg")}
+        src={tryRequire('imgs/icons/' + props.name + '.svg')}
         height={size}
         width={size}
+        alt={props.alt}
       />
     </div>
   );

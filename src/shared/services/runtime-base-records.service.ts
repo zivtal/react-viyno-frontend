@@ -63,7 +63,7 @@ export default class RuntimeBaseRecordsService {
   public static update<T>(state: BaseRecords<T>, unique: Unique, insert: HashedObject, counters?: HashedObject<string | number>): BaseRecords<T> {
     return {
       ...state,
-      data: state.data.map((content: HashedObject): HashedObject => {
+      data: state.data.map((content: any): T => {
         if (content[unique.key] === unique.value) {
           if (counters) {
             for (const [key, value] of Object.entries(counters)) {

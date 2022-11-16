@@ -1,17 +1,17 @@
-import React from "react";
-import { OverlayModal } from "../OverlayModal/OverlayModal";
-import { CloseButton } from "../CloseButton/CloseButton";
+import React from 'react';
+import { OverlayModal } from '../OverlayModal/OverlayModal';
+import { CloseButton } from '../CloseButton/CloseButton';
 
 interface MediaPreviewModal {
+  title: string;
   url?: string | null;
   onClose: () => void;
   onNext?: () => void;
   onPrevious?: () => void;
+  alt?: string;
 }
 
-export const MediaPreviewModal = (
-  props: MediaPreviewModal
-): JSX.Element | null => {
+export const MediaPreviewModal = (props: MediaPreviewModal): JSX.Element | null => {
   const beforeClose = () => {
     props.onClose?.();
   };
@@ -26,7 +26,7 @@ export const MediaPreviewModal = (
 
       <div slot="content">
         <div className="media-preview">
-          <img className="media-preview__image" src={props.url} />
+          <img className="media-preview__image" src={props.url} alt={props.alt || props.title} />
         </div>
       </div>
     </OverlayModal>

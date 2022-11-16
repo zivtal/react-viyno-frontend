@@ -1,22 +1,21 @@
-import "reflect-metadata";
-import { useEffect } from "react";
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
-import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
-import { useDispatch, useSelector } from "react-redux";
-import { wineService } from "./pages/Wine/service/wine.service";
-import { setWinesKeywords } from "./pages/Wine/store/action";
-import "./styles/global.scss";
+import { useEffect } from 'react';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
+import { useDispatch, useSelector } from 'react-redux';
+import { wineService } from './pages/Wine/service/wine.service';
+import { setWinesKeywords } from './pages/Wine/store/action';
+import './styles/global.scss';
 
-import { AppHeader } from "./components/AppHeader/AppHeader";
-import { UserFeed } from "./pages/UserFeed/UserFeed";
-import { Login } from "./pages/Login/Login";
-import { WineView } from "./pages/Wine/WineView/WineView";
-import { WineSearch } from "./pages/Wine/WineSearch/WineSearch";
-import { WineEdit } from "./pages/Wine/WineEdit/WineEdit";
-import { WineryView } from "./pages/Winery/WineryView/WineryView";
-import { WinerySearch } from "./pages/Winery/WinerySearch/WinerySearch";
-import { MainState } from "./store/models/store.models";
-import { GET_WINE_KEYWORDS } from "./pages/Wine/store/types";
+import { AppHeader } from './components/AppHeader/AppHeader';
+import { UserFeed } from './pages/UserFeed/UserFeed';
+import { Login } from './pages/Login/Login';
+import { WineView } from './pages/Wine/WineView/WineView';
+import { WineSearch } from './pages/Wine/WineSearch/WineSearch';
+import { WineEdit } from './pages/Wine/WineEdit/WineEdit';
+import { WineryView } from './pages/Winery/WineryView/WineryView';
+import { WinerySearch } from './pages/Winery/WinerySearch/WinerySearch';
+import { MainState } from './store/models/store.models';
+import { GET_WINE_KEYWORDS } from './pages/Wine/store/types';
 
 // const WinePage = lazy(() =>
 //     import(/* webpackChunkName: wine */ './pages/Wine/WineView/WineView')
@@ -41,7 +40,7 @@ export function App() {
     })();
   }, [keywords]);
 
-  const AuthRoute = (props) => {
+  const AuthRoute = (props: any) => {
     return props.user ? <Route {...props} /> : <Redirect to="/" />;
   };
 

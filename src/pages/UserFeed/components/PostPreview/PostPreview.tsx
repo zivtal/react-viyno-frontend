@@ -62,7 +62,7 @@ export const PostPreview = (props: Props) => {
 
   return (
     <>
-      <MediaPreviewModal url={src} onClose={() => setSrc(null)} />
+      <MediaPreviewModal url={src} onClose={() => setSrc(null)} title={'Attached photo'} />
 
       <div className="wine-review">
         <div

@@ -1,7 +1,7 @@
-import React from "react";
-import "./PaginationControl.scss";
-import { Icon } from "../Icon/Icon";
-import { CustomButton } from "../CustomButton/CustomButton";
+import React from 'react';
+import './PaginationControl.scss';
+import { Icon } from '../Icon/Icon';
+import { CustomButton } from '../CustomButton/CustomButton';
 
 interface PaginationProps {
   total: number;

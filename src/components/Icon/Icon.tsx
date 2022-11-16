@@ -9,7 +9,6 @@ interface IconProps {
   style?: any;
   className?: any;
   onClick?: () => void;
-  alt: string;
 }
 
 export const Icon = (props: IconProps) => {
@@ -24,7 +23,6 @@ export const Icon = (props: IconProps) => {
         src={tryRequire('imgs/icons/' + props.name + '.svg')}
         height={size}
         width={size}
-        alt={props.alt}
       />
     </div>
   );

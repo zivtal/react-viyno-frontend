@@ -1,70 +1,25 @@
-# Getting Started with Create React App
+**Viyno** is wines database based on crowd wisdom, the Full stack project is written within 160 hours of work, using JavaScript (*started converting to TypeScript*), SCSS, React.js, Node.js / Rest API and MariaDB / SQL.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Demo: https://viyno.herokuapp.com/
 
-## Available Scripts
+Desktop:
 
-In the project directory, you can run:
+![image](https://github.com/zivtal/viyno-frontend/assets/31586269/2bfa6e35-6acd-4425-ac17-8f9528969e12)
+![image](https://github.com/zivtal/viyno-frontend/assets/31586269/5af9bff9-3da1-4689-b409-4a9f17fcae38)
+![image](https://github.com/zivtal/viyno-frontend/assets/31586269/ffa5e0cd-818e-4666-acd7-dfc747ac3510)
+![image](https://github.com/zivtal/viyno-frontend/assets/31586269/31ed1dc8-8b63-498d-9f0a-5e2691853bbc)
 
-### `npm start`
+Mobile (PWA support):
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+![image](https://github.com/zivtal/viyno-frontend/assets/31586269/4b830e43-5159-4261-9bc9-77e8d5262e70)
+![image](https://github.com/zivtal/viyno-frontend/assets/31586269/3b125b08-7574-45f7-a9c9-2a0f74e0ef13)
+![image](https://github.com/zivtal/viyno-frontend/assets/31586269/c532e117-3d88-4b1f-ab0a-6b446fda3d32)
+![image](https://github.com/zivtal/viyno-frontend/assets/31586269/29c94744-d86b-4864-b6bb-a9c8cb07515e)
+![image](https://github.com/zivtal/viyno-frontend/assets/31586269/67770f63-d039-4ee2-a8ec-267a4da33083)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
